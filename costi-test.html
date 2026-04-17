@@ -1,284 +1,873 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COSTI - 浜屾鍏?COS 鍦堜汉鏍兼祴璇?/title>
+    <title>娆″厓鐩告€?| COSTI - 浜屾鍏?COS 鍦堜汉鏍兼祴璇?/title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{--primary:#6C5DD3;--primary-light:#8B7FF5;--accent:#00D4AA;--accent-pink:#FF6B9D;--bg-dark:#0A0A1A;--bg-card:#12122A;--text-light:#E8E8FF;--text-dim:#9A9AB8}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',sans-serif;background:var(--bg-dark);color:var(--text-light);min-height:100vh}
-        .bg-animation{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(ellipse at 30% 20%,rgba(108,93,211,0.15) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(0,212,170,0.1) 0%,transparent 50%)}
-        .container{max-width:720px;margin:0 auto;padding:40px 20px 60px}
-        .header{text-align:center;margin-bottom:50px}
-        .title-jp{font-size:14px;color:var(--accent);letter-spacing:8px;margin-bottom:15px}
-        .main-title{font-size:clamp(42px,8vw,72px);font-weight:900;background:linear-gradient(135deg,var(--text-light) 0%,var(--primary-light) 50%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
-        .subtitle{font-size:18px;color:var(--text-dim);margin-bottom:30px}
-        .slogan{font-size:14px;color:var(--accent-pink);font-style:italic}
-        .progress-wrap{margin-bottom:30px}
-        .progress-text{text-align:center;font-size:14px;color:var(--text-dim);margin-bottom:10px;display:flex;justify-content:space-between}
-        .progress-container{background:rgba(108,93,211,0.2);border-radius:20px;height:8px;overflow:hidden}
-        .progress-bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0%;transition:width .5s}
-        .question-card{background:rgba(18,18,42,.8);border:1px solid rgba(108,93,211,.3);border-radius:24px;padding:40px 30px;margin-bottom:30px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-        .question-number{font-size:14px;color:var(--accent);letter-spacing:2px;margin-bottom:20px}
-        .question-text{font-size:20px;line-height:1.6;margin-bottom:30px}
-        .likert-scale{display:flex;flex-direction:column;gap:12px}
-        .likert-option{background:rgba(108,93,211,.1);border:2px solid rgba(108,93,211,.3);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:12px}
-        .likert-option:hover{background:rgba(108,93,211,.2);border-color:var(--primary-light);transform:translateX(4px)}
-        .likert-option.selected{background:rgba(108,93,211,.25);border-color:var(--primary);box-shadow:0 0 20px rgba(108,93,211,.3)}
-        .likert-value{width:32px;height:32px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-        .likert-text{font-size:15px;line-height:1.5;flex:1}
-        .btn{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;border-radius:16px;padding:18px 48px;font-size:18px;font-weight:700;cursor:pointer;width:100%;margin-top:30px;font-family:inherit;transition:all .3s}
-        .btn:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(108,93,211,.4)}
-        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-        .btn-secondary{background:transparent;border:2px solid rgba(108,93,211,.5);margin-top:15px}
-        .btn-group{display:flex;gap:15px;margin-top:30px}
-        .btn-group .btn{margin-top:0;flex:1}
-        .hidden{display:none!important}
-        .result-card{background:rgba(18,18,42,.9);border:1px solid rgba(108,93,211,.4);border-radius:32px;padding:50px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.4)}
-        .result-title{font-size:14px;color:var(--accent);letter-spacing:4px;margin-bottom:30px}
-        .type-icon{width:120px;height:120px;margin:0 auto 30px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:48px;box-shadow:0 20px 60px rgba(108,93,211,.4)}
-        .type-code{font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--text-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;letter-spacing:8px}
-        .type-name{font-size:28px;font-weight:700;margin-bottom:25px}
-        .type-quote{font-size:16px;color:var(--accent-pink);font-style:italic;margin-bottom:40px}
-        .confidence-badge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--primary));padding:8px 20px;border-radius:20px;font-size:14px;font-weight:700;margin-bottom:30px}
-        .type-description{background:rgba(108,93,211,.1);border-radius:20px;padding:25px;margin-bottom:30px;text-align:left}
-        .type-description h3{font-size:16px;color:var(--accent);margin-bottom:15px}
-        .type-description p{font-size:15px;line-height:1.7;color:var(--text-dim);margin-bottom:15px}
-        .dimension-bar{margin:15px 0}
-        .dimension-label{display:flex;justify-content:space-between;font-size:13px;color:var(--text-dim);margin-bottom:8px}
-        .dimension-track{background:rgba(108,93,211,.2);height:10px;border-radius:5px;overflow:hidden;position:relative}
-        .dimension-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:5px;width:0%;transition:width 1s}
-        .dimension-percent{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-light);font-weight:700}
-        .loading{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px}
-        .loading-dot{width:12px;height:12px;background:var(--accent);border-radius:50%;animation:loadingBounce 1.4s ease-in-out infinite both}
-        .loading-dot:nth-child(1){animation-delay:-.32s}.loading-dot:nth-child(2){animation-delay:-.16s}.loading-dot:nth-child(3){animation-delay:0s}
-        @keyframes loadingBounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
-        .footer{text-align:center;padding:40px 20px;color:var(--text-dim);font-size:14px;border-top:1px solid rgba(108,93,211,.2);margin-top:40px}
-        .footer a{color:var(--accent);text-decoration:none}
-        .footer a:hover{text-decoration:underline}
-        .nav-btns{display:flex;gap:15px;margin-top:30px}
-        .nav-btns .btn{margin-top:0;flex:1}
-        .music-player{background:rgba(108,93,211,.15);border:1px solid rgba(108,93,211,.3);border-radius:16px;padding:15px 20px;margin-bottom:20px;display:flex;align-items:center;gap:15px}
-        .music-info{flex:1;text-align:left}
-        .music-title{font-size:14px;color:var(--text-light);font-weight:700;margin-bottom:5px}
-        .music-artist{font-size:12px;color:var(--text-dim)}
-        .music-wave{display:flex;align-items:flex-end;gap:3px;height:30px}
-        .wave-bar{width:4px;background:var(--accent);border-radius:2px;animation:wave 1s ease-in-out infinite}
-        .wave-bar:nth-child(1){height:60%;animation-delay:0s}.wave-bar:nth-child(2){height:80%;animation-delay:.2s}.wave-bar:nth-child(3){height:40%;animation-delay:.4s}.wave-bar:nth-child(4){height:100%;animation-delay:.6s}.wave-bar:nth-child(5){height:70%;animation-delay:.8s}
-        @keyframes wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
-        @media(max-width:480px){.container{padding:30px 15px 40px}.question-card{padding:30px 20px}.result-card{padding:40px 20px}.type-icon{width:100px;height:100px;font-size:42px}.type-code{font-size:32px}.nav-btns{flex-direction:column}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6C5DD3;
+            --primary-light: #8B7FF5;
+            --accent: #00D4AA;
+            --accent-pink: #FF6B9D;
+            --bg-dark: #0A0A1A;
+            --bg-card: #12122A;
+            --text-light: #E8E8FF;
+            --text-dim: #9A9AB8;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at 30% 20%, rgba(108, 93, 211, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+        }
+        .container { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; }
+        .header { text-align: center; margin-bottom: 50px; }
+        .title-jp { font-size: 14px; color: var(--accent); letter-spacing: 8px; margin-bottom: 15px; }
+        .main-title {
+            font-size: clamp(42px, 8vw, 72px);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-light) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        .subtitle { font-size: 18px; color: var(--text-dim); margin-bottom: 30px; }
+        .slogan { font-size: 14px; color: var(--accent-pink); font-style: italic; }
+        .progress-wrap { margin-bottom: 30px; }
+        .progress-text { 
+            text-align: center; 
+            font-size: 14px; 
+            color: var(--text-dim); 
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-container {
+            background: rgba(108, 93, 211, 0.2);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .question-card {
+            background: rgba(18, 18, 42, 0.8);
+            border: 1px solid rgba(108, 93, 211, 0.3);
+            border-radius: 24px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .question-number { font-size: 14px; color: var(--accent); letter-spacing: 2px; margin-bottom: 20px; }
+        .question-text { font-size: 20px; line-height: 1.6; margin-bottom: 30px; }
+        .likert-scale { display: flex; flex-direction: column; gap: 12px; }
+        .likert-option {
+            background: rgba(108, 93, 211, 0.1);
+            border: 2px solid rgba(108, 93, 211, 0.3);
+            border-radius: 12px;
+            padding: 14px 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .likert-option:hover {
+            background: rgba(108, 93, 211, 0.2);
+            border-color: var(--primary-light);
+            transform: translateX(4px);
+        }
+        .likert-option.selected {
+            background: rgba(108, 93, 211, 0.25);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(108, 93, 211, 0.3);
+        }
+        .likert-value {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .likert-text { font-size: 15px; line-height: 1.5; flex: 1; }
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 48px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(108, 93, 211, 0.4);
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-secondary { background: transparent; border: 2px solid rgba(108, 93, 211, 0.5); margin-top: 15px; }
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
+        .btn-group .btn { margin-top: 0; flex: 1; }
+        .hidden { display: none !important; }
+        .result-card {
+            background: rgba(18, 18, 42, 0.9);
+            border: 1px solid rgba(108, 93, 211, 0.4);
+            border-radius: 32px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+        .result-title { font-size: 14px; color: var(--accent); letter-spacing: 4px; margin-bottom: 30px; }
+        .type-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 20px 60px rgba(108, 93, 211, 0.4);
+        }
+        .type-code {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--text-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 8px;
+        }
+        .type-name { font-size: 28px; font-weight: 700; margin-bottom: 25px; }
+        .type-quote { font-size: 16px; color: var(--accent-pink); font-style: italic; margin-bottom: 40px; }
+        .confidence-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .type-description {
+            background: rgba(108, 93, 211, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        .type-description h3 { font-size: 16px; color: var(--accent); margin-bottom: 15px; }
+        .type-description p { font-size: 15px; line-height: 1.7; color: var(--text-dim); margin-bottom: 15px; }
+        .dimension-bar { margin: 15px 0; }
+        .dimension-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+        .dimension-track {
+            background: rgba(108, 93, 211, 0.2);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        .dimension-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1s;
+        }
+        .dimension-percent {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+        .loading { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: loadingBounce 1.4s ease-in-out infinite both;
+        }
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+        @keyframes loadingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-dim);
+            font-size: 14px;
+            border-top: 1px solid rgba(108, 93, 211, 0.2);
+            margin-top: 40px;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .nav-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .nav-btns .btn { margin-top: 0; flex: 1; }
+        .music-player {
+            background: rgba(108, 93, 211, 0.15);
+            border: 1px solid rgba(108, 93, 211, 0.3);
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .music-info { flex: 1; text-align: left; }
+        .music-title { font-size: 14px; color: var(--text-light); font-weight: 700; margin-bottom: 5px; }
+        .music-artist { font-size: 12px; color: var(--text-dim); }
+        .music-wave {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 30px;
+        }
+        .wave-bar {
+            width: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        .wave-bar:nth-child(1) { height: 60%; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { height: 100%; animation-delay: 0.6s; }
+        .wave-bar:nth-child(5) { height: 70%; animation-delay: 0.8s; }
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
+        @media (max-width: 480px) {
+            .container { padding: 30px 15px 40px; }
+            .question-card { padding: 30px 20px; }
+            .result-card { padding: 40px 20px; }
+            .type-icon { width: 100px; height: 100px; font-size: 42px; }
+            .type-code { font-size: 32px; }
+            .nav-btns { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
-<div class="bg-animation"></div>
-<div class="container">
-    <header class="header">
-        <div class="title-jp">COSTI</div>
-        <h1 class="main-title">娆″厓鐩告€?/h1>
-        <p class="subtitle">浜屾鍏?COS 鍦堜汉鏍兼祴璇?v8.0</p>
-        <p class="slogan" id="randomQuote"></p>
-    </header>
-    <div id="start-screen">
-        <div class="question-card">
-            <div style="font-size:24px;margin-bottom:20px">馃幁 鎵惧埌灞炰簬浣犵殑閭ｄ竴闈?/div>
-            <p style="color:var(--text-dim);line-height:1.8;margin-bottom:30px">閫氳繃 25 閬撻鐩紝璇婃柇浣犵殑 COS 鍦堜汉鏍肩被鍨?/p>
-            <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-bottom:30px">
-                <span style="background:rgba(108,93,211,.2);padding:8px 16px;border-radius:20px;font-size:14px">鈴憋笍 5-7 鍒嗛挓</span>
-                <span style="background:rgba(0,212,170,.2);padding:8px 16px;border-radius:20px;font-size:14px">馃搳 25 閬撻</span>
-                <span style="background:rgba(255,107,157,.2);padding:8px 16px;border-radius:20px;font-size:14px">馃幆 16 绉嶇粨鏋?/span>
-                <span style="background:rgba(108,93,211,.2);padding:8px 16px;border-radius:20px;font-size:14px">馃幍 鑳屾櫙闊充箰</span>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <div class="title-jp">銉囥偅銉°兂銈枫儳銉炽兓銈汇偆銈汇偆</div>
+            <h1 class="main-title">娆″厓鐩告€?/h1>
+            <p class="subtitle">浜屾鍏?COS 鍦堜汉鏍兼祴璇?v6.3</p>
+            <p class="slogan" id="randomQuote">"褰撴鍏冨鐮寸鏃讹紝浣犱細鎴愪负璋侊紵"</p>
+        </header>
+
+        <div id="start-screen">
+            <div class="question-card">
+                <div style="font-size: 24px; margin-bottom: 20px;">馃幁 鍦ㄦ棤鏁拌鑹蹭腑锛屾壘鍒板睘浜庝綘鐨勯偅涓€闈?/div>
+                <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 30px;">
+                    閫氳繃 25 閬撲汉鎬у寲棰樼洰锛岃瘖鏂綘鐨?COS 鍦堜汉鏍肩被鍨嬨€?br>
+                    鉁?5 绾ч噺琛?+ 鐪熷疄鍦烘櫙 + 缃俊搴﹁瘎浼?+ 楠岃瘉棰樼洰
+                </p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">鈴憋笍 5-7 鍒嗛挓</span>
+                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">馃搳 25 閬撻</span>
+                    <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">馃幆 16 绉嶇粨鏋?/span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">馃幍 鑳屾櫙闊充箰</span>
+                </div>
+                <button class="btn" id="startBtn">寮€濮嬫祴璇?/button>
             </div>
-            <button class="btn" id="startBtn">寮€濮嬫祴璇?/button>
+        </div>
+
+        <div id="test-screen" class="hidden">
+            <div class="music-player">
+                <div class="music-info">
+                    <div class="music-title" id="musicTitle">馃幍 鍑嗗鎾斁</div>
+                    <div class="music-artist" id="musicArtist">浜屾鍏冩瓕鏇?/div>
+                </div>
+                <div class="music-wave hidden" id="musicWave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
+            <div class="progress-wrap">
+                <div class="progress-text">
+                    <span>闂 <span id="currentQ">1</span> / 25</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+            <div id="questionContainer"></div>
+            <div class="nav-btns">
+                <button class="btn btn-secondary" id="prevBtn" disabled>涓婁竴棰?/button>
+                <button class="btn" id="nextBtn" disabled>涓嬩竴棰?/button>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden">
+            <div class="result-card">
+                <div class="loading">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+                <p style="color: var(--text-dim); margin-top: 20px;">姝ｅ湪鍒嗘瀽浣犵殑 COS 鐏甸瓊灞炴€?..</p>
+            </div>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <div class="result-card">
+                <div class="result-title">娆″厓鐩告€ц瘖鏂功</div>
+                <div class="type-icon" id="typeIcon">馃洜锔?/div>
+                <div class="type-code" id="typeCode">COSP</div>
+                <div class="type-name" id="typeName">閫犵墿涓?/div>
+                <div class="confidence-badge" id="confidenceBadge">缃俊搴︼細85%</div>
+                <div class="type-quote" id="typeQuote">"鎵嬫槸鍊熸潵鐨勶紝鑲濇槸鑷繁鐨?</div>
+                <div class="type-description">
+                    <h3>鉁?鏍稿績鐗硅川</h3>
+                    <p id="typeDesc">鎵嬪伐鐙傞瓟锛屼韩鍙椾粠闆跺埌涓€鐨勯€犵墿蹇劅銆?/p>
+                    <h3>馃幆 鍏稿瀷琛屼负</h3>
+                    <p id="typeBehaviors">鈥?鏀惰棌澶归噷鍏ㄦ槸鏁欑▼</p>
+                </div>
+                <div style="margin: 30px 0;">
+                    <h3 style="color: var(--accent); margin-bottom: 20px;">馃搳 缁村害鍒嗘瀽</h3>
+                    <div id="radarBars"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" id="shareBtn">馃摛 鍒嗕韩缁撴灉</button>
+                    <button class="btn" id="imgShareBtn">馃柤锔?鐢熸垚鍥剧墖</button>
+                </div>
+                <button class="btn btn-secondary" id="restartBtn">馃攧 鍐嶆祴涓€娆?/button>
+            </div>
         </div>
     </div>
-    <div id="test-screen" class="hidden">
-        <div class="music-player">
-            <div class="music-info">
-                <div class="music-title" id="musicTitle">馃幍 鍑嗗鎾斁</div>
-                <div class="music-artist" id="musicArtist">浜屾鍏冩瓕鏇?/div>
-            </div>
-            <div class="music-wave hidden" id="musicWave">
-                <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-            </div>
-        </div>
-        <div class="progress-wrap">
-            <div class="progress-text">
-                <span>闂 <span id="currentQ">1</span> / 25</span>
-                <span id="progressPercent">0%</span>
-            </div>
-            <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-        </div>
-        <div id="questionContainer"></div>
-        <div class="nav-btns">
-            <button class="btn btn-secondary" id="prevBtn" disabled>涓婁竴棰?/button>
-            <button class="btn" id="nextBtn" disabled>涓嬩竴棰?/button>
-        </div>
-    </div>
-    <div id="loading-screen" class="hidden">
-        <div class="result-card">
-            <div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
-            <p style="color:var(--text-dim);margin-top:20px">姝ｅ湪鍒嗘瀽浣犵殑 COS 鐏甸瓊灞炴€?..</p>
-        </div>
-    </div>
-    <div id="result-screen" class="hidden">
-        <div class="result-card">
-            <div class="result-title">娆″厓鐩告€ц瘖鏂功</div>
-            <div class="type-icon" id="typeIcon">馃洜锔?/div>
-            <div class="type-code" id="typeCode">COSP</div>
-            <div class="type-name" id="typeName">閫犵墿涓?/div>
-            <div class="confidence-badge" id="confidenceBadge">缃俊搴︼細85%</div>
-            <div class="type-quote" id="typeQuote"></div>
-            <div class="type-description">
-                <h3>鉁?鏍稿績鐗硅川</h3>
-                <p id="typeDesc"></p>
-                <h3>馃幆 鍏稿瀷琛屼负</h3>
-                <p id="typeBehaviors"></p>
-            </div>
-            <div style="margin:30px 0">
-                <h3 style="color:var(--accent);margin-bottom:20px">馃搳 缁村害鍒嗘瀽</h3>
-                <div id="radarBars"></div>
-            </div>
-            <div class="btn-group">
-                <button class="btn" id="shareBtn">馃摛 鍒嗕韩缁撴灉</button>
-                <button class="btn" id="imgShareBtn">馃柤锔?鐢熸垚鍥剧墖</button>
-            </div>
-            <button class="btn btn-secondary" id="restartBtn">馃攧 鍐嶆祴涓€娆?/button>
-        </div>
-    </div>
-</div>
-<footer class="footer">
-    <p>漏 2026 COSTI | Designed by 闈掓湪</p>
-    <p style="margin-top:10px">馃摟 1242550160@qq.com</p>
-</footer>
-<script>
-(function(){
-var DATA={
-questions:[
-{text:"鐪嬪埌鍠滄鐨勮鑹诧紝浣犳洿鍊惧悜浜庯細",dim:"CA",s:[{v:2,t:"绔嬪埢寮€濮嬬爺绌舵€庝箞鍋氬叏濂楄澶?},{v:1,t:"浼氳€冭檻鑷繁鍔ㄦ墜璇曡瘯"},{v:0,t:"鐪嬫儏鍐碉紝鏈夋椂闂村氨鑷繁鍋?},{v:-1,t:"鏇存湡寰呯湅鍒板埆浜鸿繕鍘熺殑浣滃搧"},{v:-2,t:"榛橀粯淇濆瓨鍥剧墖褰撳绾?}]},
-{text:"婕睍缁撴潫鍚庯紝浣犳洿鎯筹細",dim:"CA",s:[{v:2,t:"鍙戣嚜宸辩殑鍦虹収/姝ｇ墖"},{v:1,t:"鍒嗕韩涓€浜涜嚜宸辩殑鐓х墖"},{v:0,t:"鍙戜笉鍙戦兘琛?},{v:-1,t:"鍙戦泦閭悎闆嗗拰鍠滄鐨勬憡浣?},{v:-2,t:"鍙湅涓嶅彂锛屽綋涓畨闈欑殑缇庣敺瀛?}]},
-{text:"浣犵殑鍏虫敞鍒楄〃閲屼富瑕佹槸锛?,dim:"CA",s:[{v:2,t:"澶ч儴鍒嗘槸濡嗗/姣涘/閬撳叿甯?},{v:1,t:"鎶€鏈被鍗氫富鍗犱竴鍗?},{v:0,t:"鍚勭绫诲瀷閮芥湁"},{v:-1,t:"涓昏鏄敾甯?鎽勫奖/鍚屽ソ"},{v:-2,t:"鍑犱箮涓嶅叧娉ㄦ妧鏈被鍗氫富"}]},
-{text:"瀵逛簬 COS 鏈嶏紝浣犵殑鎬佸害鏄細",dim:"CA",s:[{v:2,t:"鑳借嚜宸卞仛缁濆涓嶄拱"},{v:1,t:"浼樺厛鑷繁鍋氾紝瀹炲湪涓嶈鍐嶄拱"},{v:0,t:"鐪嬫椂闂村拰棰勭畻鍐冲畾"},{v:-1,t:"姝ｅ父娑堣垂锛岀渷鏃剁渷鍔?},{v:-2,t:"鐩存帴涔版垚鍝佹洿棣?}]},
-{text:"鐪嬪埌鍒汉鐨勭簿鑷撮亾鍏凤紝浣犱細锛?,dim:"CA",s:[{v:2,t:"鍑戣繎瑙傚療宸ヨ壓锛屾兂瀛︿範鍒朵綔"},{v:1,t:"浼氶棶鏄€庝箞鍋氱殑"},{v:0,t:"鎰熷徆濂藉帀瀹?},{v:-1,t:"璇㈤棶鏄摢浣嶅お澶殑浣滃搧"},{v:-2,t:"鐐硅禐鏀惰棌锛岄粯榛樻璧?}]},
-{text:"瀵逛簬 COS 鏁欑▼瑙嗛锛?,dim:"CA",s:[{v:2,t:"鏀惰棌浜嗗氨浼氳窡鐫€鍋?},{v:1,t:"鏈夋椂浼氬皾璇?},{v:0,t:"鐪嬪績鎯?},{v:-1,t:"鏀惰棌浜嗙瓑浜庡仛浜?},{v:-2,t:"寰堝皯鐪嬫暀绋?}]},
-{text:"鐞嗘兂鐨勬极灞曚竴澶╋細",dim:"OI",s:[{v:2,t:"涓婂彴姣旇禌/娓稿満琚洿鎷?},{v:1,t:"澶氭媿鐓у绀句氦"},{v:0,t:"闅忔剰閫涢€涳紝鐪嬪績鎯?},{v:-1,t:"鍜屼翰鍙嬪皬鑱?閫涙憡浣?},{v:-2,t:"瀹夐潤闆嗛偖锛屽拰璁よ瘑鐨勪汉鐜?}]},
-{text:"瀵逛簬琚憚褰卞洿鎷嶇殑鎰熷彈锛?,dim:"OI",s:[{v:2,t:"鍏村锛岃繖鏄鑷繁鐨勮鍙?},{v:1,t:"鏈夌偣绱у紶浣嗗彲浠ユ帴鍙?},{v:0,t:"鏃犳墍璋擄紝鐪嬫儏鍐?},{v:-1,t:"鏇村枩娆㈠拰鐔熸倝鐨勬憚褰辨媿"},{v:-2,t:"浼氭劅鍒颁笉鑷湪"}]},
-{text:"浣犳洿鍠滄鍦ㄤ粈涔堝満鏅嚭鐗囷細",dim:"OI",s:[{v:2,t:"澶у満鏅?鑸炲彴/灞曚細鐜板満"},{v:1,t:"浜哄鐑椆鐨勫湴鏂?},{v:0,t:"鍝噷閮藉彲浠?},{v:-1,t:"鎽勫奖妫?灏忔爲鏋?},{v:-2,t:"浜插弸瀹?绉佸瘑绌洪棿"}]},
-{text:"鍔犲叆 COS 绀惧洟锛屼綘鏇存兂鍙備笌锛?,dim:"OI",s:[{v:2,t:"鑸炲彴鍓?瀹呰垶/姣旇禌"},{v:1,t:"鍙板墠琛ㄦ紨绫绘椿鍔?},{v:0,t:"鐪嬫椿鍔ㄥ唴瀹瑰喅瀹?},{v:-1,t:"鍚庡嫟/鑱氶"},{v:-2,t:"绾夸笂姘寸兢锛岀嚎涓嬮殢缂?}]},
-{text:"婕睍鍓嶇殑鍑嗗閲嶅績锛?,dim:"OI",s:[{v:2,t:"缁冧範鍔ㄤ綔/琛ㄦ儏/鑸炲彴璧颁綅"},{v:1,t:"鍑嗗灞曠ず鍐呭"},{v:0,t:"闅忎究鍑嗗涓€涓?},{v:-1,t:"纭鍜岃皝鐨勭害浼?},{v:-2,t:"甯︿粈涔堥浂椋熷拰浜插弸鍒嗕韩"}]},
-{text:"婕睍缁撴潫鍚庯紝浣犱細锛?,dim:"OI",s:[{v:2,t:"鍙戞€荤粨鍔ㄦ€?鏁寸悊鐓х墖"},{v:1,t:"鍙戜竴浜涚収鐗?},{v:0,t:"鐪嬪績鎯?},{v:-1,t:"鍥炲浼戞伅"},{v:-2,t:"褰诲簳娑堝け鍑犲ぉ"}]},
-{text:"閬撳叿鍋氫笉鍑烘潵鏃讹紝浣犱細锛?,dim:"SF",s:[{v:2,t:"鐔鏌ユ暀绋?鎹㈡潗鏂?璇锋暀澶т浆"},{v:1,t:"灏濊瘯澶氱瑙ｅ喅鏂规"},{v:0,t:"鐪嬫儏鍐靛喅瀹?},{v:-1,t:"鑰冭檻涔扮幇鎴愮殑"},{v:-2,t:"鐩存帴鎵撳紑娣樺疂/闂查奔"}]},
-{text:"浣犵殑瑁呭鏉ユ簮澶ф鏄細",dim:"SF",s:[{v:2,t:"90% 浠ヤ笂鑷埗/鏀归€?},{v:1,t:"澶ч儴鍒嗚嚜宸卞仛"},{v:0,t:"涓€鍗婁竴鍗?},{v:-1,t:"澶ч儴鍒嗚喘涔?绾﹀崟"},{v:-2,t:"鍑犱箮鍏ㄦ槸涔扮殑"}]},
-{text:"瀵逛簬鎵嬩綔鐨勭湅娉曪細",dim:"SF",s:[{v:2,t:"鏍稿績涔愯叮锛岀渷閽辨槸闄勫甫鐨?},{v:1,t:"寰堟湁鎴愬氨鎰?},{v:0,t:"鐪嬪績鎯?},{v:-1,t:"鏃堕棿鎴愭湰澶珮"},{v:-2,t:"涓嶅鐩存帴涔?}]},
-{text:"瀵逛簬姣涘/濡嗗鐨勬€佸害锛?,dim:"SF",s:[{v:2,t:"灏介噺鑷繁瀛︼紝瀹炲湪涓嶈鎵嶇害"},{v:1,t:"绠€鍗曠殑鑷繁鏉?},{v:0,t:"鐪嬫儏鍐?},{v:-1,t:"涓撲笟鐨勪氦缁欎笓涓氱殑浜?},{v:-2,t:"鍏ㄩ儴绾﹀崟鏇寸渷蹇?}]},
-{text:"婕睍鍓嶄竴鍛紝浣犲湪锛?,dim:"SF",s:[{v:2,t:"鎵嬫悡鏈€鍚庡嚑浠堕厤楗?淇亣鍙?},{v:1,t:"杩樺湪瀹屽杽瑁呭"},{v:0,t:"璇ュ噯澶囩殑閮藉噯澶囦簡"},{v:-1,t:"纭蹇€掕繘搴?},{v:-2,t:"绾﹀濞樻椂闂?灏炬"}]},
-{text:"瀵逛簬浜屾墜 COS 瑁呭锛?,dim:"SF",s:[{v:2,t:"涔板洖鏉ヨ嚜宸辨敼閫?},{v:1,t:"浼氳€冭檻"},{v:0,t:"鐪嬫€т环姣?},{v:-1,t:"鏇村€惧悜鍏ㄦ柊鐨?},{v:-2,t:"鍙拱鍏ㄦ柊鎴栧悕瀹舵墜浣?}]},
-{text:"璺濈婕睍 3 澶╋紝鍙戠幇琛ｆ湇灏哄涓嶅锛?,dim:"PR",s:[{v:2,t:"鐔鏀?閲嶆柊鍋氾紝蹇呴』瀹岀編"},{v:1,t:"灏介噺鏀瑰埌婊℃剰"},{v:0,t:"鑳界┛灏辫"},{v:-1,t:"鐢ㄥ埆閽堝浐瀹氫竴涓?},{v:-2,t:"鍙嶆鎷嶇収鐪嬩笉鍑烘潵"}]},
-{text:"瀵逛簬杩樺師搴︾殑瑕佹眰锛?,dim:"PR",s:[{v:2,t:"缁嗚妭蹇呴』鍒颁綅锛屽摢鎬曠収鐗囨媿涓嶅嚭"},{v:1,t:"灏介噺杩樺師"},{v:0,t:"宸笉澶氬氨琛?},{v:-1,t:"鏁翠綋鎰熻瀵逛簡灏辫"},{v:-2,t:"寮€蹇冨氨濂?}]},
-{text:"鍑嗗涓€涓柊瑙掕壊锛屼綘浼氾細",dim:"PR",s:[{v:2,t:"鎷夎瀹氳〃/鎵惧弬鑰冨浘/鍒跺畾鏃堕棿琛?},{v:1,t:"鍋氳缁嗗噯澶?},{v:0,t:"绠€鍗曞噯澶囦竴涓?},{v:-1,t:"澶ф榻?},{v:-2,t:"杈瑰嚭杈硅皟鏁?}]},
-{text:"鍑虹墖鍚庡彂鐜版湁绌垮府锛?,dim:"PR",s:[{v:2,t:"蹇呴』閲嶄慨/閲嶆媿锛屼笉鑳界暀閬楁喚"},{v:1,t:"灏介噺淇帀"},{v:0,t:"鐪嬩弗閲嶇▼搴?},{v:-1,t:"绠椾簡锛屼笅娆℃敞鎰?},{v:-2,t:"涓嶄粩缁嗙湅鍙戠幇涓嶄簡"}]},
-{text:"瀵逛簬 COS 鍦堝唴鍗风幇璞★細",dim:"PR",s:[{v:2,t:"鐒﹁檻锛岃杩窡鐫€鍗?},{v:1,t:"鏈夌偣鍘嬪姏"},{v:0,t:"鏃犳墍璋?},{v:-1,t:"涓嶅叧鎴戜簨"},{v:-2,t:"鍧氬喅鍙嶅嵎"}]},
-{text:"绾夸笂绀剧兢鐨勫弬涓庣▼搴︼細",dim:"OI",s:[{v:2,t:"澶╁ぉ鍐掓场锛岀粍缁囨椿鍔?},{v:1,t:"缁忓父鍙備笌"},{v:0,t:"鍋跺皵鐪嬬湅"},{v:-1,t:"寰堝皯璇磋瘽"},{v:-2,t:"娼滄按鍏?}]},
-{text:"瀵逛簬鍗氫富 KOL 鐨勬€佸害锛?,dim:"CA",s:[{v:2,t:"瀛︿範鎶€鏈紝鍏虫敞鏇存柊"},{v:1,t:"鍋跺皵鐪嬬湅"},{v:0,t:"鐪嬪績鎯?},{v:-1,t:"褰撳ū涔愮湅鐪?},{v:-2,t:"涓嶅叧娉?}]}
-],
-types:{
-COSP:{n:"閫犵墿涓?,q:"鎵嬫槸鍊熸潵鐨勶紝鑲濇槸鑷繁鐨?,d:"鎵嬪伐鐙傞瓟锛屼韩鍙椾粠闆跺埌涓€鐨勯€犵墿蹇劅銆?,i:"馃洜锔?},
-COSR:{n:"浣涚郴鎵嬩綔濞?,q:"鑳藉仛灏卞仛锛屼笉琛屽氨鏀?,d:"鍠滄鍔ㄦ墜浣嗘嫆缁濈劍铏戙€?,i:"馃"},
-COIP:{n:"鑸炲彴鍖犱汉",q:"姣忎竴閽堥兘鏄负浜嗚仛鍏夌伅",d:"鎵嬪伐 + 琛ㄦ紨鍙岄噸杩芥眰銆?,i:"馃幁"},
-COIR:{n:"鍚屽ソ宸ュ潑涓?,q:"鏉ユ垜瀹跺仛閬撳叿鍚?,d:"浜彈鍜屼翰鍙嬩竴璧锋墜浣溿€?,i:"馃彔"},
-COFP:{n:"鎴愬搧鏀惰棌瀹?,q:"涓撲笟鐨勪簨浜ょ粰涓撲笟鐨勪汉",d:"鎳傝浼氭寫锛屾槸浼樿川鐢叉柟銆?,i:"馃拵"},
-COFR:{n:"杞绘澗姘噾鍏?,q:"涔伴兘涔颁簡寮€蹇冨氨濂?,d:"姘噾浣嗛殢鎬с€?,i:"馃捀"},
-COIF:{n:"绀句氦姘噾鐜?,q:"鎴戝嚭閽变綘鍑轰汉",d:"姘噾 + 绀句氦鍨嬨€?,i:"馃憫"},
-AOSP:{n:"鏋佽嚧鏀惰棌瀹?,q:"鎴戜笉鍑轰絾鎴戞噦",d:"琛岃蛋鐨勮祫鏂欏簱銆?,i:"馃摎"},
-AOSR:{n:"浣涚郴浜戠帺瀹?,q:"鐪嬬湅涔熸尯濂?,d:"杞诲害鍙備笌閲嶅湪绀句氦銆?,i:"鈽侊笍"},
-AOIP:{n:"鑸炲彴閴磋祻瀹?,q:"鎴戞槸鏈€涓撲笟鐨勮浼?,d:"娣卞害鑸炲彴鐖卞ソ鑰呫€?,i:"馃幀"},
-AOIR:{n:"鍚屽ソ绀句氦瀹?,q:"婕睍鏄綉鍙嬭闈細",d:"灏忓湀瀛愭牳蹇冧汉鐗┿€?,i:"馃"},
-AISF:{n:"鍏ㄨ兘浣撻獙娲?,q:"浠€涔堥兘鎯宠瘯璇?,d:"鎶€鑳芥爲鐐瑰緱鏁ｃ€?,i:"馃寛"},
-AISR:{n:"杞婚噺鍙備笌鑰?,q:"鏈夊眬鍙垜",d:"浜彈闄即鎰熴€?,i:"馃巿"},
-CIFP:{n:"鎶€鏈祦姘噾鍏?,q:"鎴戣鏈€濂界殑鏁堟灉",d:"缁撴灉瀵煎悜瀹岀編涓讳箟銆?,i:"鈿?},
-CIFR:{n:"闅忔€ф妧鏈畢",q:"浼氬仛浣嗗彧鐪嬪叴瓒?,d:"鍏磋叮椹卞姩銆?,i:"馃帹"},
-CISP:{n:"纭牳鍒涗綔鑰?,q:"瑕佷箞涓嶅仛锛岃鍋氬氨鍋氬埌鏋佽嚧",d:"鍒涗綔 + 瀹岀編鍙岄噸杩芥眰銆?,i:"馃敟"}
-},
-behaviors:{
-COSP:["鏀惰棌澶归噷鍏ㄦ槸鏁欑▼","鐪嬪埌瑙掕壊鍏堟兂鎬庝箞鍋?,"婕睍鍓嶅鎵嬫悡閬撳叿鍒板噷鏅?,"鐑啍鑳舵灙鏄湰浣?,"涓轰簡閰嶄欢鏌ヤ笁涓湀璧勬枡"],
-COSR:["杩欎釜鑺辩汗缁ｄ笉濂斤紵閭ｅ氨璐村竷璐?,"婕睍鍓嶄竴鍛ㄨ繕鍦ㄦ敼鏂规","甯歌鍑哄樊涓嶅琛屼簡","鍋氫笉鍑烘潵灏?plan B","浜彈杩囩▼锛岀粨鏋滈殢缂?],
-COIP:["鍋氳。鏈嶆椂鎯冲姩浣滀細涓嶄細宕╃嚎","涓鸿垶鍙版晥鏋滆璁″彲鎷嗗嵏閮ㄤ欢","鍚庡彴鏈€蹇欑殑浜?,"鑸炲彴鍓х殑鎶€鏈媴褰?,"姣忎竴閽堥兘鏄负浜嗚仛鍏夌伅"],
-COIR:["瀹堕噷鍙樻垚鍚屽ソ鑱氶泦鍦?,"婕睍鍓嶇粍缁囪倽閬撳叿澶滆瘽浼?,"寮€蹇冪殑鏄緬寮熷嚭鐗囦簡","灏忓湀瀛愰噷鐨勬妧鏈敮鎸?,"鏉ユ垜瀹跺仛閬撳叿鍚?],
-COFP:["鍏虫敞鍒楄〃涓€鍗婃槸濡嗗姣涘","鑳藉噯纭鍑烘瘺鑳氭槸鍝鐨?,"婕睍鍓嶄富瑕佸伐浣滐細鍌崟","鎳傝浼氭寫","鏀惰棌鏌滈噷鍏ㄦ槸鍚嶅鎵嬩綔"],
-COFR:["杩欎欢璐ㄦ劅涓€鑸絾鎷嶇収澶熺敤浜?,"婕睍鍓嶄笁澶╄繕鍦ㄧ姽璞?,"瑁呭榻愬叏浣嗗彲鑳芥病鎷嗗皝","姘噾浣嗛殢鎬?,"涔伴兘涔颁簡锛屽紑蹇冨氨濂?],
-COIF:["杩欏鍥㈢墖鎴戝寘浜嗘憚褰卞拰妫氬瓙","瀹堕噷鏈夌┖鎴块棿瀛樻斁瑁呭","涓嶄竴瀹氳嚜宸卞嚭锛屼絾涓€瀹氬湪鍦?,"灏忓湀瀛愮殑閲戜富鐖哥埜","鎴戝嚭閽变綘鍑轰汉"],
-AOSP:["婕睍涓婃渶浼氬じ鐨勪汉","瀹堕噷鏈変竴闈㈠鏄墜鍔?,"鍙兘鏄殣钘忕殑鎽勫奖澶т浆","琛岃蛋鐨勮祫鏂欏簱","鎴戜笉鍑猴紝浣嗘垜鎳?],
-AOSR:["婕睍琛岀▼锛氶泦閭啋鍚冮キ鈫掕亰澶?,"瑁呭涓嶅浣嗕娇鐢ㄧ巼鏋侀珮","瀵瑰嵎鏂囧寲鍏嶇柅","杞诲害鍙備笌锛岄噸鍦ㄧぞ浜?,"鍘绘极灞曚富瑕佹槸涓轰簡瑙佹湅鍙?],
-AOIP:["瀹呰垶姣旇禌鍙颁笅璁扮瑪璁扮殑浜?,"鑳芥寚鍑哄垏闀滆妭濂忎笉瀵?,"鎵嬫満閲屾湁涓婄櫨 G 鑸炲彴瑙嗛","娣卞害鑸炲彴鐖卞ソ鑰?,"鎴戞槸鏈€涓撲笟鐨勮浼?],
-AOIR:["婕睍鍓嶄竴涓湀寮€濮嬬粍灞€","缇ら噷鏈€娲昏穬","鍙兘鍑虹殑瑙掕壊寰堟櫘閫氾紝浣嗗悎褰辨案杩滄湁浜烘壘","灏忓湀瀛愭牳蹇冧汉鐗?,"婕睍鏄ぇ鍨嬬綉鍙嬭闈細"],
-AISF:["鎶€鑳芥爲鐐瑰緱寰堟暎","婕睍瑙掕壊骞村勾鎹?,"缁忓父璇村嚭涓嬫鎯宠瘯璇?XX","浠€涔堥兘鎯宠瘯璇?,"涓嶆繁鑰曚絾蹇箰"],
-AISR:["瑁呭鍙兘鏄€熺殑","鍑虹墖涓昏闈犱翰鍙嬪悗鏈?,"浣嗘瘡娆￠兘鐜╁緱寰堝紑蹇?,"琚湅鍙嬫媺鍏ュ潙","鏈夊眬鍙垜锛屾病灞€涔熻"],
-CIFP:["杩欎釜姣涜儦涓嶉敊锛屼絾鍒樻捣瑕侀噸鏂拌创","绾﹀崟鍚庤繕瑕佽嚜宸卞姞缁嗚妭","瑁呭杩唬鏋佸揩","缁撴灉瀵煎悜鐨勫畬缇庝富涔?,"鎴戣鏈€濂界殑鏁堟灉"],
-CIFR:["杩欎釜瑙掕壊鐨勬鍣ㄥお閰蜂簡锛屾垜瑕佽嚜宸卞仛","鍏朵粬閮ㄥ垎锛熸窐瀹濅竴閿喘涔?,"鍏磋叮椹卞姩","鎶€鑳界偣婊′絾璋冪敤鐪嬪績鎯?,"浼氬仛锛屼絾鍙仛鎰熷叴瓒ｇ殑"],
-CISP:["鎷夎瀹氳〃鎵惧弬鑰冨浘","姣忎竴涓粏鑺傞兘瑕佹墦纾?,"瑕佷箞涓嶅仛锛岃鍋氬氨鍋氬埌鏈€濂?,"鍒涗綔娆?+ 瀹岀編涓讳箟","涓轰簡杩樺師搴﹀彲浠ョ啲澶滄敼涓夊ぉ"]
-},
-music:[
-{t:"杩滆埅鏄熺殑鍛婂埆",a:"楦ｆ疆鍏堢害鐢靛彴",id:"3346496288"},
-{t:"鏄庢湀澶╂动",a:"浜旈煶 Jw",id:"416388799"},
-{t:"鏇规搷",a:"鏋椾繆鏉?,id:"108795"},
-{t:"VISIONS",a:"NAQT VANE",id:"2750093263"},
-{t:"EXCITE",a:"涓夋郸澶х煡",id:"454438331"},
-{t:"AIZO",a:"King Gnu",id:"3337367763"},
-{t:"unravel",a:"TK from 鍑涖仺銇椼仸鏅傞洦",id:"1031063946"},
-{t:"绾㈣幉鍗?,a:"LiSA",id:"1377518821"},
-{t:"鐩村埌涓栫晫灏藉ご",a:"WANDS",id:"1397031"},
-{t:"Butter-Fly",a:"鍜岀敯鍏夊徃",id:"1397060"},
-{t:"aLIEz",a:"mizuki",id:"28261695"},
-{t:"鎴戠殑鎴樻枟",a:"Linked Horizon",id:"28261696"},
-{t:"闈掗笩",a:"鐢熺墿鑲￠暱",id:"1397055"},
-{t:"only my railgun",a:"fripSide",id:"1397064"},
-{t:"Crossing Field",a:"LiSA",id:"1397068"},
-{t:"鎭嬬埍寰幆",a:"鑺辨辰棣欒彍",id:"1397072"},
-{t:"楦熶箣璇?,a:"Lia",id:"1397076"},
-{t:"娈嬮叿澶╀娇鐨勮鍔ㄧ翰棰?,a:"楂樻ˉ娲嬪瓙",id:"1397080"},
-{t:"God knows...",a:"骞抽噹缁?,id:"1397084"},
-{t:"姊︾殑鍏夌偣",a:"鐜嬪績鍑?,id:"1397088"}
-],
-quotes:[
-{t:"褰撴鍏冨鐮寸鏃讹紝浣犱細鎴愪负璋侊紵",s:"鍘熷垱"},
-{t:"浜轰笉鏄粈涔堟椂鍊欓兘鑳芥椿鐨勫厜鏄庢澶?,s:"鍙嶅彌鐨勯瞾璺慨"},
-{t:"鎴戝彧鏄竴涓矾杩囩殑鍋囬潰楠戝＋",s:"鍋囬潰楠戝＋ Decade"},
-{t:"浜虹被鐨勮禐姝屽氨鏄媷姘旂殑璧炴瓕",s:"JOJO 鐨勫濡欏啋闄?},
-{t:"鐪熺浉姘歌繙鍙湁涓€涓?,s:"鍚嶄睛鎺㈡煰鍗?},
-{t:"鎴戞槸瑕佹垚涓烘捣璐肩帇鐨勭敺浜?,s:"娴疯醇鐜?},
-{t:"宸茬粡娌′粈涔堝ソ瀹虫€曠殑浜?,s:"榄旀硶灏戝コ灏忓渾"},
-{t:"杩欎釜涓栫晫鏄畫閰风殑锛屼絾鍗翠篃鏄編濂界殑",s:"杩涘嚮鐨勫法浜?},
-{t:"鍙鏈夋爲鍙堕鑸炵殑鍦版柟锛岀伀灏变細鐕冪儳",s:"鐏奖蹇嶈€?},
-{t:"鑳芥墦璐ヤ綘鐨勶紝鍙湁浣犺嚜宸?,s:"鎺掔悆灏戝勾"},
-{t:"濡傛灉缁撴灉涓嶅浣犳墍鎰匡紝閭ｅ氨濂嬪姏涓€鎼?,s:"澶忕洰鍙嬩汉甯?},
-{t:"涓嶇鍓嶆柟鐨勮矾鏈夊鑻︼紝璧扮殑鏂瑰悜姝ｇ‘灏辨洿鎺ヨ繎骞哥",s:"鍗冧笌鍗冨"},
-{t:"鎴戜滑鐨勫緛閫旀槸鏄熻景澶ф捣",s:"閾舵渤鑻遍泟浼犺"},
-{t:"鍙杩樻湁涓€鍙ｆ皵锛屽氨瑕佹妸璇ュ仛鐨勪簨鍋氬埌搴?,s:"楝肩伃涔嬪垉"}
-]
-};
-var STATE={q:0,a:[],s:{C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0},max:12,startTime:0,timeSpent:[]};
-var musicState={playing:false,current:null,audio:null};
-var DOM={};
-function gid(id){return document.getElementById(id);}
-function show(el){el.classList.remove('hidden');}
-function hide(el){el.classList.add('hidden');}
-function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
-function shuffle(arr){if(!arr||!Array.isArray(arr))return[];return arr.slice().sort(function(){return Math.random()-0.5;});}
-function start(){try{console.log('[COSTI] START');STATE.startTime=Date.now();STATE.timeSpent=[];hide(DOM.start);show(DOM.test);playRandomMusic();renderQ();}catch(e){console.error('[COSTI] START ERROR:',e);alert('鍚姩澶辫触锛岃鍒锋柊閲嶈瘯');}}
-function renderQ(){var q=DATA.questions[STATE.q];DOM.curQ.textContent=STATE.q+1;DOM.progress.textContent=Math.round((STATE.q/25)*100)+'%';DOM.bar.style.width=(STATE.q/25*100)+'%';var html='<div class="question-card"><div class="question-number">QUESTION '+(STATE.q+1)+'</div><div class="question-text">'+q.text+'</div><div class="likert-scale">';for(var i=0;i<q.s.length;i++){var opt=q.s[i];var val=opt.v>0?'+ '+opt.v:opt.v;html+='<div class="likert-option" data-v="'+opt.v+'"><div class="likert-value">'+val+'</div><div class="likert-text">'+opt.t+'</div></div>';}html+='</div></div>';DOM.qCon.innerHTML=html;var opts=DOM.qCon.querySelectorAll('.likert-option');for(var j=0;j<opts.length;j++){(function(o){o.onclick=function(){for(var k=0;k<opts.length;k++)opts[k].classList.remove('selected');this.classList.add('selected');STATE.a[STATE.q]={dim:q.dim,v:parseInt(this.getAttribute('data-v'))};DOM.next.disabled=false;};})(opts[j]);}DOM.next.disabled=!STATE.a[STATE.q];DOM.prev.disabled=STATE.q===0;}
-function next(){if(!STATE.a[STATE.q])return;STATE.timeSpent[STATE.q]=Date.now();var a=STATE.a[STATE.q];var dim=a.dim;if(a.v>0){STATE.s[dim[0]]+=a.v;}else if(a.v<0){STATE.s[dim[1]]+=Math.abs(a.v);}STATE.q++;if(STATE.q>=25){hide(DOM.test);show(DOM.load);setTimeout(showResult,2000);}else{renderQ();}}
-function prev(){if(STATE.q===0)return;STATE.q--;renderQ();}
-function calcType(){var t='';t+=(STATE.s.C>=STATE.s.A)?'C':'A';t+=(STATE.s.O>=STATE.s.I)?'O':'I';t+=(STATE.s.S>=STATE.s.F)?'S':'F';t+=(STATE.s.P>=STATE.s.R)?'P':'R';return t;}
-function calcConf(){var diffs=[Math.abs(STATE.s.C-STATE.s.A),Math.abs(STATE.s.O-STATE.s.I),Math.abs(STATE.s.S-STATE.s.F),Math.abs(STATE.s.P-STATE.s.R)];var avgDiff=(diffs[0]+diffs[1]+diffs[2]+diffs[3])/4;var totalScore=STATE.s.C+STATE.s.A+STATE.s.O+STATE.s.I+STATE.s.S+STATE.s.F+STATE.s.P+STATE.s.R;var totalTime=(Date.now()-STATE.startTime)/1000;var avgTime=totalTime/25;var timePenalty=avgTime<3?20:0;var diffContrib=Math.min(30,avgDiff*3);var activeContrib=Math.min(20,totalScore/2);return Math.min(95,Math.max(50,Math.round(50+diffContrib+activeContrib-timePenalty)));}
-function showResult(){hide(DOM.load);show(DOM.result);var code=calcType();var res=DATA.types[code]||DATA.types.COSP;var conf=calcConf();var behavs=DATA.behaviors[code]||DATA.behaviors.COSP;DOM.icon.textContent=res.i;DOM.code.textContent=code;DOM.name.textContent=res.n;DOM.quote.textContent='"'+res.q+'"';DOM.desc.textContent=res.d;DOM.behav.innerHTML=behavs?shuffle(behavs).slice(0,3).join('<br>'):'鈥?鐙壒鐨勪汉鏍奸瓍鍔?;DOM.conf.textContent='缃俊搴︼細'+conf+'%';if(musicState.playing&&musicState.current){DOM.musicTitle.textContent='馃幍 '+musicState.current.t;DOM.musicArtist.textContent=musicState.current.a;}var dims=[{l:'鍒涗綔鑰?C',v:STATE.s.C},{l:'娆ｈ祻鑰?A',v:STATE.s.A},{l:'鑸炲彴鍨?O',v:STATE.s.O},{l:'鍦堝唴鍨?I',v:STATE.s.I},{l:'鎵嬪伐鍨?S',v:STATE.s.S},{l:'姘噾鍨?F',v:STATE.s.F},{l:'瀹岀編鍨?P',v:STATE.s.P},{l:'闅忔€у瀷 R',v:STATE.s.R}];var bars='';for(var i=0;i<dims.length;i++){var d=dims[i];var pct=Math.min(100,(d.v/STATE.max*100));bars+='<div class="dimension-bar"><div class="dimension-label"><span>'+d.l+'</span><span>'+d.v+'/'+STATE.max+'</span></div><div class="dimension-track"><div class="dimension-fill" style="width:'+pct+'%"></div><span class="dimension-percent">'+Math.round(pct)+'%</span></div></div>';}DOM.bars.innerHTML=bars;}
-function share(){var txt='鎴戠殑 COSTI 缁撴灉鏄細'+DOM.code.textContent+' 路 '+DOM.name.textContent+'\n鏉ヨ嚜锛氭鍏冪浉鎬ф祴璇?v8.0';if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){alert('缁撴灉宸插鍒讹紒');});}else{alert(txt);}}
-function imgShare(){alert('鍥剧墖鐢熸垚鍔熻兘寮€鍙戜腑...鏁鏈熷緟锛?);}
-function restart(){STATE.q=0;STATE.a=[];STATE.s={C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};STATE.startTime=0;STATE.timeSpent=[];if(musicState.audio){musicState.audio.pause();musicState.audio=null;}musicState.playing=false;hide(DOM.result);show(DOM.start);}
-function showQuote(){var q=rand(DATA.quotes);DOM.quoteEl.textContent='"'+q.t+'" 鈥斺€?'+q.s;}
-function playRandomMusic(){try{var song=rand(DATA.music);musicState.current=song;var url='https://music.163.com/song/media/outer/url?id='+song.id+'.mp3';if(musicState.audio){musicState.audio.pause();}musicState.audio=new Audio(url);musicState.audio.onended=function(){setTimeout(playRandomMusic,1000);};musicState.audio.onerror=function(){console.log('[COSTI] 闊充箰鍔犺浇澶辫触');};musicState.audio.play().then(function(){musicState.playing=true;if(DOM.musicTitle&&DOM.musicArtist&&DOM.musicWave){DOM.musicTitle.textContent='馃幍 '+song.t;DOM.musicArtist.textContent=song.a;DOM.musicWave.classList.remove('hidden');}}).catch(function(e){console.log('[COSTI] 闊充箰鎾斁澶辫触:',e);});}catch(e){console.log('[COSTI] 闊充箰鎾斁寮傚父:',e);}}
-function init(){console.log('[COSTI] INIT');DOM={start:gid('start-screen'),test:gid('test-screen'),load:gid('loading-screen'),result:gid('result-screen'),curQ:gid('currentQ'),progress:gid('progressPercent'),bar:gid('progressBar'),qCon:gid('questionContainer'),next:gid('nextBtn'),prev:gid('prevBtn'),icon:gid('typeIcon'),code:gid('typeCode'),name:gid('typeName'),quote:gid('typeQuote'),desc:gid('typeDesc'),behav:gid('typeBehaviors'),conf:gid('confidenceBadge'),bars:gid('radarBars'),quoteEl:gid('randomQuote'),musicTitle:gid('musicTitle'),musicArtist:gid('musicArtist'),musicWave:gid('musicWave')};console.log('[COSTI] BIND');var startBtn=gid('startBtn');if(startBtn){startBtn.onclick=function(e){e.preventDefault();console.log('[COSTI] CLICK');start();};}var nextBtn=gid('nextBtn');if(nextBtn)nextBtn.onclick=next;var prevBtn=gid('prevBtn');if(prevBtn)prevBtn.onclick=prev;var shareBtn=gid('shareBtn');if(shareBtn)shareBtn.onclick=share;var imgShareBtn=gid('imgShareBtn');if(imgShareBtn)imgShareBtn.onclick=imgShare;var restartBtn=gid('restartBtn');if(restartBtn)restartBtn.onclick=restart;showQuote();console.log('[COSTI] READY v8.0');}
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
-})();
-</script>
+    <footer class="footer">
+        <p>漏 2026 COSTI 娆″厓鐩告€?| Designed by 闈掓湪</p>
+        <p style="margin-top: 10px;">馃摟 鎰忚涓庡缓璁細<a href="mailto:1242550160@qq.com">1242550160@qq.com</a></p>
+    </footer>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ========== 鏁版嵁妯″潡 ==========
+        var DATA = {
+            questions: [
+                { text: "鐪嬪埌鍠滄鐨勮鑹诧紝浣犳洿鍊惧悜浜庯細", dim: "CA", s: [
+                    {v:2,t:"绔嬪埢寮€濮嬬爺绌舵€庝箞鍋氬叏濂楄澶?}, {v:1,t:"浼氳€冭檻鑷繁鍔ㄦ墜璇曡瘯"}, {v:0,t:"鐪嬫儏鍐碉紝鏈夋椂闂村氨鑷繁鍋?}, {v:-1,t:"鏇存湡寰呯湅鍒板埆浜鸿繕鍘熺殑浣滃搧"}, {v:-2,t:"榛橀粯淇濆瓨鍥剧墖褰撳绾?}
+                ]},
+                { text: "婕睍缁撴潫鍚庯紝浣犳洿鎯筹細", dim: "CA", s: [
+                    {v:2,t:"鍙戣嚜宸辩殑鍦虹収/姝ｇ墖"}, {v:1,t:"鍒嗕韩涓€浜涜嚜宸辩殑鐓х墖"}, {v:0,t:"鍙戜笉鍙戦兘琛?}, {v:-1,t:"鍙戦泦閭悎闆嗗拰鍠滄鐨勬憡浣?}, {v:-2,t:"鍙湅涓嶅彂锛屽綋涓畨闈欑殑缇庣敺瀛?}
+                ]},
+                { text: "浣犵殑鍏虫敞鍒楄〃閲屼富瑕佹槸锛?, dim: "CA", s: [
+                    {v:2,t:"澶ч儴鍒嗘槸濡嗗/姣涘/閬撳叿甯?}, {v:1,t:"鎶€鏈被鍗氫富鍗犱竴鍗?}, {v:0,t:"鍚勭绫诲瀷閮芥湁"}, {v:-1,t:"涓昏鏄敾甯?鎽勫奖/鍚屽ソ"}, {v:-2,t:"鍑犱箮涓嶅叧娉ㄦ妧鏈被鍗氫富"}
+                ]},
+                { text: "瀵逛簬 COS 鏈嶏紝浣犵殑鎬佸害鏄細", dim: "CA", s: [
+                    {v:2,t:"鑳借嚜宸卞仛缁濆涓嶄拱"}, {v:1,t:"浼樺厛鑷繁鍋氾紝瀹炲湪涓嶈鍐嶄拱"}, {v:0,t:"鐪嬫椂闂村拰棰勭畻鍐冲畾"}, {v:-1,t:"姝ｅ父娑堣垂锛岀渷鏃剁渷鍔?}, {v:-2,t:"鐩存帴涔版垚鍝佹洿棣?}
+                ]},
+                { text: "鐪嬪埌鍒汉鐨勭簿鑷撮亾鍏凤紝浣犱細锛?, dim: "CA", s: [
+                    {v:2,t:"鍑戣繎瑙傚療宸ヨ壓锛屾兂瀛︿範鍒朵綔"}, {v:1,t:"浼氶棶鏄€庝箞鍋氱殑"}, {v:0,t:"鎰熷徆濂藉帀瀹?}, {v:-1,t:"璇㈤棶鏄摢浣嶅お澶殑浣滃搧"}, {v:-2,t:"鐐硅禐鏀惰棌锛岄粯榛樻璧?}
+                ]},
+                { text: "瀵逛簬 COS 鏁欑▼瑙嗛锛?, dim: "CA", s: [
+                    {v:2,t:"鏀惰棌浜嗗氨浼氳窡鐫€鍋?}, {v:1,t:"鏈夋椂浼氬皾璇?}, {v:0,t:"鐪嬪績鎯?}, {v:-1,t:"鏀惰棌浜嗙瓑浜庡仛浜?}, {v:-2,t:"寰堝皯鐪嬫暀绋?}
+                ]},
+                { text: "鐞嗘兂鐨勬极灞曚竴澶╋細", dim: "OI", s: [
+                    {v:2,t:"涓婂彴姣旇禌/娓稿満琚洿鎷?}, {v:1,t:"澶氭媿鐓у绀句氦"}, {v:0,t:"闅忔剰閫涢€涳紝鐪嬪績鎯?}, {v:-1,t:"鍜屼翰鍙嬪皬鑱?閫涙憡浣?}, {v:-2,t:"瀹夐潤闆嗛偖锛屽拰璁よ瘑鐨勪汉鐜?}
+                ]},
+                { text: "瀵逛簬琚憚褰卞洿鎷嶇殑鎰熷彈锛?, dim: "OI", s: [
+                    {v:2,t:"鍏村锛岃繖鏄鑷繁鐨勮鍙?}, {v:1,t:"鏈夌偣绱у紶浣嗗彲浠ユ帴鍙?}, {v:0,t:"鏃犳墍璋擄紝鐪嬫儏鍐?}, {v:-1,t:"鏇村枩娆㈠拰鐔熸倝鐨勬憚褰辨媿"}, {v:-2,t:"浼氭劅鍒颁笉鑷湪"}
+                ]},
+                { text: "浣犳洿鍠滄鍦ㄤ粈涔堝満鏅嚭鐗囷細", dim: "OI", s: [
+                    {v:2,t:"澶у満鏅?鑸炲彴/灞曚細鐜板満"}, {v:1,t:"浜哄鐑椆鐨勫湴鏂?}, {v:0,t:"鍝噷閮藉彲浠?}, {v:-1,t:"鎽勫奖妫?灏忔爲鏋?}, {v:-2,t:"浜插弸瀹?绉佸瘑绌洪棿"}
+                ]},
+                { text: "鍔犲叆 COS 绀惧洟锛屼綘鏇存兂鍙備笌锛?, dim: "OI", s: [
+                    {v:2,t:"鑸炲彴鍓?瀹呰垶/姣旇禌"}, {v:1,t:"鍙板墠琛ㄦ紨绫绘椿鍔?}, {v:0,t:"鐪嬫椿鍔ㄥ唴瀹瑰喅瀹?}, {v:-1,t:"鍚庡嫟/鑱氶"}, {v:-2,t:"绾夸笂姘寸兢锛岀嚎涓嬮殢缂?}
+                ]},
+                { text: "婕睍鍓嶇殑鍑嗗閲嶅績锛?, dim: "OI", s: [
+                    {v:2,t:"缁冧範鍔ㄤ綔/琛ㄦ儏/鑸炲彴璧颁綅"}, {v:1,t:"鍑嗗灞曠ず鍐呭"}, {v:0,t:"闅忎究鍑嗗涓€涓?}, {v:-1,t:"纭鍜岃皝鐨勭害浼?}, {v:-2,t:"甯︿粈涔堥浂椋熷拰浜插弸鍒嗕韩"}
+                ]},
+                { text: "婕睍缁撴潫鍚庯紝浣犱細锛?, dim: "OI", s: [
+                    {v:2,t:"鍙戞€荤粨鍔ㄦ€?鏁寸悊鐓х墖"}, {v:1,t:"鍙戜竴浜涚収鐗?}, {v:0,t:"鐪嬪績鎯?}, {v:-1,t:"鍥炲浼戞伅"}, {v:-2,t:"褰诲簳娑堝け鍑犲ぉ"}
+                ]},
+                { text: "閬撳叿鍋氫笉鍑烘潵鏃讹紝浣犱細锛?, dim: "SF", s: [
+                    {v:2,t:"鐔鏌ユ暀绋?鎹㈡潗鏂?璇锋暀澶т浆"}, {v:1,t:"灏濊瘯澶氱瑙ｅ喅鏂规"}, {v:0,t:"鐪嬫儏鍐靛喅瀹?}, {v:-1,t:"鑰冭檻涔扮幇鎴愮殑"}, {v:-2,t:"鐩存帴鎵撳紑娣樺疂/闂查奔"}
+                ]},
+                { text: "浣犵殑瑁呭鏉ユ簮澶ф鏄細", dim: "SF", s: [
+                    {v:2,t:"90% 浠ヤ笂鑷埗/鏀归€?}, {v:1,t:"澶ч儴鍒嗚嚜宸卞仛"}, {v:0,t:"涓€鍗婁竴鍗?}, {v:-1,t:"澶ч儴鍒嗚喘涔?绾﹀崟"}, {v:-2,t:"鍑犱箮鍏ㄦ槸涔扮殑"}
+                ]},
+                { text: "瀵逛簬鎵嬩綔鐨勭湅娉曪細", dim: "SF", s: [
+                    {v:2,t:"鏍稿績涔愯叮锛岀渷閽辨槸闄勫甫鐨?}, {v:1,t:"寰堟湁鎴愬氨鎰?}, {v:0,t:"鐪嬪績鎯?}, {v:-1,t:"鏃堕棿鎴愭湰澶珮"}, {v:-2,t:"涓嶅鐩存帴涔?}
+                ]},
+                { text: "瀵逛簬姣涘/濡嗗鐨勬€佸害锛?, dim: "SF", s: [
+                    {v:2,t:"灏介噺鑷繁瀛︼紝瀹炲湪涓嶈鎵嶇害"}, {v:1,t:"绠€鍗曠殑鑷繁鏉?}, {v:0,t:"鐪嬫儏鍐?}, {v:-1,t:"涓撲笟鐨勪氦缁欎笓涓氱殑浜?}, {v:-2,t:"鍏ㄩ儴绾﹀崟鏇寸渷蹇?}
+                ]},
+                { text: "婕睍鍓嶄竴鍛紝浣犲湪锛?, dim: "SF", s: [
+                    {v:2,t:"鎵嬫悡鏈€鍚庡嚑浠堕厤楗?淇亣鍙?}, {v:1,t:"杩樺湪瀹屽杽瑁呭"}, {v:0,t:"璇ュ噯澶囩殑閮藉噯澶囦簡"}, {v:-1,t:"纭蹇€掕繘搴?}, {v:-2,t:"绾﹀濞樻椂闂?灏炬"}
+                ]},
+                { text: "瀵逛簬浜屾墜 COS 瑁呭锛?, dim: "SF", s: [
+                    {v:2,t:"涔板洖鏉ヨ嚜宸辨敼閫?}, {v:1,t:"浼氳€冭檻"}, {v:0,t:"鐪嬫€т环姣?}, {v:-1,t:"鏇村€惧悜鍏ㄦ柊鐨?}, {v:-2,t:"鍙拱鍏ㄦ柊鎴栧悕瀹舵墜浣?}
+                ]},
+                { text: "璺濈婕睍 3 澶╋紝鍙戠幇琛ｆ湇灏哄涓嶅锛?, dim: "PR", s: [
+                    {v:2,t:"鐔鏀?閲嶆柊鍋氾紝蹇呴』瀹岀編"}, {v:1,t:"灏介噺鏀瑰埌婊℃剰"}, {v:0,t:"鑳界┛灏辫"}, {v:-1,t:"鐢ㄥ埆閽堝浐瀹氫竴涓?}, {v:-2,t:"鍙嶆鎷嶇収鐪嬩笉鍑烘潵"}
+                ]},
+                { text: "瀵逛簬杩樺師搴︾殑瑕佹眰锛?, dim: "PR", s: [
+                    {v:2,t:"缁嗚妭蹇呴』鍒颁綅锛屽摢鎬曠収鐗囨媿涓嶅嚭"}, {v:1,t:"灏介噺杩樺師"}, {v:0,t:"宸笉澶氬氨琛?}, {v:-1,t:"鏁翠綋鎰熻瀵逛簡灏辫"}, {v:-2,t:"寮€蹇冨氨濂?}
+                ]},
+                { text: "鍑嗗涓€涓柊瑙掕壊锛屼綘浼氾細", dim: "PR", s: [
+                    {v:2,t:"鎷夎瀹氳〃/鎵惧弬鑰冨浘/鍒跺畾鏃堕棿琛?}, {v:1,t:"鍋氳缁嗗噯澶?}, {v:0,t:"绠€鍗曞噯澶囦竴涓?}, {v:-1,t:"澶ф榻?}, {v:-2,t:"杈瑰嚭杈硅皟鏁?}
+                ]},
+                { text: "鍑虹墖鍚庡彂鐜版湁绌垮府锛?, dim: "PR", s: [
+                    {v:2,t:"蹇呴』閲嶄慨/閲嶆媿锛屼笉鑳界暀閬楁喚"}, {v:1,t:"灏介噺淇帀"}, {v:0,t:"鐪嬩弗閲嶇▼搴?}, {v:-1,t:"绠椾簡锛屼笅娆℃敞鎰?}, {v:-2,t:"涓嶄粩缁嗙湅鍙戠幇涓嶄簡"}
+                ]},
+                { text: "瀵逛簬 COS 鍦堝唴鍗风幇璞★細", dim: "PR", s: [
+                    {v:2,t:"鐒﹁檻锛岃杩窡鐫€鍗?}, {v:1,t:"鏈夌偣鍘嬪姏"}, {v:0,t:"鏃犳墍璋?}, {v:-1,t:"涓嶅叧鎴戜簨"}, {v:-2,t:"鍧氬喅鍙嶅嵎"}
+                ]},
+                { text: "绾夸笂绀剧兢鐨勫弬涓庣▼搴︼細", dim: "OI", s: [
+                    {v:2,t:"澶╁ぉ鍐掓场锛岀粍缁囨椿鍔?}, {v:1,t:"缁忓父鍙備笌"}, {v:0,t:"鍋跺皵鐪嬬湅"}, {v:-1,t:"寰堝皯璇磋瘽"}, {v:-2,t:"娼滄按鍏?}
+                ]},
+                { text: "瀵逛簬鍗氫富 KOL 鐨勬€佸害锛?, dim: "CA", s: [
+                    {v:2,t:"瀛︿範鎶€鏈紝鍏虫敞鏇存柊"}, {v:1,t:"鍋跺皵鐪嬬湅"}, {v:0,t:"鐪嬪績鎯?}, {v:-1,t:"褰撳ū涔愮湅鐪?}, {v:-2,t:"涓嶅叧娉?}
+                ]}
+            ],
+
+            types: {
+                COSP: {n:"閫犵墿涓?, q:"鎵嬫槸鍊熸潵鐨勶紝鑲濇槸鑷繁鐨?, d:"鎵嬪伐鐙傞瓟锛屼韩鍙椾粠闆跺埌涓€鐨勯€犵墿蹇劅銆傜紳绾満鏄湰浣擄紝鐑啍鑳舵槸琛€娑层€?, i:"馃洜锔?},
+                COSR: {n:"浣涚郴鎵嬩綔濞?, q:"鑳藉仛灏卞仛锛屼笉琛屽氨鏀?, d:"鍠滄鍔ㄦ墜浣嗘嫆缁濈劍铏戙€備韩鍙楄繃绋嬪ぇ浜庣粨鏋滐紝鍋氫笉鍑烘潵灏?plan B銆?, i:"馃"},
+                COIP: {n:"鑸炲彴鍖犱汉", q:"姣忎竴閽堥兘鏄负浜嗚仛鍏夌伅", d:"鎵嬪伐 + 琛ㄦ紨鍙岄噸杩芥眰銆傝垶鍙板墽/瀹呰垶姣旇禌鐨勬妧鏈媴褰撱€?, i:"馃幁"},
+                COIR: {n:"鍚屽ソ宸ュ潑涓?, q:"鏉ユ垜瀹跺仛閬撳叿鍚?, d:"浜彈鍜屼翰鍙嬩竴璧锋墜浣溿€傚皬鍦堝瓙閲岀殑鎶€鏈敮鎸侊紝鍠滄鏁欎汉銆?, i:"馃彔"},
+                COFP: {n:"鎴愬搧鏀惰棌瀹?, q:"涓撲笟鐨勪簨浜ょ粰涓撲笟鐨勪汉", d:"璁ゅ彲涓撲笟浠峰€兼効鎰忎拱鍗曘€傛噦琛屼細鎸戯紝鏄お澶滑鐨勪紭璐ㄧ敳鏂广€?, i:"馃拵"},
+                COFR: {n:"杞绘澗姘噾鍏?, q:"涔伴兘涔颁簡寮€蹇冨氨濂?, d:"姘噾浣嗛殢鎬с€傝垝鏈嶇涓€锛屼笉杩芥眰鏋佽嚧杩樺師銆?, i:"馃捀"},
+                COIF: {n:"绀句氦姘噾鐜?, q:"鎴戝嚭閽变綘鍑轰汉", d:"姘噾 + 绀句氦鍨嬨€傚皬鍦堝瓙鐨勯噾涓荤埜鐖?鍚庡嫟渚涘簲鍟嗐€?, i:"馃憫"},
+                AOSP: {n:"鏋佽嚧鏀惰棌瀹?, q:"鎴戜笉鍑轰絾鎴戞噦", d:"娣卞害浜嗚В浣嗕笉浜茶嚜涓嬪満銆傝璧扮殑璧勬枡搴擄紝鎳傚伐鑹烘噦璁惧畾銆?, i:"馃摎"},
+                AOSR: {n:"浣涚郴浜戠帺瀹?, q:"鐪嬬湅涔熸尯濂?, d:"杞诲害鍙備笌閲嶅湪绀句氦銆傚拰鍠滄鐨勪汉鍦ㄤ竴璧凤紝瀵瑰嵎鏂囧寲鍏嶇柅銆?, i:"鈽侊笍"},
+                AOIP: {n:"鑸炲彴閴磋祻瀹?, q:"鎴戞槸鏈€涓撲笟鐨勮浼?, d:"娣卞害鑸炲彴鐖卞ソ鑰呫€傛噦缂栬垶鎳傜伅鍏夛紝瀹呰垶姣旇禌鍙颁笅璁扮瑪璁扮殑浜恒€?, i:"馃幀"},
+                AOIR: {n:"鍚屽ソ绀句氦瀹?, q:"婕睍鏄綉鍙嬭闈細", d:"COS 鏄ぞ浜ゅ獟浠嬨€傚皬鍦堝瓙鏍稿績浜虹墿锛岃寰椾綇姣忎釜浜虹殑 CN銆?, i:"馃"},
+                AISF: {n:"鍏ㄨ兘浣撻獙娲?, q:"浠€涔堥兘鎯宠瘯璇?, d:"鏃犳槑鏄惧亸鍚戜綋楠屾淳銆傛妧鑳芥爲鐐瑰緱鏁ｏ紝涓嶆繁鑰曚絾蹇箰銆?, i:"馃寛"},
+                AISR: {n:"杞婚噺鍙備笌鑰?, q:"鏈夊眬鍙垜", d:"鏋佷綆闂ㄦ鍙備笌銆備韩鍙楅櫔浼存劅锛岃澶囧彲鑳芥槸鍊熺殑浣嗙帺寰楀紑蹇冦€?, i:"馃巿"},
+                CIFP: {n:"鎶€鏈祦姘噾鍏?, q:"鎴戣鏈€濂界殑鏁堟灉", d:"缁撴灉瀵煎悜瀹岀編涓讳箟銆傝嚜宸卞仛涓嶅嚭鏉ュ氨涔帮紝涔板洖鏉ヨ繕瑕佹敼銆?, i:"鈿?},
+                CIFR: {n:"闅忔€ф妧鏈畢", q:"浼氬仛浣嗗彧鐪嬪叴瓒?, d:"鎶€鑳界偣婊′絾璋冪敤鐪嬪績鎯呫€傚叴瓒ｉ┍鍔紝娌℃湁鍥哄畾妯″紡銆?, i:"馃帹"},
+                CISP: {n:"纭牳鍒涗綔鑰?, q:"瑕佷箞涓嶅仛锛岃鍋氬氨鍋氬埌鏋佽嚧", d:"鍒涗綔 + 瀹岀編鍙岄噸杩芥眰銆傛瘡涓€涓粏鑺傞兘瑕佹墦纾ㄥ埌鏋佽嚧銆?, i:"馃敟"}
+            },
+
+            behaviors: {
+                COSP: ["鏀惰棌澶归噷鍏ㄦ槸鏁欑▼銆佺増鍨嬨€佹潗鏂欐祴璇?,"鐪嬪埌瑙掕壊鍏堟兂杩欎釜閾犵敳鑳戒笉鑳界敤 EVA 鍋?,"婕睍鍓嶅鍦ㄥ棣嗘墜鎼撻亾鍏峰埌鍑屾櫒","鐑啍鑳舵灙鏄湰浣擄紝宸ヤ綔鍙版槸绗簩涓","涓轰簡涓€涓厤浠跺彲浠ユ煡涓変釜鏈堣祫鏂?],
+                COSR: ["杩欎釜鑺辩汗缁ｄ笉濂斤紵閭ｅ氨璐村竷璐?,"婕睍鍓嶄竴鍛ㄨ繕鍦ㄦ敼鏂规锛屼絾蹇冩€佺ǔ濡傝€佺嫍","甯歌鍑哄樊涓嶅琛屼簡鍚嶈█","鍋氫笉鍑烘潵灏?plan B锛岀粷涓嶅唴鑰?,"浜彈杩囩▼锛岀粨鏋滈殢缂?],
+                COIP: ["鍋氳。鏈嶆椂宸茬粡鍦ㄦ兂杩欎釜鍔ㄤ綔浼氫笉浼氬穿绾?,"浼氫负浜嗚垶鍙版晥鏋滀笓闂ㄨ璁″彲鎷嗗嵏閮ㄤ欢","鍚庡彴鏈€蹇欑殑浜猴細涓€杈逛慨閬撳叿涓€杈硅儗鍙拌瘝","鑸炲彴鍓?瀹呰垶姣旇禌鐨勬妧鏈媴褰?,"姣忎竴閽堥兘鏄负浜嗛偅涓€鍒荤殑鑱氬厜鐏?],
+                COIR: ["瀹堕噷鍙樻垚鍚屽ソ鑱氶泦鍦帮紝宸ュ叿鍏变韩","婕睍鍓嶇粍缁囪倽閬撳叿澶滆瘽浼?,"姣旇捣鑷繁鍑虹墖锛屾洿寮€蹇冪殑鏄垜寰掑紵鍑虹墖浜?,"灏忓湀瀛愰噷鐨勬妧鏈敮鎸侊紝鍠滄鏁欎汉","鏉ユ垜瀹跺仛閬撳叿鍚э紝鎴戜拱浜嗘柊缂濈韩鏈?],
+                COFP: ["鍏虫敞鍒楄〃閲屼竴鍗婃槸濡嗗/姣涘/閬撳叿甯?,"鑳藉噯纭鍑鸿繖涓瘺鑳氭槸鍝鐨?,"婕睍鍓嶄富瑕佸伐浣滐細鍌崟銆佺‘璁ょ墿娴併€佹鏌ュ熬娆?,"鎳傝浼氭寫锛屾槸澶お浠殑浼樿川鐢叉柟","鏀惰棌鏌滈噷鍏ㄦ槸鍚嶅鎵嬩綔"],
+                COFR: ["杩欎欢璐ㄦ劅涓€鑸絾鎷嶇収澶熺敤浜?,"婕睍鍓嶄笁澶╄繕鍦ㄧ姽璞嚭涓嶅嚭","瑁呭榻愬叏浣嗗彲鑳芥病鎷嗗皝杩囧嚑娆?,"姘噾浣嗛殢鎬э紝鑸掓湇绗竴","涔伴兘涔颁簡锛屽紑蹇冨氨濂?],
+                COIF: ["杩欏鍥㈢墖鎴戝寘浜嗘憚褰卞拰妫氬瓙","瀹堕噷鏈夌┖鎴块棿瀛樻斁澶у鐨勮澶?,"涓嶄竴瀹氳嚜宸卞嚭锛屼絾涓€瀹氬湪鍦?,"灏忓湀瀛愮殑閲戜富鐖哥埜/鍚庡嫟渚涘簲鍟?,"鎴戝嚭閽变綘鍑轰汉锛屽挶浠极灞曡"],
+                AOSP: ["婕睍涓婃渶浼氬じ鐨勪汉锛氳繖涓埡缁ｆ槸鑻忕唬鍚?,"瀹堕噷鏈変竴闈㈠鏄墜鍔?璁惧畾闆?鐗╂枡","鍙兘鏄殣钘忕殑鎽勫奖/鍚庢湡澶т浆","琛岃蛋鐨勮祫鏂欏簱锛屾噦宸ヨ壓鎳傝瀹?,"鎴戜笉鍑猴紝浣嗘垜鎳傦紝鑰屼笖鎴戞湁寰堝"],
+                AOSR: ["婕睍琛岀▼锛氶泦閭啋鍚冮キ鈫掕亰澶┾啋鍥炲","瑁呭涓嶅浣嗕娇鐢ㄧ巼鏋侀珮","瀵瑰嵎鏂囧寲鍏嶇柅","杞诲害鍙備笌锛岄噸鍦ㄧぞ浜?,"鐪嬬湅涔熸尯濂斤紝鍘绘极灞曚富瑕佹槸涓轰簡瑙佹湅鍙?],
+                AOIP: ["瀹呰垶姣旇禌鍙颁笅璁扮瑪璁扮殑浜?,"鑳芥寚鍑鸿繖閲屽垏闀滆妭濂忎笉瀵?,"鎵嬫満閲屾湁涓婄櫨 G 鑸炲彴瑙嗛锛屽垎绫绘暣鐞?,"娣卞害鑸炲彴鐖卞ソ鑰咃紝鎳傜紪鑸炴噦鐏厜","鎴戝湪鍙颁笅鐪嬶紝浣嗘垜鏄渶涓撲笟鐨勮浼?],
+                AOIR: ["婕睍鍓嶄竴涓湀寮€濮嬬粍灞€","缇ら噷鏈€娲昏穬锛岃礋璐ｅ崗璋冩椂闂?鍦扮偣/鍚冮キ","鍙兘鍑虹殑瑙掕壊寰堟櫘閫氾紝浣嗗悎褰辨案杩滄湁浜烘壘","灏忓湀瀛愭牳蹇冧汉鐗╋紝璁板緱浣忔瘡涓汉鐨?CN","婕睍鏄ぇ鍨嬬綉鍙嬭闈細"],
+                AISF: ["鎶€鑳芥爲鐐瑰緱寰堟暎锛氫細涓€鐐瑰銆佷竴鐐规瘺銆佷竴鐐归亾鍏?,"婕睍瑙掕壊骞村勾鎹紝娌℃湁鍥哄畾椋庢牸","缁忓父璇村嚭涓嬫鎯宠瘯璇?XX 鐒跺悗鐪熺殑璇曚簡","浠€涔堥兘鎯宠瘯璇曪紝浠€涔堥兘鐜╀竴鐐?,"涓嶆繁鑰曚絾蹇箰锛屼綋楠屾淳"],
+                AISR: ["瑁呭鍙兘鏄€熺殑/绉熺殑/浜屾墜鏀剁殑","鍑虹墖涓昏闈犱翰鍙嬪悗鏈熸嫰鏁?,"浣嗘瘡娆￠兘鐜╁緱寰堝紑蹇?,"琚湅鍙嬫媺鍏ュ潙锛屼韩鍙楅櫔浼存劅","鏈夊眬鍙垜锛屾病灞€涔熻"],
+                CIFP: ["杩欎釜姣涜儦涓嶉敊锛屼絾鍒樻捣瑕侀噸鏂拌创","绾﹀崟鍚庤繕瑕佽嚜宸卞姞缁嗚妭","瑁呭杩唬鏋佸揩锛屾案杩滃湪鍗囩骇","缁撴灉瀵煎悜鐨勫畬缇庝富涔?,"鎴戣鏈€濂界殑鏁堟灉锛屼拱杩樻槸鍋氬彧鏄墜娈?],
+                CIFR: ["杩欎釜瑙掕壊鐨勬鍣ㄥお閰蜂簡锛屾垜瑕佽嚜宸卞仛","鍏朵粬閮ㄥ垎锛熸窐瀹濅竴閿喘涔?,"鍏磋叮椹卞姩锛屾病鏈夊浐瀹氭ā寮?,"鎶€鑳界偣婊′絾璋冪敤鐪嬪績鎯?,"浼氬仛锛屼絾鍙仛鎰熷叴瓒ｇ殑"],
+                CISP: ["鎷夎瀹氳〃鎵惧弬鑰冨浘鍒跺畾鏃堕棿琛?,"姣忎竴涓粏鑺傞兘瑕佹墦纾ㄥ埌鏋佽嚧","瑕佷箞涓嶅仛锛岃鍋氬氨鍋氬埌鏈€濂?,"鍒涗綔娆?+ 瀹岀編涓讳箟鐨勫弻閲?buff","涓轰簡杩樺師搴﹀彲浠ョ啲澶滄敼涓夊ぉ"]
+            },
+
+            music: [
+                {t:"杩滆埅鏄熺殑鍛婂埆", a:"楦ｆ疆鍏堢害鐢靛彴", id:"3346496288"},
+                {t:"鏄庢湀澶╂动", a:"浜旈煶 Jw", id:"416388799"},
+                {t:"鏇规搷", a:"鏋椾繆鏉?, id:"108795"},
+                {t:"VISIONS", a:"NAQT VANE", id:"2750093263"},
+                {t:"EXCITE", a:"涓夋郸澶х煡", id:"454438331"},
+                {t:"AIZO", a:"King Gnu", id:"3337367763"},
+                {t:"unravel", a:"TK from 鍑涖仺銇椼仸鏅傞洦", id:"1031063946"},
+                {t:"绾㈣幉鍗?, a:"LiSA", id:"1377518821"},
+                {t:"鐩村埌涓栫晫灏藉ご", a:"WANDS", id:"1397031"},
+                {t:"Butter-Fly", a:"鍜岀敯鍏夊徃", id:"1397060"},
+                {t:"aLIEz", a:"mizuki", id:"28261695"},
+                {t:"鎴戠殑鎴樻枟", a:"Linked Horizon", id:"28261696"},
+                {t:"闈掗笩", a:"鐢熺墿鑲￠暱", id:"1397055"},
+                {t:"only my railgun", a:"fripSide", id:"1397064"},
+                {t:"Crossing Field", a:"LiSA", id:"1397068"},
+                {t:"鎭嬬埍寰幆", a:"鑺辨辰棣欒彍", id:"1397072"},
+                {t:"楦熶箣璇?, a:"Lia", id:"1397076"},
+                {t:"娈嬮叿澶╀娇鐨勮鍔ㄧ翰棰?, a:"楂樻ˉ娲嬪瓙", id:"1397080"},
+                {t:"God knows...", a:"骞抽噹缁?, id:"1397084"},
+                {t:"姊︾殑鍏夌偣", a:"鐜嬪績鍑?, id:"1397088"}
+            ],
+
+            quotes: [
+                {t:"褰撴鍏冨鐮寸鏃讹紝浣犱細鎴愪负璋侊紵", s:"鍘熷垱"},
+                {t:"浜轰笉鏄粈涔堟椂鍊欓兘鑳芥椿鐨勫厜鏄庢澶э紝浜虹敓鎬绘槸瑕佽儗鐫€涓€浜涙薄鐐规椿鐫€銆?, s:"鍙嶅彌鐨勯瞾璺慨"},
+                {t:"鎴戝彧鏄竴涓矾杩囩殑鍋囬潰楠戝＋锛岀粰鎴戣濂戒簡锛?, s:"鍋囬潰楠戝＋ Decade"},
+                {t:"浜虹被鐨勮禐姝屽氨鏄媷姘旂殑璧炴瓕锛?, s:"JOJO 鐨勫濡欏啋闄?},
+                {t:"鐪熺浉姘歌繙鍙湁涓€涓紒", s:"鍚嶄睛鎺㈡煰鍗?},
+                {t:"鎴戞槸瑕佹垚涓烘捣璐肩帇鐨勭敺浜猴紒", s:"娴疯醇鐜?},
+                {t:"宸茬粡娌′粈涔堝ソ瀹虫€曠殑浜?, s:"榄旀硶灏戝コ灏忓渾"},
+                {t:"杩欎釜涓栫晫鏄畫閰风殑锛屼絾鍗翠篃鏄編濂界殑銆?, s:"杩涘嚮鐨勫法浜?},
+                {t:"鍙鏈夋爲鍙堕鑸炵殑鍦版柟锛岀伀灏变細鐕冪儳銆?, s:"鐏奖蹇嶈€?},
+                {t:"鑳芥墦璐ヤ綘鐨勶紝鍙湁浣犺嚜宸便€?, s:"鎺掔悆灏戝勾"},
+                {t:"濡傛灉缁撴灉涓嶅浣犳墍鎰匡紝閭ｅ氨鍦ㄥ皹鍩冭惤瀹氬墠濂嬪姏涓€鎼忋€?, s:"澶忕洰鍙嬩汉甯?},
+                {t:"涓嶇鍓嶆柟鐨勮矾鏈夊鑻︼紝鍙璧扮殑鏂瑰悜姝ｇ‘锛屼笉绠″涔堝磶宀栦笉骞筹紝閮芥瘮绔欏湪鍘熷湴鏇存帴杩戝垢绂忋€?, s:"鍗冧笌鍗冨"},
+                {t:"鎴戜滑鐨勫緛閫旀槸鏄熻景澶ф捣锛?, s:"閾舵渤鑻遍泟浼犺"},
+                {t:"鍙杩樻湁涓€鍙ｆ皵锛屽氨瑕佹妸璇ュ仛鐨勪簨鍋氬埌搴曘€?, s:"楝肩伃涔嬪垉"}
+            ]
+        };
+
+        // ========== 鐘舵€佹ā鍧?==========
+        var STATE = {
+            q: 0,
+            a: [],
+            s: {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0},
+            max: 12,
+            startTime: 0,
+            timeSpent: []
+        };
+
+        // ========== 闊充箰鐘舵€?==========
+        var musicState = {
+            playing: false,
+            current: null,
+            audio: null
+        };
+
+        // ========== DOM 鍏冪礌 ==========
+        var DOM = {};
+
+        // ========== 宸ュ叿鍑芥暟 ==========
+        function gid(id) { return document.getElementById(id); }
+        function show(el) { el.classList.remove('hidden'); }
+        function hide(el) { el.classList.add('hidden'); }
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function shuffle(arr) { 
+            if (!arr || !Array.isArray(arr)) return [];
+            return arr.slice().sort(function() { return Math.random() - 0.5; }); 
+        }
+
+        // ========== 鏍稿績閫昏緫 ==========
+        function start() {
+            try {
+                console.log('[COSTI] 寮€濮嬫祴璇?);
+                STATE.startTime = Date.now();
+                STATE.timeSpent = [];
+                hide(DOM.start);
+                show(DOM.test);
+                playRandomMusic();
+                renderQ();
+            } catch (err) {
+                console.error('[COSTI] 寮€濮嬫祴璇曞け璐?', err);
+                alert('娴嬭瘯鍚姩澶辫触锛岃鍒锋柊椤甸潰閲嶈瘯');
+            }
+        }
+
+        function renderQ() {
+            var q = DATA.questions[STATE.q];
+            DOM.curQ.textContent = STATE.q + 1;
+            DOM.progress.textContent = Math.round((STATE.q / 25) * 100) + '%';
+            DOM.bar.style.width = (STATE.q / 25 * 100) + '%';
+
+            var html = '<div class="question-card"><div class="question-number">QUESTION ' + (STATE.q + 1) + '</div>';
+            html += '<div class="question-text">' + q.text + '</div><div class="likert-scale">';
+            
+            for (var i = 0; i < q.s.length; i++) {
+                var opt = q.s[i];
+                var val = opt.v > 0 ? '+' + opt.v : opt.v;
+                html += '<div class="likert-option" data-v="' + opt.v + '">';
+                html += '<div class="likert-value">' + val + '</div>';
+                html += '<div class="likert-text">' + opt.t + '</div></div>';
+            }
+            
+            html += '</div></div>';
+            DOM.qCon.innerHTML = html;
+
+            var opts = DOM.qCon.querySelectorAll('.likert-option');
+            for (var j = 0; j < opts.length; j++) {
+                (function(o) {
+                    o.onclick = function() {
+                        for (var k = 0; k < opts.length; k++) {
+                            opts[k].classList.remove('selected');
+                        }
+                        this.classList.add('selected');
+                        STATE.a[STATE.q] = { dim: q.dim, v: parseInt(this.getAttribute('data-v')) };
+                        DOM.next.disabled = false;
+                    };
+                })(opts[j]);
+            }
+
+            DOM.next.disabled = !STATE.a[STATE.q];
+            DOM.prev.disabled = STATE.q === 0;
+        }
+
+        function next() {
+            if (!STATE.a[STATE.q]) return;
+            STATE.timeSpent[STATE.q] = Date.now();
+            
+            var a = STATE.a[STATE.q];
+            var dim = a.dim;
+            
+            if (a.v > 0) {
+                STATE.s[dim[0]] += a.v;
+            } else if (a.v < 0) {
+                STATE.s[dim[1]] += Math.abs(a.v);
+            }
+            
+            STATE.q++;
+
+            if (STATE.q >= 25) {
+                hide(DOM.test);
+                show(DOM.load);
+                setTimeout(showResult, 2000);
+            } else {
+                renderQ();
+            }
+        }
+
+        function prev() {
+            if (STATE.q === 0) return;
+            STATE.q--;
+            renderQ();
+        }
+
+        function calcType() {
+            var t = '';
+            t += (STATE.s.C >= STATE.s.A) ? 'C' : 'A';
+            t += (STATE.s.O >= STATE.s.I) ? 'O' : 'I';
+            t += (STATE.s.S >= STATE.s.F) ? 'S' : 'F';
+            t += (STATE.s.P >= STATE.s.R) ? 'P' : 'R';
+            return t;
+        }
+
+        function calcConf() {
+            var diffs = [
+                Math.abs(STATE.s.C - STATE.s.A),
+                Math.abs(STATE.s.O - STATE.s.I),
+                Math.abs(STATE.s.S - STATE.s.F),
+                Math.abs(STATE.s.P - STATE.s.R)
+            ];
+            var avgDiff = (diffs[0] + diffs[1] + diffs[2] + diffs[3]) / 4;
+            var totalScore = STATE.s.C + STATE.s.A + STATE.s.O + STATE.s.I + 
+                            STATE.s.S + STATE.s.F + STATE.s.P + STATE.s.R;
+            
+            var totalTime = (Date.now() - STATE.startTime) / 1000;
+            var avgTime = totalTime / 25;
+            var timePenalty = avgTime < 3 ? 20 : 0;
+            
+            var diffContrib = Math.min(30, avgDiff * 3);
+            var activeContrib = Math.min(20, totalScore / 2);
+            
+            return Math.min(95, Math.max(50, Math.round(50 + diffContrib + activeContrib - timePenalty)));
+        }
+
+        function showResult() {
+            hide(DOM.load);
+            show(DOM.result);
+
+            var code = calcType();
+            var res = DATA.types[code] || DATA.types.COSP;
+            var conf = calcConf();
+            var behavs = DATA.behaviors[code] || DATA.behaviors.COSP;
+
+            DOM.icon.textContent = res.i;
+            DOM.code.textContent = code;
+            DOM.name.textContent = res.n;
+            DOM.quote.textContent = '"' + res.q + '"';
+            DOM.desc.textContent = res.d;
+            DOM.behav.innerHTML = behavs ? shuffle(behavs).slice(0, 3).join('<br>') : '鈥?鐙壒鐨勪汉鏍奸瓍鍔?;
+            DOM.conf.textContent = '缃俊搴︼細' + conf + '%';
+
+            if (musicState.playing && musicState.current) {
+                DOM.musicTitle.textContent = '馃幍 ' + musicState.current.t;
+                DOM.musicArtist.textContent = musicState.current.a;
+            }
+
+            var dims = [
+                {l:'鍒涗綔鑰?C',v:STATE.s.C}, {l:'娆ｈ祻鑰?A',v:STATE.s.A},
+                {l:'鑸炲彴鍨?O',v:STATE.s.O}, {l:'鍦堝唴鍨?I',v:STATE.s.I},
+                {l:'鎵嬪伐鍨?S',v:STATE.s.S}, {l:'姘噾鍨?F',v:STATE.s.F},
+                {l:'瀹岀編鍨?P',v:STATE.s.P}, {l:'闅忔€у瀷 R',v:STATE.s.R}
+            ];
+
+            var bars = '';
+            for (var i = 0; i < dims.length; i++) {
+                var d = dims[i];
+                var pct = Math.min(100, (d.v / STATE.max * 100));
+                bars += '<div class="dimension-bar"><div class="dimension-label">';
+                bars += '<span>' + d.l + '</span><span>' + d.v + '/' + STATE.max + '</span></div>';
+                bars += '<div class="dimension-track"><div class="dimension-fill" style="width:' + pct + '%"></div>';
+                bars += '<span class="dimension-percent">' + Math.round(pct) + '%</span></div></div>';
+            }
+            DOM.bars.innerHTML = bars;
+        }
+
+        function share() {
+            var txt = '鎴戠殑 COSTI 缁撴灉鏄細' + DOM.code.textContent + ' 路 ' + DOM.name.textContent + '\n鏉ヨ嚜锛氭鍏冪浉鎬ф祴璇?v6.3';
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(txt).then(function() { alert('缁撴灉宸插鍒讹紒'); });
+            } else {
+                alert(txt);
+            }
+        }
+
+        function imgShare() {
+            alert('鍥剧墖鐢熸垚鍔熻兘寮€鍙戜腑... 鏁鏈熷緟锛?);
+        }
+
+        function restart() {
+            STATE.q = 0;
+            STATE.a = [];
+            STATE.s = {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};
+            STATE.startTime = 0;
+            STATE.timeSpent = [];
+            if (musicState.audio) {
+                musicState.audio.pause();
+                musicState.audio = null;
+            }
+            musicState.playing = false;
+            hide(DOM.result);
+            show(DOM.start);
+        }
+
+        function showQuote() {
+            var q = rand(DATA.quotes);
+            DOM.quoteEl.textContent = '"' + q.t + '" 鈥斺€?' + q.s;
+        }
+
+        // ========== 闊充箰鎾斁鍣?==========
+        function playRandomMusic() {
+            try {
+                var song = rand(DATA.music);
+                musicState.current = song;
+                
+                var url = 'https://music.163.com/song/media/outer/url?id=' + song.id + '.mp3';
+                
+                if (musicState.audio) {
+                    musicState.audio.pause();
+                }
+                
+                musicState.audio = new Audio(url);
+                musicState.audio.onended = function() {
+                    setTimeout(playRandomMusic, 1000);
+                };
+                musicState.audio.onerror = function() {
+                    console.log('[COSTI] 闊充箰鍔犺浇澶辫触');
+                };
+                
+                musicState.audio.play().then(function() {
+                    musicState.playing = true;
+                    if (DOM.musicTitle && DOM.musicArtist && DOM.musicWave) {
+                        DOM.musicTitle.textContent = '馃幍 ' + song.t;
+                        DOM.musicArtist.textContent = song.a;
+                        DOM.musicWave.classList.remove('hidden');
+                    }
+                }).catch(function(e) {
+                    console.log('[COSTI] 闊充箰鎾斁澶辫触:', e);
+                });
+            } catch (err) {
+                console.log('[COSTI] 闊充箰鎾斁寮傚父:', err);
+            }
+        }
+
+        // ========== 鍒濆鍖?==========
+        function init() {
+            console.log('[COSTI] 鍒濆鍖?DOM');
+            DOM = {
+                start: gid('start-screen'),
+                test: gid('test-screen'),
+                load: gid('loading-screen'),
+                result: gid('result-screen'),
+                curQ: gid('currentQ'),
+                progress: gid('progressPercent'),
+                bar: gid('progressBar'),
+                qCon: gid('questionContainer'),
+                next: gid('nextBtn'),
+                prev: gid('prevBtn'),
+                icon: gid('typeIcon'),
+                code: gid('typeCode'),
+                name: gid('typeName'),
+                quote: gid('typeQuote'),
+                desc: gid('typeDesc'),
+                behav: gid('typeBehaviors'),
+                conf: gid('confidenceBadge'),
+                bars: gid('radarBars'),
+                quoteEl: gid('randomQuote'),
+                musicTitle: gid('musicTitle'),
+                musicArtist: gid('musicArtist'),
+                musicWave: gid('musicWave')
+            };
+
+            console.log('[COSTI] 缁戝畾浜嬩欢');
+            var startBtn = gid('startBtn');
+            if (startBtn) {
+                startBtn.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('[COSTI] 寮€濮嬫寜閽偣鍑?);
+                    start();
+                };
+            }
+            
+            var nextBtn = gid('nextBtn');
+            if (nextBtn) nextBtn.onclick = next;
+            
+            var prevBtn = gid('prevBtn');
+            if (prevBtn) prevBtn.onclick = prev;
+            
+            var shareBtn = gid('shareBtn');
+            if (shareBtn) shareBtn.onclick = share;
+            
+            var imgShareBtn = gid('imgShareBtn');
+            if (imgShareBtn) imgShareBtn.onclick = imgShare;
+            
+            var restartBtn = gid('restartBtn');
+            if (restartBtn) restartBtn.onclick = restart;
+
+            showQuote();
+            console.log('[COSTI] 鍒濆鍖栧畬鎴?- v6.3');
+        }
+
+        // 椤甸潰鍔犺浇瀹屾垚鍚庡垵濮嬪寲
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
 </body>
 </html>
