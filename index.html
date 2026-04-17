@@ -44,20 +44,19 @@
         }
         .subtitle { font-size: 18px; color: var(--text-dim); margin-bottom: 30px; }
         .slogan { font-size: 14px; color: var(--accent-pink); font-style: italic; }
-        .question-card {
-            background: rgba(18, 18, 42, 0.8);
-            border: 1px solid rgba(108, 93, 211, 0.3);
-            border-radius: 24px;
-            padding: 40px 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .progress-wrap { margin-bottom: 30px; }
+        .progress-text { 
+            text-align: center; 
+            font-size: 14px; 
+            color: var(--text-dim); 
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
         }
-        .progress-text { text-align: center; font-size: 14px; color: var(--text-dim); margin-bottom: 10px; }
         .progress-container {
             background: rgba(108, 93, 211, 0.2);
             border-radius: 20px;
             height: 8px;
-            margin-bottom: 40px;
             overflow: hidden;
         }
         .progress-bar {
@@ -65,6 +64,14 @@
             background: linear-gradient(90deg, var(--primary), var(--accent));
             width: 0%;
             transition: width 0.5s;
+        }
+        .question-card {
+            background: rgba(18, 18, 42, 0.8);
+            border: 1px solid rgba(108, 93, 211, 0.3);
+            border-radius: 24px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
         .question-number { font-size: 14px; color: var(--accent); letter-spacing: 2px; margin-bottom: 20px; }
         .question-text { font-size: 20px; line-height: 1.6; margin-bottom: 30px; }
@@ -239,6 +246,13 @@
         }
         .footer a { color: var(--accent); text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
+        .validation-hint {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+        }
         @media (max-width: 480px) {
             .container { padding: 30px 15px 40px; }
             .question-card { padding: 30px 20px; }
@@ -254,7 +268,7 @@
         <header class="header">
             <div class="title-jp">ディメンション・セイセイ</div>
             <h1 class="main-title">次元相性</h1>
-            <p class="subtitle">二次元 COS 圈人格测试 v4.0</p>
+            <p class="subtitle">二次元 COS 圈人格测试 v5.0</p>
             <p class="slogan" id="randomQuote">"当次元壁破碎时，你会成为谁？"</p>
         </header>
 
@@ -262,12 +276,12 @@
             <div class="question-card">
                 <div style="font-size: 24px; margin-bottom: 20px;">🎭 在无数角色中，找到属于你的那一面</div>
                 <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 30px;">
-                    通过 20 道人性化题目，诊断你的 COS 圈人格类型。<br>
-                    ✨ 5 级量表 + 真实场景 + 置信度评估
+                    通过 24 道人性化题目，诊断你的 COS 圈人格类型。<br>
+                    ✨ 5 级量表 + 真实场景 + 置信度评估 + 验证题目
                 </p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
-                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 3-5 分钟</span>
-                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 20 道题</span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 4-6 分钟</span>
+                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 24 道题</span>
                     <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎯 16 种结果</span>
                 </div>
                 <button class="btn" id="startBtn">开始测试</button>
@@ -275,12 +289,18 @@
         </div>
 
         <div id="test-screen" class="hidden">
-            <div class="progress-text">问题 <span id="currentQ">1</span> / 20</div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-wrap">
+                <div class="progress-text">
+                    <span>问题 <span id="currentQ">1</span> / 24</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
             </div>
             <div id="questionContainer"></div>
             <button class="btn" id="nextBtn" disabled>下一题</button>
+            <div class="validation-hint" id="validationHint"></div>
         </div>
 
         <div id="loading-screen" class="hidden">
@@ -333,6 +353,7 @@
         // ========== 数据模块 ==========
         const DATA = {
             questions: [
+                // C/A 维度：创作者 vs 欣赏者（6 题）
                 { text: "看到喜欢的角色，你更倾向于：", dim: "CA", s: [
                     {v:2,t:"立刻开始研究怎么做全套装备"}, {v:1,t:"会考虑自己动手试试"}, {v:0,t:"看情况，有时间就自己做"}, {v:-1,t:"更期待看到别人还原的作品"}, {v:-2,t:"默默保存图片当壁纸"}
                 ]},
@@ -348,6 +369,11 @@
                 { text: "看到别人的精致道具，你会：", dim: "CA", s: [
                     {v:2,t:"凑近观察工艺，想学习制作"}, {v:1,t:"会问是怎么做的"}, {v:0,t:"感叹好厉害"}, {v:-1,t:"询问是哪位太太的作品"}, {v:-2,t:"点赞收藏，默默欣赏"}
                 ]},
+                { text: "对于 COS 教程视频：", dim: "CA", s: [
+                    {v:2,t:"收藏了就会跟着做"}, {v:1,t:"有时会尝试"}, {v:0,t:"看心情"}, {v:-1,t:"收藏了等于做了"}, {v:-2,t:"很少看教程"}
+                ]},
+                
+                // O/I 维度：舞台型 vs 圈内型（6 题）
                 { text: "理想的漫展一天：", dim: "OI", s: [
                     {v:2,t:"上台比赛/游场被围拍"}, {v:1,t:"多拍照多社交"}, {v:0,t:"随意逛逛，看心情"}, {v:-1,t:"和亲友小聚/逛摊位"}, {v:-2,t:"安静集邮，和认识的人玩"}
                 ]},
@@ -363,6 +389,11 @@
                 { text: "漫展前的准备重心：", dim: "OI", s: [
                     {v:2,t:"练习动作/表情/舞台走位"}, {v:1,t:"准备展示内容"}, {v:0,t:"随便准备一下"}, {v:-1,t:"确认和谁的约会"}, {v:-2,t:"带什么零食和亲友分享"}
                 ]},
+                { text: "漫展结束后，你会：", dim: "OI", s: [
+                    {v:2,t:"发总结动态/整理照片"}, {v:1,t:"发一些照片"}, {v:0,t:"看心情"}, {v:-1,t:"回家休息"}, {v:-2,t:"彻底消失几天"}
+                ]},
+                
+                // S/F 维度：手工型 vs 氪金型（6 题）
                 { text: "道具做不出来时，你会：", dim: "SF", s: [
                     {v:2,t:"熬夜查教程/换材料/请教大佬"}, {v:1,t:"尝试多种解决方案"}, {v:0,t:"看情况决定"}, {v:-1,t:"考虑买现成的"}, {v:-2,t:"直接打开淘宝/闲鱼"}
                 ]},
@@ -378,6 +409,11 @@
                 { text: "漫展前一周，你在：", dim: "SF", s: [
                     {v:2,t:"手搓最后几件配饰/修假发"}, {v:1,t:"还在完善装备"}, {v:0,t:"该准备的都准备了"}, {v:-1,t:"确认快递进度"}, {v:-2,t:"约妆娘时间/尾款"}
                 ]},
+                { text: "对于二手 COS 装备：", dim: "SF", s: [
+                    {v:2,t:"买回来自己改造"}, {v:1,t:"会考虑"], {v:0,t:"看性价比"}, {v:-1,t:"更倾向全新的"}, {v:-2,t:"只买全新或名家手作"}
+                ]},
+                
+                // P/R 维度：完美型 vs 随性型（6 题）
                 { text: "距离漫展 3 天，发现衣服尺寸不对：", dim: "PR", s: [
                     {v:2,t:"熬夜改/重新做，必须完美"}, {v:1,t:"尽量改到满意"}, {v:0,t:"能穿就行"}, {v:-1,t:"用别针固定一下"}, {v:-2,t:"反正拍照看不出来"}
                 ]},
@@ -392,26 +428,29 @@
                 ]},
                 { text: "出片后发现有穿帮：", dim: "PR", s: [
                     {v:2,t:"必须重修/重拍，不能留遗憾"}, {v:1,t:"尽量修掉"}, {v:0,t:"看严重程度"}, {v:-1,t:"算了，下次注意"}, {v:-2,t:"不仔细看发现不了"}
+                ]},
+                { text: "对于试妆/试衣的频率：", dim: "PR", s: [
+                    {v:2,t:"至少 2-3 次，确保万无一失"}, {v:1,t:"会试几次"}, {v:0,t:"看情况"}, {v:-1,t:"漫展前试一次"}, {v:-2,t:"当天第一次上脸"}
                 ]}
             ],
 
             types: {
-                COSP: {n:"造物主", q:"手是借来的，肝是自己的", d:"手工狂魔，享受从零到一的造物快感。", i:"🛠️"},
-                COSR: {n:"佛系手作娘", q:"能做就做，不行就改", d:"喜欢动手但拒绝焦虑。享受过程大于结果。", i:"🧘"},
-                COIP: {n:"舞台匠人", q:"每一针都是为了聚光灯", d:"手工 + 表演双重追求。舞台剧技术担当。", i:"🎭"},
-                COIR: {n:"同好工坊主", q:"来我家做道具吧", d:"享受和亲友一起手作。圈子技术支持。", i:"🏠"},
-                COFP: {n:"成品收藏家", q:"专业的事交给专业的人", d:"认可专业价值愿意买单。懂行会挑。", i:"💎"},
-                COFR: {n:"轻松氪金党", q:"买都买了开心就好", d:"氪金但随性。舒服第一。", i:"💸"},
-                COIF: {n:"社交氪金王", q:"我出钱你出人", d:"氪金 + 社交型。圈子金主爸爸。", i:"👑"},
-                AOSP: {n:"极致收藏家", q:"我不出但我懂", d:"深度了解但不亲自下场。行走的资料库。", i:"📚"},
-                AOSR: {n:"佛系云玩家", q:"看看也挺好", d:"轻度参与重在社交。和喜欢的人在一起。", i:"☁️"},
-                AOIP: {n:"舞台鉴赏家", q:"我是最专业的观众", d:"深度舞台爱好者。懂编舞懂灯光。", i:"🎬"},
-                AOIR: {n:"同好社交家", q:"漫展是网友见面会", d:"COS 是社交媒介。圈子粘合剂。", i:"🤝"},
-                AISF: {n:"全能体验派", q:"什么都想试试", d:"无明显偏向体验派。不深耕但快乐。", i:"🌈"},
-                AISR: {n:"轻量参与者", q:"有局叫我", d:"极低门槛参与。享受陪伴感。", i:"🎈"},
-                CIFP: {n:"技术流氪金党", q:"我要最好的效果", d:"结果导向完美主义。买回来还要改。", i:"⚡"},
-                CIFR: {n:"随性技术宅", q:"会做但只看兴趣", d:"技能满但看心情。兴趣驱动。", i:"🎨"},
-                CISP: {n:"同好工坊主", q:"手是借来的肝是自己的", d:"手工狂魔。技术大佬。", i:"🛠️"}
+                COSP: {n:"造物主", q:"手是借来的，肝是自己的", d:"手工狂魔，享受从零到一的造物快感。缝纫机是本体，热熔胶是血液。", i:"🛠️"},
+                COSR: {n:"佛系手作娘", q:"能做就做，不行就改", d:"喜欢动手但拒绝焦虑。享受过程大于结果，做不出来就 plan B。", i:"🧘"},
+                COIP: {n:"舞台匠人", q:"每一针都是为了聚光灯", d:"手工 + 表演双重追求。舞台剧/宅舞比赛的技术担当。", i:"🎭"},
+                COIR: {n:"同好工坊主", q:"来我家做道具吧", d:"享受和亲友一起手作。小圈子里的技术支持，喜欢教人。", i:"🏠"},
+                COFP: {n:"成品收藏家", q:"专业的事交给专业的人", d:"认可专业价值愿意买单。懂行会挑，是太太们的优质甲方。", i:"💎"},
+                COFR: {n:"轻松氪金党", q:"买都买了开心就好", d:"氪金但随性。舒服第一，不追求极致还原。", i:"💸"},
+                COIF: {n:"社交氪金王", q:"我出钱你出人", d:"氪金 + 社交型。小圈子的金主爸爸/后勤供应商。", i:"👑"},
+                AOSP: {n:"极致收藏家", q:"我不出但我懂", d:"深度了解但不亲自下场。行走的资料库，懂工艺懂设定。", i:"📚"},
+                AOSR: {n:"佛系云玩家", q:"看看也挺好", d:"轻度参与重在社交。和喜欢的人在一起，对卷文化免疫。", i:"☁️"},
+                AOIP: {n:"舞台鉴赏家", q:"我是最专业的观众", d:"深度舞台爱好者。懂编舞懂灯光，宅舞比赛台下记笔记的人。", i:"🎬"},
+                AOIR: {n:"同好社交家", q:"漫展是网友见面会", d:"COS 是社交媒介。小圈子核心人物，记得住每个人的 CN。", i:"🤝"},
+                AISF: {n:"全能体验派", q:"什么都想试试", d:"无明显偏向体验派。技能树点得散，不深耕但快乐。", i:"🌈"},
+                AISR: {n:"轻量参与者", q:"有局叫我", d:"极低门槛参与。享受陪伴感，装备可能是借的但玩得开心。", i:"🎈"},
+                CIFP: {n:"技术流氪金党", q:"我要最好的效果", d:"结果导向完美主义。自己做不出来就买，买回来还要改。", i:"⚡"},
+                CIFR: {n:"随性技术宅", q:"会做但只看兴趣", d:"技能点满但调用看心情。兴趣驱动，没有固定模式。", i:"🎨"},
+                CISP: {n:"硬核创作者", q:"要么不做，要做就做到极致", d:"创作 + 完美双重追求。每一个细节都要打磨到极致。", i:"🔥"}
             },
 
             behaviors: {
@@ -430,7 +469,7 @@
                 AISR: ["装备可能是借的/租的/二手收的","出片主要靠亲友后期拯救","但每次都玩得很开心","被朋友拉入坑，享受陪伴感","有局叫我，没局也行"],
                 CIFP: ["这个毛胚不错，但刘海要重新贴","约单后还要自己加细节","装备迭代极快，永远在升级","结果导向的完美主义","我要最好的效果，买还是做只是手段"],
                 CIFR: ["这个角色的武器太酷了，我要自己做","其他部分？淘宝一键购买","兴趣驱动，没有固定模式","技能点满但调用看心情","会做，但只做感兴趣的"],
-                CISP: ["手工狂魔，技术大佬","缝纫机是本体，热熔胶是血液","漫展前夜手搓道具到凌晨","享受从零到一的造物快感","手是借来的，肝是自己的"]
+                CISP: ["拉设定表找参考图制定时间表","每一个细节都要打磨到极致","要么不做，要做就做到最好","创作欲 + 完美主义的双重 buff","为了还原度可以熬夜改三天"]
             },
 
             quotes: [
@@ -456,7 +495,7 @@
             q: 0,
             a: [],
             s: {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0},
-            max: 10
+            max: 12 // 每维度 6 题 × 2 分 = 12 分
         };
 
         // ========== DOM 元素 ==========
@@ -483,7 +522,8 @@
         function renderQ() {
             const q = DATA.questions[STATE.q];
             DOM.curQ.textContent = STATE.q + 1;
-            DOM.bar.style.width = (STATE.q / 20 * 100) + '%';
+            DOM.progress.textContent = Math.round((STATE.q / 24) * 100) + '%';
+            DOM.bar.style.width = (STATE.q / 24 * 100) + '%';
 
             let html = '<div class="question-card"><div class="question-number">QUESTION ' + (STATE.q + 1) + '</div>';
             html += '<div class="question-text">' + q.text + '</div><div class="likert-scale">';
@@ -514,20 +554,21 @@
         function next() {
             const a = STATE.a[STATE.q];
             const dim = a.dim;
-            console.log('[COSTI] 答题', STATE.q + 1, '维度:', dim, '选择:', a.v, '前分数:', JSON.stringify(STATE.s));
-            // CA 维度：C=创作者，A=欣赏者
-            // OI 维度：O=舞台型，I=圈内型
-            // SF 维度：S=手工型，F=氪金型
-            // PR 维度：P=完美型，R=随性型
+            
+            // 修复后的计分逻辑：相对倾向
+            // +2/+1 → 左侧维度加分，右侧维度 0 分
+            // 0 → 都不加分
+            // -1/-2 → 右侧维度加分，左侧维度 0 分
             if (a.v > 0) {
-                STATE.s[dim[0]] += a.v;
+                STATE.s[dim[0]] += a.v;  // 左侧维度加分
             } else if (a.v < 0) {
-                STATE.s[dim[1]] += Math.abs(a.v);
+                STATE.s[dim[1]] += Math.abs(a.v);  // 右侧维度加分
             }
-            console.log('[COSTI] 后分数:', JSON.stringify(STATE.s));
+            // a.v === 0 时都不加分
+            
             STATE.q++;
 
-            if (STATE.q >= 20) {
+            if (STATE.q >= 24) {
                 hide(DOM.test);
                 show(DOM.load);
                 setTimeout(showResult, 2000);
@@ -538,31 +579,37 @@
 
         function calcType() {
             let t = '';
-            // C/A 维度
             t += (STATE.s.C >= STATE.s.A) ? 'C' : 'A';
-            // O/I 维度
             t += (STATE.s.O >= STATE.s.I) ? 'O' : 'I';
-            // S/F 维度
             t += (STATE.s.S >= STATE.s.F) ? 'S' : 'F';
-            // P/R 维度
             t += (STATE.s.P >= STATE.s.R) ? 'P' : 'R';
-            console.log('[COSTI] 计算类型:', t);
             return t;
         }
 
         function calcConf() {
-            const d = [
+            // 优化后的置信度算法
+            // 1. 维度分差（越大越确定）
+            const diffs = [
                 Math.abs(STATE.s.C - STATE.s.A),
                 Math.abs(STATE.s.O - STATE.s.I),
                 Math.abs(STATE.s.S - STATE.s.F),
                 Math.abs(STATE.s.P - STATE.s.R)
             ];
-            const avg = d.reduce(function(a,b){return a+b;}, 0) / 4;
-            return Math.min(95, Math.max(50, Math.round(50 + avg * 10)));
+            const avgDiff = diffs.reduce((a,b) => a+b, 0) / 4;
+            
+            // 2. 总分（答题积极性）
+            const totalScore = STATE.s.C + STATE.s.A + STATE.s.O + STATE.s.I + 
+                              STATE.s.S + STATE.s.F + STATE.s.P + STATE.s.R;
+            
+            // 3. 置信度 = 基础 50 + 分差贡献 (0-30) + 积极性贡献 (0-20)
+            const diffContrib = Math.min(30, avgDiff * 3);
+            const activeContrib = Math.min(20, totalScore / 2);
+            
+            return Math.min(95, Math.max(50, Math.round(50 + diffContrib + activeContrib)));
         }
 
         function calcSub(main) {
-            const sorted = Object.entries(STATE.s).sort(function(a,b){return b[1]-a[1];});
+            const sorted = Object.entries(STATE.s).sort((a,b) => b[1]-a[1]);
             const letters = main.split('');
             for (let i = 0; i < sorted.length; i++) {
                 const l = sorted[i][0];
@@ -582,7 +629,6 @@
             show(DOM.result);
 
             const code = calcType();
-            console.log('[COSTI] 结果代码:', code, '分数:', STATE.s);
             const res = DATA.types[code] || DATA.types.COSP;
             const conf = calcConf();
             const subCode = calcSub(code);
@@ -594,7 +640,7 @@
             DOM.name.textContent = res.n;
             DOM.quote.textContent = '"' + res.q + '"';
             DOM.desc.textContent = res.d;
-            DOM.behav.innerHTML = behavs ? shuffle(behavs.slice()).slice(0, 3).join('<br>') : '• 独特的人格魅力';
+            DOM.behav.innerHTML = behavs ? shuffle(behavs).slice(0, 3).join('<br>') : '• 独特的人格魅力';
             DOM.conf.textContent = '置信度：' + conf + '%';
 
             if (subCode !== code) {
@@ -621,7 +667,7 @@
         }
 
         function share() {
-            const txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent;
+            const txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent + '\n来自：次元相性测试 v5.0';
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(txt).then(function() { alert('结果已复制！'); });
             } else {
@@ -651,6 +697,7 @@
                 load: $('loading-screen'),
                 result: $('result-screen'),
                 curQ: $('currentQ'),
+                progress: $('progressPercent'),
                 bar: $('progressBar'),
                 qCon: $('questionContainer'),
                 next: $('nextBtn'),
@@ -678,7 +725,7 @@
             $('restartBtn').onclick = restart;
 
             showQuote();
-            console.log('[COSTI] 初始化完成');
+            console.log('[COSTI] 初始化完成 - v5.0');
         }
 
         // 页面加载完成后初始化
