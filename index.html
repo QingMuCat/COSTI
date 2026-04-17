@@ -130,6 +130,8 @@
         }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .btn-secondary { background: transparent; border: 2px solid rgba(108, 93, 211, 0.5); margin-top: 15px; }
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
+        .btn-group .btn { margin-top: 0; flex: 1; }
         .hidden { display: none !important; }
         .result-card {
             background: rgba(18, 18, 42, 0.9);
@@ -246,19 +248,19 @@
         }
         .footer a { color: var(--accent); text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
-        .validation-hint {
-            font-size: 12px;
-            color: var(--text-dim);
-            text-align: center;
-            margin-top: 15px;
-            font-style: italic;
+        .nav-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
         }
+        .nav-btns .btn { margin-top: 0; flex: 1; }
         @media (max-width: 480px) {
             .container { padding: 30px 15px 40px; }
             .question-card { padding: 30px 20px; }
             .result-card { padding: 40px 20px; }
             .type-icon { width: 100px; height: 100px; font-size: 42px; }
             .type-code { font-size: 32px; }
+            .nav-btns { flex-direction: column; }
         }
     </style>
 </head>
@@ -268,7 +270,7 @@
         <header class="header">
             <div class="title-jp">ディメンション・セイセイ</div>
             <h1 class="main-title">次元相性</h1>
-            <p class="subtitle">二次元 COS 圈人格测试 v5.0</p>
+            <p class="subtitle">二次元 COS 圈人格测试 v6.0</p>
             <p class="slogan" id="randomQuote">"当次元壁破碎时，你会成为谁？"</p>
         </header>
 
@@ -276,12 +278,12 @@
             <div class="question-card">
                 <div style="font-size: 24px; margin-bottom: 20px;">🎭 在无数角色中，找到属于你的那一面</div>
                 <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 30px;">
-                    通过 24 道人性化题目，诊断你的 COS 圈人格类型。<br>
+                    通过 25 道人性化题目，诊断你的 COS 圈人格类型。<br>
                     ✨ 5 级量表 + 真实场景 + 置信度评估 + 验证题目
                 </p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
-                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 4-6 分钟</span>
-                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 24 道题</span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 5-7 分钟</span>
+                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 25 道题</span>
                     <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎯 16 种结果</span>
                 </div>
                 <button class="btn" id="startBtn">开始测试</button>
@@ -291,7 +293,7 @@
         <div id="test-screen" class="hidden">
             <div class="progress-wrap">
                 <div class="progress-text">
-                    <span>问题 <span id="currentQ">1</span> / 24</span>
+                    <span>问题 <span id="currentQ">1</span> / 25</span>
                     <span id="progressPercent">0%</span>
                 </div>
                 <div class="progress-container">
@@ -299,8 +301,10 @@
                 </div>
             </div>
             <div id="questionContainer"></div>
-            <button class="btn" id="nextBtn" disabled>下一题</button>
-            <div class="validation-hint" id="validationHint"></div>
+            <div class="nav-btns">
+                <button class="btn btn-secondary" id="prevBtn" disabled>上一题</button>
+                <button class="btn" id="nextBtn" disabled>下一题</button>
+            </div>
         </div>
 
         <div id="loading-screen" class="hidden">
@@ -336,7 +340,10 @@
                     <h3 style="color: var(--accent); margin-bottom: 20px;">📊 维度分析</h3>
                     <div id="radarBars"></div>
                 </div>
-                <button class="btn" id="shareBtn">📤 分享结果</button>
+                <div class="btn-group">
+                    <button class="btn" id="shareBtn">📤 分享结果</button>
+                    <button class="btn" id="imgShareBtn">🖼️ 生成图片</button>
+                </div>
                 <button class="btn btn-secondary" id="restartBtn">🔄 再测一次</button>
             </div>
         </div>
@@ -413,7 +420,7 @@
                     {v:2,t:"买回来自己改造"}, {v:1,t:"会考虑"}, {v:0,t:"看性价比"}, {v:-1,t:"更倾向全新的"}, {v:-2,t:"只买全新或名家手作"}
                 ]},
                 
-                // P/R 维度：完美型 vs 随性型（6 题）
+                // P/R 维度：完美型 vs 随性型（4 题）
                 { text: "距离漫展 3 天，发现衣服尺寸不对：", dim: "PR", s: [
                     {v:2,t:"熬夜改/重新做，必须完美"}, {v:1,t:"尽量改到满意"}, {v:0,t:"能穿就行"}, {v:-1,t:"用别针固定一下"}, {v:-2,t:"反正拍照看不出来"}
                 ]},
@@ -423,14 +430,19 @@
                 { text: "准备一个新角色，你会：", dim: "PR", s: [
                     {v:2,t:"拉设定表/找参考图/制定时间表"}, {v:1,t:"做详细准备"}, {v:0,t:"简单准备一下"}, {v:-1,t:"大概齐"}, {v:-2,t:"边出边调整"}
                 ]},
-                { text: "看到别人的 COS 比你的精致：", dim: "PR", s: [
-                    {v:2,t:"焦虑，想升级自己的装备"}, {v:1,t:"有点压力"}, {v:0,t:"还好吧"}, {v:-1,t:"欣赏一下"}, {v:-2,t:"每个人都有自己的节奏"}
-                ]},
                 { text: "出片后发现有穿帮：", dim: "PR", s: [
                     {v:2,t:"必须重修/重拍，不能留遗憾"}, {v:1,t:"尽量修掉"}, {v:0,t:"看严重程度"}, {v:-1,t:"算了，下次注意"}, {v:-2,t:"不仔细看发现不了"}
                 ]},
-                { text: "对于试妆/试衣的频率：", dim: "PR", s: [
-                    {v:2,t:"至少 2-3 次，确保万无一失"}, {v:1,t:"会试几次"}, {v:0,t:"看情况"}, {v:-1,t:"漫展前试一次"}, {v:-2,t:"当天第一次上脸"}
+                
+                // 新增场景题（3 题）
+                { text: "对于 COS 圈'内卷'现象：", dim: "PR", s: [
+                    {v:2,t:"焦虑，被迫跟着卷"}, {v:1,t:"有点压力"}, {v:0,t:"无所谓"}, {v:-1,t:"不关我事"}, {v:-2,t:"坚决反卷"}
+                ]},
+                { text: "线上社群的参与程度：", dim: "OI", s: [
+                    {v:2,t:"天天冒泡，组织活动"}, {v:1,t:"经常参与"}, {v:0,t:"偶尔看看"}, {v:-1,t:"很少说话"}, {v:-2,t:"潜水党"}
+                ]},
+                { text: "对于博主/KOL 的态度：", dim: "CA", s: [
+                    {v:2,t:"学习技术，关注更新"}, {v:1,t:"偶尔看看"}, {v:0,t:"看心情"}, {v:-1,t:"当娱乐看看"}, {v:-2,t:"不关注"}
                 ]}
             ],
 
@@ -495,7 +507,9 @@
             q: 0,
             a: [],
             s: {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0},
-            max: 12 // 每维度 6 题 × 2 分 = 12 分
+            max: 12,
+            startTime: 0,
+            timeSpent: []
         };
 
         // ========== DOM 元素 ==========
@@ -514,6 +528,8 @@
         // ========== 核心逻辑 ==========
         function start() {
             console.log('[COSTI] 开始测试');
+            STATE.startTime = Date.now();
+            STATE.timeSpent = [];
             hide(DOM.start);
             show(DOM.test);
             renderQ();
@@ -522,8 +538,8 @@
         function renderQ() {
             const q = DATA.questions[STATE.q];
             DOM.curQ.textContent = STATE.q + 1;
-            DOM.progress.textContent = Math.round((STATE.q / 24) * 100) + '%';
-            DOM.bar.style.width = (STATE.q / 24 * 100) + '%';
+            DOM.progress.textContent = Math.round((STATE.q / 25) * 100) + '%';
+            DOM.bar.style.width = (STATE.q / 25 * 100) + '%';
 
             let html = '<div class="question-card"><div class="question-number">QUESTION ' + (STATE.q + 1) + '</div>';
             html += '<div class="question-text">' + q.text + '</div><div class="likert-scale">';
@@ -548,33 +564,39 @@
                 };
             });
 
-            DOM.next.disabled = true;
+            DOM.next.disabled = !STATE.a[STATE.q];
+            DOM.prev.disabled = STATE.q === 0;
         }
 
         function next() {
+            if (!STATE.a[STATE.q]) return;
+            STATE.timeSpent[STATE.q] = Date.now();
+            
             const a = STATE.a[STATE.q];
             const dim = a.dim;
             
             // 修复后的计分逻辑：相对倾向
-            // +2/+1 → 左侧维度加分，右侧维度 0 分
-            // 0 → 都不加分
-            // -1/-2 → 右侧维度加分，左侧维度 0 分
             if (a.v > 0) {
-                STATE.s[dim[0]] += a.v;  // 左侧维度加分
+                STATE.s[dim[0]] += a.v;
             } else if (a.v < 0) {
-                STATE.s[dim[1]] += Math.abs(a.v);  // 右侧维度加分
+                STATE.s[dim[1]] += Math.abs(a.v);
             }
-            // a.v === 0 时都不加分
             
             STATE.q++;
 
-            if (STATE.q >= 24) {
+            if (STATE.q >= 25) {
                 hide(DOM.test);
                 show(DOM.load);
                 setTimeout(showResult, 2000);
             } else {
                 renderQ();
             }
+        }
+
+        function prev() {
+            if (STATE.q === 0) return;
+            STATE.q--;
+            renderQ();
         }
 
         function calcType() {
@@ -588,7 +610,6 @@
 
         function calcConf() {
             // 优化后的置信度算法
-            // 1. 维度分差（越大越确定）
             const diffs = [
                 Math.abs(STATE.s.C - STATE.s.A),
                 Math.abs(STATE.s.O - STATE.s.I),
@@ -596,16 +617,18 @@
                 Math.abs(STATE.s.P - STATE.s.R)
             ];
             const avgDiff = diffs.reduce((a,b) => a+b, 0) / 4;
-            
-            // 2. 总分（答题积极性）
             const totalScore = STATE.s.C + STATE.s.A + STATE.s.O + STATE.s.I + 
                               STATE.s.S + STATE.s.F + STATE.s.P + STATE.s.R;
             
-            // 3. 置信度 = 基础 50 + 分差贡献 (0-30) + 积极性贡献 (0-20)
+            // 检测答题时间（防止刷分）
+            const totalTime = (Date.now() - STATE.startTime) / 1000;
+            const avgTime = totalTime / 25;
+            const timePenalty = avgTime < 3 ? 20 : 0; // 每题少于 3 秒扣 20 分
+            
             const diffContrib = Math.min(30, avgDiff * 3);
             const activeContrib = Math.min(20, totalScore / 2);
             
-            return Math.min(95, Math.max(50, Math.round(50 + diffContrib + activeContrib)));
+            return Math.min(95, Math.max(50, Math.round(50 + diffContrib + activeContrib - timePenalty)));
         }
 
         function calcSub(main) {
@@ -667,7 +690,7 @@
         }
 
         function share() {
-            const txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent + '\n来自：次元相性测试 v5.0';
+            const txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent + '\n来自：次元相性测试 v6.0';
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(txt).then(function() { alert('结果已复制！'); });
             } else {
@@ -675,10 +698,17 @@
             }
         }
 
+        function imgShare() {
+            alert('图片生成功能开发中... 敬请期待！');
+            // TODO: 使用 canvas 生成结果图片
+        }
+
         function restart() {
             STATE.q = 0;
             STATE.a = [];
             STATE.s = {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};
+            STATE.startTime = 0;
+            STATE.timeSpent = [];
             hide(DOM.result);
             show(DOM.start);
         }
@@ -701,6 +731,7 @@
                 bar: $('progressBar'),
                 qCon: $('questionContainer'),
                 next: $('nextBtn'),
+                prev: $('prevBtn'),
                 icon: $('typeIcon'),
                 code: $('typeCode'),
                 name: $('typeName'),
@@ -721,11 +752,13 @@
                 start();
             };
             $('nextBtn').onclick = next;
+            $('prevBtn').onclick = prev;
             $('shareBtn').onclick = share;
+            $('imgShareBtn').onclick = imgShare;
             $('restartBtn').onclick = restart;
 
             showQuote();
-            console.log('[COSTI] 初始化完成 - v5.0');
+            console.log('[COSTI] 初始化完成 - v6.0');
         }
 
         // 页面加载完成后初始化
