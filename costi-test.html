@@ -467,7 +467,10 @@
         function show(a) { a.classList.remove('hidden'); }
         function hide(a) { a.classList.add('hidden'); }
         function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-        function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+        function shuffle(arr) { 
+            if (!arr || !Array.isArray(arr)) return [];
+            return arr.slice().sort(() => Math.random() - 0.5); 
+        }
 
         // ========== 核心逻辑 ==========
         function start() {
@@ -510,11 +513,18 @@
 
         function next() {
             const a = STATE.a[STATE.q];
+            const dim = a.dim;
+            console.log('[COSTI] 答题', STATE.q + 1, '维度:', dim, '选择:', a.v, '前分数:', JSON.stringify(STATE.s));
+            // CA 维度：C=创作者，A=欣赏者
+            // OI 维度：O=舞台型，I=圈内型
+            // SF 维度：S=手工型，F=氪金型
+            // PR 维度：P=完美型，R=随性型
             if (a.v > 0) {
-                STATE.s[a.dim[0]] += a.v;
+                STATE.s[dim[0]] += a.v;
             } else if (a.v < 0) {
-                STATE.s[a.dim[1]] += Math.abs(a.v);
+                STATE.s[dim[1]] += Math.abs(a.v);
             }
+            console.log('[COSTI] 后分数:', JSON.stringify(STATE.s));
             STATE.q++;
 
             if (STATE.q >= 20) {
@@ -528,10 +538,15 @@
 
         function calcType() {
             let t = '';
-            t += STATE.s.C >= STATE.s.A ? 'C' : 'A';
-            t += STATE.s.O >= STATE.s.I ? 'O' : 'I';
-            t += STATE.s.S >= STATE.s.F ? 'S' : 'F';
-            t += STATE.s.P >= STATE.s.R ? 'P' : 'R';
+            // C/A 维度
+            t += (STATE.s.C >= STATE.s.A) ? 'C' : 'A';
+            // O/I 维度
+            t += (STATE.s.O >= STATE.s.I) ? 'O' : 'I';
+            // S/F 维度
+            t += (STATE.s.S >= STATE.s.F) ? 'S' : 'F';
+            // P/R 维度
+            t += (STATE.s.P >= STATE.s.R) ? 'P' : 'R';
+            console.log('[COSTI] 计算类型:', t);
             return t;
         }
 
@@ -567,17 +582,19 @@
             show(DOM.result);
 
             const code = calcType();
+            console.log('[COSTI] 结果代码:', code, '分数:', STATE.s);
             const res = DATA.types[code] || DATA.types.COSP;
             const conf = calcConf();
             const subCode = calcSub(code);
             const sub = DATA.types[subCode] || res;
+            const behavs = DATA.behaviors[code] || DATA.behaviors.COSP;
 
             DOM.icon.textContent = res.i;
             DOM.code.textContent = code;
             DOM.name.textContent = res.n;
             DOM.quote.textContent = '"' + res.q + '"';
             DOM.desc.textContent = res.d;
-            DOM.behav.innerHTML = shuffle(DATA.behaviors[code]).slice(0, 3).join('<br>');
+            DOM.behav.innerHTML = behavs ? shuffle(behavs.slice()).slice(0, 3).join('<br>') : '• 独特的人格魅力';
             DOM.conf.textContent = '置信度：' + conf + '%';
 
             if (subCode !== code) {
