@@ -113,52 +113,59 @@
             margin-bottom: 20px;
         }
 
-        .question-weight {
-            display: inline-block;
-            background: rgba(255, 107, 157, 0.2);
-            color: var(--accent-pink);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-left: 10px;
-        }
-
         .question-text {
             font-size: 20px;
             line-height: 1.6;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
-        .options {
+        .likert-scale {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .option {
+        .likert-option {
             background: rgba(108, 93, 211, 0.1);
             border: 2px solid rgba(108, 93, 211, 0.3);
-            border-radius: 16px;
-            padding: 16px 20px;
+            border-radius: 12px;
+            padding: 14px 18px;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .option:hover {
+        .likert-option:hover {
             background: rgba(108, 93, 211, 0.2);
             border-color: var(--primary-light);
-            transform: translateX(8px);
+            transform: translateX(4px);
         }
 
-        .option.selected {
+        .likert-option.selected {
             background: rgba(108, 93, 211, 0.25);
             border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(108, 93, 211, 0.3);
+            box-shadow: 0 0 20px rgba(108, 93, 211, 0.3);
         }
 
-        .option-text {
+        .likert-value {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .likert-text {
             font-size: 15px;
             line-height: 1.5;
+            flex: 1;
         }
 
         .btn {
@@ -385,6 +392,8 @@
             .result-card { padding: 40px 20px; }
             .type-icon { width: 100px; height: 100px; font-size: 42px; }
             .type-code { font-size: 32px; }
+            .likert-option { padding: 12px 14px; }
+            .likert-value { width: 28px; height: 28px; font-size: 12px; }
         }
     </style>
 </head>
@@ -395,7 +404,7 @@
         <header class="header">
             <div class="title-jp">ディメンション・セイセイ</div>
             <h1 class="main-title">次元相性</h1>
-            <p class="subtitle">二次元 COS 圈人格测试 v2.0</p>
+            <p class="subtitle">二次元 COS 圈人格测试 v3.0</p>
             <p class="slogan" id="randomQuote">"当次元壁破碎时，你会成为谁？"</p>
         </header>
 
@@ -403,12 +412,12 @@
             <div class="question-card">
                 <div style="font-size: 24px; margin-bottom: 20px;">🎭 在无数角色中，找到属于你的那一面</div>
                 <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 30px;">
-                    通过 40 道精心设计的题目，诊断你的 COS 圈人格类型。<br>
-                    ✨ 新增：权重系统 + 置信度评估 + 主副类型分析
+                    通过 20 道人性化题目，诊断你的 COS 圈人格类型。<br>
+                    ✨ 新增：5 级量表 + 真实场景 + 置信度评估
                 </p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
-                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 5-8 分钟</span>
-                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 40 道题</span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 3-5 分钟</span>
+                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 20 道题</span>
                     <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎯 16 种结果</span>
                     <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">✅ 置信度</span>
                 </div>
@@ -417,7 +426,7 @@
         </div>
 
         <div id="test-screen" class="hidden">
-            <div class="progress-text">问题 <span id="currentQ">1</span> / 40</div>
+            <div class="progress-text">问题 <span id="currentQ">1</span> / 20</div>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
@@ -475,56 +484,236 @@
 
     <script>
         (function() {
-            // 题库 - 40 题，带权重
-            // weight: 1.5=核心题，1.0=普通题，0.8=边缘题
+            // 20 道人性化题目 - 5 级李克特量表
+            // 每个维度 5 题，涵盖真实场景
             const questions = [
-                // C/A 维度：创作者 vs 欣赏者（10 题）
-                { text: "看到喜欢的角色立绘，你的第一反应是：", dimension: "C/A", weight: 1.5, options: [{ text: "开始研究怎么做这套衣服/道具", type: "C" }, { text: "保存图片，期待看到别人的还原作品", type: "A" }] },
-                { text: "漫展结束后，你更想发：", dimension: "C/A", weight: 1.2, options: [{ text: "自己的场照/正片", type: "C" }, { text: "集邮合集/返图", type: "A" }] },
-                { text: "关注列表里占比更多的是：", dimension: "C/A", weight: 1.0, options: [{ text: "妆娘/毛娘/道具师", type: "C" }, { text: "画师/摄影/同好", type: "A" }] },
-                { text: "对于买 cos 服的态度：", dimension: "C/A", weight: 1.3, options: [{ text: "能自己做就自己做", type: "C" }, { text: "正常消费省时省力", type: "A" }] },
-                { text: "看到别人的精致道具：", dimension: "C/A", weight: 1.0, options: [{ text: "凑近观察想学习", type: "C" }, { text: "感叹好还原", type: "A" }] },
-                { text: "空闲时间的 COS 活动：", dimension: "C/A", weight: 1.2, options: [{ text: "肝道具/试妆", type: "C" }, { text: "刷返图/看舞台剧", type: "A" }] },
-                { text: "对于出冷门角色：", dimension: "C/A", weight: 0.8, options: [{ text: "更有动力自己做全套", type: "C" }, { text: "观望等装备成熟", type: "A" }] },
-                { text: "更享受的时刻：", dimension: "C/A", weight: 1.5, options: [{ text: "道具完成的瞬间", type: "C" }, { text: "被认出角色/收到返图", type: "A" }] },
-                { text: "对于 COS 教程视频：", dimension: "C/A", weight: 1.0, options: [{ text: "收藏了等于做了", type: "A" }, { text: "真的会跟着做", type: "C" }] },
-                { text: "看到好看的 COS：", dimension: "C/A", weight: 0.8, options: [{ text: "点赞收藏转发", type: "A" }, { text: "分析是怎么做的", type: "C" }] },
+                // C/A 维度：创作者 vs 欣赏者（5 题）
+                {
+                    text: "看到喜欢的角色，你更倾向于：",
+                    dimension: "C/A",
+                    scale: [
+                        { value: 2, text: "立刻开始研究怎么做全套装备" },
+                        { value: 1, text: "会考虑自己动手试试" },
+                        { value: 0, text: "看情况，有时间就自己做" },
+                        { value: -1, text: "更期待看到别人还原的作品" },
+                        { value: -2, text: "默默保存图片当壁纸" }
+                    ]
+                },
+                {
+                    text: "漫展结束后，你更想：",
+                    dimension: "C/A",
+                    scale: [
+                        { value: 2, text: "发自己的场照/正片" },
+                        { value: 1, text: "分享一些自己的照片" },
+                        { value: 0, text: "发不发都行" },
+                        { value: -1, text: "发集邮合集和喜欢的摊位" },
+                        { value: -2, text: "只看不发，当个安静的美男子" }
+                    ]
+                },
+                {
+                    text: "你的关注列表里主要是：",
+                    dimension: "C/A",
+                    scale: [
+                        { value: 2, text: "大部分是妆娘/毛娘/道具师" },
+                        { value: 1, text: "技术类博主占一半" },
+                        { value: 0, text: "各种类型都有" },
+                        { value: -1, text: "主要是画师/摄影/同好" },
+                        { value: -2, text: "几乎不关注技术类博主" }
+                    ]
+                },
+                {
+                    text: "对于 COS 服，你的态度是：",
+                    dimension: "C/A",
+                    scale: [
+                        { value: 2, text: "能自己做绝对不买" },
+                        { value: 1, text: "优先自己做，实在不行再买" },
+                        { value: 0, text: "看时间和预算决定" },
+                        { value: -1, text: "正常消费，省时省力" },
+                        { value: -2, text: "直接买成品更香" }
+                    ]
+                },
+                {
+                    text: "看到别人的精致道具，你会：",
+                    dimension: "C/A",
+                    scale: [
+                        { value: 2, text: "凑近观察工艺，想学习制作" },
+                        { value: 1, text: "会问是怎么做的" },
+                        { value: 0, text: "感叹好厉害" },
+                        { value: -1, text: "询问是哪位太太的作品" },
+                        { value: -2, text: "点赞收藏，默默欣赏" }
+                    ]
+                },
                 
-                // O/I 维度：舞台型 vs 圈内型（10 题）
-                { text: "理想的漫展一天：", dimension: "O/I", weight: 1.5, options: [{ text: "上台比赛/被围拍", type: "O" }, { text: "和亲友小聚/逛摊", type: "I" }] },
-                { text: "被摄影围拍的感受：", dimension: "O/I", weight: 1.3, options: [{ text: "兴奋认可", type: "O" }, { text: "紧张喜欢熟人拍", type: "I" }] },
-                { text: "出片场景偏好：", dimension: "O/I", weight: 1.2, options: [{ text: "大场景/舞台", type: "O" }, { text: "摄影棚/小树林", type: "I" }] },
-                { text: "COS 社团参与：", dimension: "O/I", weight: 1.0, options: [{ text: "舞台剧/比赛", type: "O" }, { text: "后勤/聚餐", type: "I" }] },
-                { text: "线上营业态度：", dimension: "O/I", weight: 1.2, options: [{ text: "积极发片", type: "O" }, { text: "小圈子分享", type: "I" }] },
-                { text: "漫展前准备重心：", dimension: "O/I", weight: 1.0, options: [{ text: "练习动作表情", type: "O" }, { text: "确认约会", type: "I" }] },
-                { text: "更喜欢的 COS 回忆：", dimension: "O/I", weight: 1.5, options: [{ text: "舞台掌声/被集邮", type: "O" }, { text: "和亲友聊天", type: "I" }] },
-                { text: "对于游场：", dimension: "O/I", weight: 0.8, options: [{ text: "享受被拍", type: "O" }, { text: "只和亲友拍", type: "I" }] },
-                { text: "社交账号更新频率：", dimension: "O/I", weight: 1.0, options: [{ text: "经常发", type: "O" }, { text: "很少发", type: "I" }] },
-                { text: "漫展结束后：", dimension: "O/I", weight: 0.8, options: [{ text: "发总结动态", type: "O" }, { text: "回家休息", type: "I" }] },
+                // O/I 维度：舞台型 vs 圈内型（5 题）
+                {
+                    text: "理想的漫展一天：",
+                    dimension: "O/I",
+                    scale: [
+                        { value: 2, text: "上台比赛/游场被围拍" },
+                        { value: 1, text: "多拍照多社交" },
+                        { value: 0, text: "随意逛逛，看心情" },
+                        { value: -1, text: "和亲友小聚/逛摊位" },
+                        { value: -2, text: "安静集邮，和认识的人玩" }
+                    ]
+                },
+                {
+                    text: "对于"被摄影围拍'的感受：",
+                    dimension: "O/I",
+                    scale: [
+                        { value: 2, text: "兴奋，这是对自己的认可" },
+                        { value: 1, text: "有点紧张但可以接受" },
+                        { value: 0, text: "无所谓，看情况" },
+                        { value: -1, text: "更喜欢和熟悉的摄影拍" },
+                        { value: -2, text: "会感到不自在" }
+                    ]
+                },
+                {
+                    text: "你更喜欢在什么场景出片：",
+                    dimension: "O/I",
+                    scale: [
+                        { value: 2, text: "大场景/舞台/展会现场" },
+                        { value: 1, text: "人多热闹的地方" },
+                        { value: 0, text: "哪里都可以" },
+                        { value: -1, text: "摄影棚/小树林" },
+                        { value: -2, text: "亲友家/私密空间" }
+                    ]
+                },
+                {
+                    text: "加入 COS 社团，你更想参与：",
+                    dimension: "O/I",
+                    scale: [
+                        { value: 2, text: "舞台剧/宅舞/比赛" },
+                        { value: 1, text: "台前表演类活动" },
+                        { value: 0, text: "看活动内容决定" },
+                        { value: -1, text: "后勤/聚餐" },
+                        { value: -2, text: "线上水群，线下随缘" }
+                    ]
+                },
+                {
+                    text: "漫展前的准备重心：",
+                    dimension: "O/I",
+                    scale: [
+                        { value: 2, text: "练习动作/表情/舞台走位" },
+                        { value: 1, text: "准备展示内容" },
+                        { value: 0, text: "随便准备一下" },
+                        { value: -1, text: "确认和谁的约会" },
+                        { value: -2, text: "带什么零食和亲友分享" }
+                    ]
+                },
                 
-                // S/F 维度：手工型 vs 氪金型（10 题）
-                { text: "道具做不出来时：", dimension: "S/F", weight: 1.5, options: [{ text: "查教程请教", type: "S" }, { text: "淘宝闲鱼", type: "F" }] },
-                { text: "对于手作的看法：", dimension: "S/F", weight: 1.3, options: [{ text: "核心乐趣", type: "S" }, { text: "时间成本太高", type: "F" }] },
-                { text: "装备来源比例：", dimension: "S/F", weight: 1.5, options: [{ text: "70% 自制", type: "S" }, { text: "70% 购买", type: "F" }] },
-                { text: "看到 99 元全套推送：", dimension: "S/F", weight: 0.8, options: [{ text: "好奇但不买", type: "S" }, { text: "看看评价", type: "F" }] },
-                { text: "对毛娘妆娘态度：", dimension: "S/F", weight: 1.2, options: [{ text: "尽量自己学", type: "S" }, { text: "专业的事专业人", type: "F" }] },
-                { text: "漫展前一周在：", dimension: "S/F", weight: 1.0, options: [{ text: "手搓配饰", type: "S" }, { text: "确认快递", type: "F" }] },
-                { text: "对二手 COS 服：", dimension: "S/F", weight: 0.8, options: [{ text: "买材料改", type: "S" }, { text: "状态好就入", type: "F" }] },
-                { text: "更自豪的是：", dimension: "S/F", weight: 1.3, options: [{ text: "自己做的", type: "S" }, { text: "抢到限量款", type: "F" }] },
-                { text: "工具投入：", dimension: "S/F", weight: 1.0, options: [{ text: "买了一堆工具", type: "S" }, { text: "工具够用就行", type: "F" }] },
-                { text: "对于改造：", dimension: "S/F", weight: 1.2, options: [{ text: "买了也要改", type: "S" }, { text: "直接穿", type: "F" }] },
+                // S/F 维度：手工型 vs 氪金型（5 题）
+                {
+                    text: "道具做不出来时，你会：",
+                    dimension: "S/F",
+                    scale: [
+                        { value: 2, text: "熬夜查教程/换材料/请教大佬" },
+                        { value: 1, text: "尝试多种解决方案" },
+                        { value: 0, text: "看情况决定" },
+                        { value: -1, text: "考虑买现成的" },
+                        { value: -2, text: "直接打开淘宝/闲鱼" }
+                    ]
+                },
+                {
+                    text: "你的装备来源大概是：",
+                    dimension: "S/F",
+                    scale: [
+                        { value: 2, text: "90% 以上自制/改造" },
+                        { value: 1, text: "大部分自己做" },
+                        { value: 0, text: "一半一半" },
+                        { value: -1, text: "大部分购买/约单" },
+                        { value: -2, text: "几乎全是买的" }
+                    ]
+                },
+                {
+                    text: "对于"手作'的看法：",
+                    dimension: "S/F",
+                    scale: [
+                        { value: 2, text: "核心乐趣，省钱是附带的" },
+                        { value: 1, text: "很有成就感" },
+                        { value: 0, text: "看心情" },
+                        { value: -1, text: "时间成本太高" },
+                        { value: -2, text: "不如直接买" }
+                    ]
+                },
+                {
+                    text: "对于毛娘/妆娘的态度：",
+                    dimension: "S/F",
+                    scale: [
+                        { value: 2, text: "尽量自己学，实在不行才约" },
+                        { value: 1, text: "简单的自己来" },
+                        { value: 0, text: "看情况" },
+                        { value: -1, text: "专业的交给专业的人" },
+                        { value: -2, text: "全部约单更省心" }
+                    ]
+                },
+                {
+                    text: "漫展前一周，你在：",
+                    dimension: "S/F",
+                    scale: [
+                        { value: 2, text: "手搓最后几件配饰/修假发" },
+                        { value: 1, text: "还在完善装备" },
+                        { value: 0, text: "该准备的都准备了" },
+                        { value: -1, text: "确认快递进度" },
+                        { value: -2, text: "约妆娘时间/尾款" }
+                    ]
+                },
                 
-                // P/R 维度：完美型 vs 随性型（10 题）
-                { text: "衣服尺寸不对：", dimension: "P/R", weight: 1.5, options: [{ text: "熬夜改完美", type: "P" }, { text: "别针固定", type: "R" }] },
-                { text: "对还原度要求：", dimension: "P/R", weight: 1.5, options: [{ text: "细节到位", type: "P" }, { text: "感觉对就行", type: "R" }] },
-                { text: "准备新角色：", dimension: "P/R", weight: 1.2, options: [{ text: "拉表制定计划", type: "P" }, { text: "大概齐", type: "R" }] },
-                { text: "看到别人更精致：", dimension: "P/R", weight: 1.0, options: [{ text: "焦虑想升级", type: "P" }, { text: "欣赏各有节奏", type: "R" }] },
-                { text: "出片有穿帮：", dimension: "P/R", weight: 1.3, options: [{ text: "重修重拍", type: "P" }, { text: "算了下次注意", type: "R" }] },
-                { text: "试妆频率：", dimension: "P/R", weight: 1.0, options: [{ text: "至少 2-3 次", type: "P" }, { text: "当天第一次", type: "R" }] },
-                { text: "COS 座右铭：", dimension: "P/R", weight: 1.5, options: [{ text: "要做就做到最好", type: "P" }, { text: "开心就好", type: "R" }] },
-                { text: "道具细节：", dimension: "P/R", weight: 1.2, options: [{ text: "必须还原", type: "P" }, { text: "差不多就行", type: "R" }] },
-                { text: "对于后期：", dimension: "P/R", weight: 0.8, options: [{ text: "精修每张照片", type: "P" }, { text: "随便调调", type: "R" }] },
-                { text: "装备迭代：", dimension: "P/R", weight: 1.0, options: [{ text: "不断更新升级", type: "P" }, { text: "够用就好", type: "R" }] }
+                // P/R 维度：完美型 vs 随性型（5 题）
+                {
+                    text: "距离漫展 3 天，发现衣服尺寸不对：",
+                    dimension: "P/R",
+                    scale: [
+                        { value: 2, text: "熬夜改/重新做，必须完美" },
+                        { value: 1, text: "尽量改到满意" },
+                        { value: 0, text: "能穿就行" },
+                        { value: -1, text: "用别针固定一下" },
+                        { value: -2, text: "反正拍照看不出来" }
+                    ]
+                },
+                {
+                    text: "对于"还原度'的要求：",
+                    dimension: "P/R",
+                    scale: [
+                        { value: 2, text: "细节必须到位，哪怕照片拍不出" },
+                        { value: 1, text: "尽量还原" },
+                        { value: 0, text: "差不多就行" },
+                        { value: -1, text: "整体感觉对了就行" },
+                        { value: -2, text: "开心就好" }
+                    ]
+                },
+                {
+                    text: "准备一个新角色，你会：",
+                    dimension: "P/R",
+                    scale: [
+                        { value: 2, text: "拉设定表/找参考图/制定时间表" },
+                        { value: 1, text: "做详细准备" },
+                        { value: 0, text: "简单准备一下" },
+                        { value: -1, text: "大概齐" },
+                        { value: -2, text: "边出边调整" }
+                    ]
+                },
+                {
+                    text: "看到别人的 COS 比你的精致：",
+                    dimension: "P/R",
+                    scale: [
+                        { value: 2, text: "焦虑，想升级自己的装备" },
+                        { value: 1, text: "有点压力" },
+                        { value: 0, text: "还好吧" },
+                        { value: -1, text: "欣赏一下" },
+                        { value: -2, text: "每个人都有自己的节奏" }
+                    ]
+                },
+                {
+                    text: "出片后发现有穿帮：",
+                    dimension: "P/R",
+                    scale: [
+                        { value: 2, text: "必须重修/重拍，不能留遗憾" },
+                        { value: 1, text: "尽量修掉" },
+                        { value: 0, text: "看严重程度" },
+                        { value: -1, text: "算了，下次注意" },
+                        { value: -2, text: "不仔细看发现不了" }
+                    ]
+                }
             ];
 
             // 结果类型
@@ -550,7 +739,7 @@
             let currentQ = 0;
             let answers = [];
             let scores = { C: 0, A: 0, O: 0, I: 0, S: 0, F: 0, P: 0, R: 0 };
-            let maxScores = { C: 0, A: 0, O: 0, I: 0, S: 0, F: 0, P: 0, R: 0 };
+            const maxScorePerDim = 10; // 每维度 5 题 × 2 分 = 10 分
 
             // DOM 元素
             const startScreen = document.getElementById('start-screen');
@@ -565,33 +754,9 @@
             const progressBar = document.getElementById('progressBar');
             const currentQEl = document.getElementById('currentQ');
 
-            // 计算最大可能分数
-            function calculateMaxScores() {
-                questions.forEach(q => {
-                    if (q.options[0].type === 'C') maxScores.C += q.weight;
-                    else if (q.options[0].type === 'A') maxScores.A += q.weight;
-                    else if (q.options[0].type === 'O') maxScores.O += q.weight;
-                    else if (q.options[0].type === 'I') maxScores.I += q.weight;
-                    else if (q.options[0].type === 'S') maxScores.S += q.weight;
-                    else if (q.options[0].type === 'F') maxScores.F += q.weight;
-                    else if (q.options[0].type === 'P') maxScores.P += q.weight;
-                    else if (q.options[0].type === 'R') maxScores.R += q.weight;
-                    
-                    if (q.options[1].type === 'C') maxScores.C += q.weight;
-                    else if (q.options[1].type === 'A') maxScores.A += q.weight;
-                    else if (q.options[1].type === 'O') maxScores.O += q.weight;
-                    else if (q.options[1].type === 'I') maxScores.I += q.weight;
-                    else if (q.options[1].type === 'S') maxScores.S += q.weight;
-                    else if (q.options[1].type === 'F') maxScores.F += q.weight;
-                    else if (q.options[1].type === 'P') maxScores.P += q.weight;
-                    else if (q.options[1].type === 'R') maxScores.R += q.weight;
-                });
-            }
-
             // 开始测试
             function startTest() {
-                console.log('开始测试');
-                calculateMaxScores();
+                console.log('开始测试 v3.0');
                 startScreen.classList.add('hidden');
                 testScreen.classList.remove('hidden');
                 showQuestion();
@@ -603,25 +768,27 @@
                 currentQEl.textContent = currentQ + 1;
                 progressBar.style.width = ((currentQ) / questions.length * 100) + '%';
 
-                const weightText = q.weight >= 1.3 ? '核心题' : (q.weight >= 1.0 ? '普通题' : '边缘题');
-                
-                questionContainer.innerHTML = '<div class="question-card">' +
-                    '<div class="question-number">QUESTION ' + (currentQ + 1) + 
-                    '<span class="question-weight">' + weightText + '</span></div>' +
-                    '<div class="question-text">' + q.text + '</div>' +
-                    '<div class="options">' +
-                    '<div class="option" data-index="0"><div class="option-text">' + q.options[0].text + '</div></div>' +
-                    '<div class="option" data-index="1"><div class="option-text">' + q.options[1].text + '</div></div>' +
-                    '</div></div>';
+                let optionsHtml = '';
+                q.scale.forEach(function(opt, index) {
+                    optionsHtml += '<div class="likert-option" data-value="' + opt.value + '">' +
+                        '<div class="likert-value">' + (opt.value > 0 ? '+' + opt.value : opt.value) + '</div>' +
+                        '<div class="likert-text">' + opt.text + '</div>' +
+                        '</div>';
+                });
 
-                const options = questionContainer.querySelectorAll('.option');
+                questionContainer.innerHTML = '<div class="question-card">' +
+                    '<div class="question-number">QUESTION ' + (currentQ + 1) + '</div>' +
+                    '<div class="question-text">' + q.text + '</div>' +
+                    '<div class="likert-scale">' + optionsHtml + '</div></div>';
+
+                const options = questionContainer.querySelectorAll('.likert-option');
                 options.forEach(function(opt) {
                     opt.addEventListener('click', function() {
                         options.forEach(function(o) { o.classList.remove('selected'); });
                         this.classList.add('selected');
                         answers[currentQ] = {
-                            type: q.options[parseInt(this.getAttribute('data-index'))].type,
-                            weight: q.weight
+                            dimension: q.dimension,
+                            value: parseInt(this.getAttribute('data-value'))
                         };
                         nextBtn.disabled = false;
                     });
@@ -633,7 +800,15 @@
             // 下一题
             function nextQuestion() {
                 const answer = answers[currentQ];
-                scores[answer.type] += answer.weight;
+                const dim = answer.dimension.split('/');
+                
+                // 5 级量表计分：+2/+1 归左维度，0 不计，-1/-2 归右维度
+                if (answer.value > 0) {
+                    scores[dim[0]] += answer.value;
+                } else if (answer.value < 0) {
+                    scores[dim[1]] += Math.abs(answer.value);
+                }
+                
                 currentQ++;
 
                 if (currentQ >= questions.length) {
@@ -657,15 +832,14 @@
 
             // 计算置信度
             function calculateConfidence() {
-                const totalScore = scores.C + scores.A + scores.O + scores.I + scores.S + scores.F + scores.P + scores.R;
                 const diffs = [
-                    Math.abs(scores.C - scores.A) / (scores.C + scores.A || 1),
-                    Math.abs(scores.O - scores.I) / (scores.O + scores.I || 1),
-                    Math.abs(scores.S - scores.F) / (scores.S + scores.F || 1),
-                    Math.abs(scores.P - scores.R) / (scores.P + scores.R || 1)
+                    Math.abs(scores.C - scores.A),
+                    Math.abs(scores.O - scores.I),
+                    Math.abs(scores.S - scores.F),
+                    Math.abs(scores.P - scores.R)
                 ];
                 const avgDiff = diffs.reduce((a, b) => a + b, 0) / 4;
-                return Math.min(95, Math.max(50, Math.round(50 + avgDiff * 50)));
+                return Math.min(95, Math.max(50, Math.round(50 + avgDiff * 10)));
             }
 
             // 计算副类型
@@ -673,11 +847,9 @@
                 const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
                 const mainLetters = mainType.split('');
                 
-                // 找到不在主类型中的最高分维度
                 for (let i = 0; i < sortedScores.length; i++) {
                     const letter = sortedScores[i][0];
                     if (!mainLetters.includes(letter)) {
-                        // 替换主类型中的一个字母
                         const subType = mainType.split('');
                         for (let j = 0; j < 4; j++) {
                             if (subType[j] !== letter) {
@@ -710,7 +882,6 @@
                 document.getElementById('typeBehaviors').innerHTML = '• 手工大佬<br>• 技术担当<br>• 道具专家';
                 document.getElementById('confidenceBadge').textContent = '置信度：' + confidence + '%';
 
-                // 显示副类型
                 if (subTypeCode !== typeCode) {
                     document.getElementById('subTypeContainer').classList.remove('hidden');
                     document.getElementById('subTypeCode').textContent = subTypeCode + ' · ' + subType.name;
@@ -718,21 +889,21 @@
 
                 // 维度条
                 const dims = [
-                    { label: '创作者 C', value: scores.C, max: maxScores.C / 2 },
-                    { label: '欣赏者 A', value: scores.A, max: maxScores.A / 2 },
-                    { label: '舞台型 O', value: scores.O, max: maxScores.O / 2 },
-                    { label: '圈内型 I', value: scores.I, max: maxScores.I / 2 },
-                    { label: '手工型 S', value: scores.S, max: maxScores.S / 2 },
-                    { label: '氪金型 F', value: scores.F, max: maxScores.F / 2 },
-                    { label: '完美型 P', value: scores.P, max: maxScores.P / 2 },
-                    { label: '随性型 R', value: scores.R, max: maxScores.R / 2 }
+                    { label: '创作者 C', value: scores.C },
+                    { label: '欣赏者 A', value: scores.A },
+                    { label: '舞台型 O', value: scores.O },
+                    { label: '圈内型 I', value: scores.I },
+                    { label: '手工型 S', value: scores.S },
+                    { label: '氪金型 F', value: scores.F },
+                    { label: '完美型 P', value: scores.P },
+                    { label: '随性型 R', value: scores.R }
                 ];
 
                 let barsHtml = '';
                 dims.forEach(function(d) {
-                    const pct = Math.min(100, (d.value / d.max * 100));
+                    const pct = Math.min(100, (d.value / maxScorePerDim * 100));
                     barsHtml += '<div class="dimension-bar">' +
-                        '<div class="dimension-label"><span>' + d.label + '</span><span>' + d.value.toFixed(1) + '</span></div>' +
+                        '<div class="dimension-label"><span>' + d.label + '</span><span>' + d.value + '/' + maxScorePerDim + '</span></div>' +
                         '<div class="dimension-track"><div class="dimension-fill" style="width: ' + pct + '%"></div>' +
                         '<span class="dimension-percent">' + pct.toFixed(0) + '%</span></div>' +
                         '</div>';
@@ -795,7 +966,7 @@
             restartBtn.addEventListener('click', restartTest);
 
             showRandomQuote();
-            console.log('COSTI v2.0 已就绪');
+            console.log('COSTI v3.0 已就绪 - 5 级量表版');
         })();
     </script>
 </body>
