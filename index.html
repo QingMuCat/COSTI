@@ -340,12 +340,26 @@
                     <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 5-7 分钟</span>
                     <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 25 道题</span>
                     <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎯 16 种结果</span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎵 背景音乐</span>
                 </div>
                 <button class="btn" id="startBtn">开始测试</button>
             </div>
         </div>
 
         <div id="test-screen" class="hidden">
+            <div class="music-player" style="margin-bottom: 20px;">
+                <div class="music-info">
+                    <div class="music-title" id="musicTitle">🎵 准备播放</div>
+                    <div class="music-artist" id="musicArtist">二次元歌曲</div>
+                </div>
+                <div class="music-wave hidden" id="musicWave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
             <div class="progress-wrap">
                 <div class="progress-text">
                     <span>问题 <span id="currentQ">1</span> / 25</span>
@@ -381,12 +395,12 @@
                 <div class="type-name" id="typeName">造物主</div>
                 <div class="confidence-badge" id="confidenceBadge">置信度：85%</div>
                 <div class="type-quote" id="typeQuote">"手是借来的，肝是自己的"</div>
-                <div class="music-player" id="musicPlayer">
+                <div class="music-player">
                     <div class="music-info">
-                        <div class="music-title" id="musicTitle">🎵 正在播放</div>
-                        <div class="music-artist" id="musicArtist">随机二次元歌曲</div>
+                        <div class="music-title">🎵 背景音乐持续播放中</div>
+                        <div class="music-artist">享受你的 COS 人格测试之旅</div>
                     </div>
-                    <div class="music-wave" id="musicWave">
+                    <div class="music-wave">
                         <div class="wave-bar"></div>
                         <div class="wave-bar"></div>
                         <div class="wave-bar"></div>
@@ -614,6 +628,8 @@
             STATE.timeSpent = [];
             hide(DOM.start);
             show(DOM.test);
+            // 开始播放音乐
+            playRandomMusic();
             renderQ();
         }
 
@@ -746,8 +762,11 @@
             DOM.behav.innerHTML = behavs ? shuffle(behavs).slice(0, 3).join('<br>') : '• 独特的人格魅力';
             DOM.conf.textContent = '置信度：' + conf + '%';
 
-            // 自动播放音乐
-            playRandomMusic();
+            // 更新音乐显示状态
+            if (musicState.playing) {
+                DOM.musicTitle.textContent = '🎵 ' + (musicState.current ? musicState.current.t : '正在播放');
+                DOM.musicArtist.textContent = musicState.current ? musicState.current.a : '二次元歌曲';
+            }
 
             const dims = [
                 {l:'创作者 C',v:STATE.s.C}, {l:'欣赏者 A',v:STATE.s.A},
@@ -839,6 +858,12 @@
             STATE.s = {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};
             STATE.startTime = 0;
             STATE.timeSpent = [];
+            // 停止当前音乐
+            if (musicState.audio) {
+                musicState.audio.pause();
+                musicState.audio = null;
+            }
+            musicState.playing = false;
             hide(DOM.result);
             show(DOM.start);
         }
@@ -872,7 +897,8 @@
                 bars: $('radarBars'),
                 quoteEl: $('randomQuote'),
                 musicTitle: $('musicTitle'),
-                musicArtist: $('musicArtist')
+                musicArtist: $('musicArtist'),
+                musicWave: $('musicWave')
             };
 
             console.log('[COSTI] 绑定事件');
