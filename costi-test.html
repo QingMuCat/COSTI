@@ -1084,13 +1084,29 @@
             }
 
             // 绑定事件
-            startBtn.addEventListener('click', startTest);
-            nextBtn.addEventListener('click', nextQuestion);
-            shareBtn.addEventListener('click', shareResult);
-            restartBtn.addEventListener('click', restartTest);
+            function initEvents() {
+                startBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('开始测试按钮被点击');
+                    startTest();
+                });
+                nextBtn.addEventListener('click', nextQuestion);
+                shareBtn.addEventListener('click', shareResult);
+                restartBtn.addEventListener('click', restartTest);
+            }
 
-            showRandomQuote();
-            console.log('COSTI v3.0 已就绪 - 5 级量表版');
+            // 页面加载完成后初始化
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    showRandomQuote();
+                    initEvents();
+                    console.log('COSTI v3.0 已就绪 - DOM 加载完成');
+                });
+            } else {
+                showRandomQuote();
+                initEvents();
+                console.log('COSTI v3.0 已就绪 - 5 级量表版');
+            }
         })();
     </script>
 </body>
