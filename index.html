@@ -214,70 +214,6 @@
             color: var(--text-light);
             font-weight: 700;
         }
-        .music-player {
-            background: rgba(108, 93, 211, 0.15);
-            border: 1px solid rgba(108, 93, 211, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .music-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s;
-        }
-        .music-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(108, 93, 211, 0.4);
-        }
-        .music-info {
-            flex: 1;
-            text-align: left;
-        }
-        .music-title {
-            font-size: 14px;
-            color: var(--text-light);
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        .music-artist {
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-        .music-wave {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 30px;
-        }
-        .wave-bar {
-            width: 4px;
-            background: var(--accent);
-            border-radius: 2px;
-            animation: wave 1s ease-in-out infinite;
-        }
-        .wave-bar:nth-child(1) { height: 60%; animation-delay: 0s; }
-        .wave-bar:nth-child(2) { height: 80%; animation-delay: 0.2s; }
-        .wave-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
-        .wave-bar:nth-child(4) { height: 100%; animation-delay: 0.6s; }
-        .wave-bar:nth-child(5) { height: 70%; animation-delay: 0.8s; }
-        @keyframes wave {
-            0%, 100% { transform: scaleY(0.5); }
-            50% { transform: scaleY(1); }
-        }
         .loading { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
         .loading-dot {
             width: 12px;
@@ -309,6 +245,40 @@
             margin-top: 30px;
         }
         .nav-btns .btn { margin-top: 0; flex: 1; }
+        .music-player {
+            background: rgba(108, 93, 211, 0.15);
+            border: 1px solid rgba(108, 93, 211, 0.3);
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .music-info { flex: 1; text-align: left; }
+        .music-title { font-size: 14px; color: var(--text-light); font-weight: 700; margin-bottom: 5px; }
+        .music-artist { font-size: 12px; color: var(--text-dim); }
+        .music-wave {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 30px;
+        }
+        .wave-bar {
+            width: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        .wave-bar:nth-child(1) { height: 60%; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { height: 100%; animation-delay: 0.6s; }
+        .wave-bar:nth-child(5) { height: 70%; animation-delay: 0.8s; }
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
         @media (max-width: 480px) {
             .container { padding: 30px 15px 40px; }
             .question-card { padding: 30px 20px; }
@@ -325,7 +295,7 @@
         <header class="header">
             <div class="title-jp">ディメンション・セイセイ</div>
             <h1 class="main-title">次元相性</h1>
-            <p class="subtitle">二次元 COS 圈人格测试 v6.0</p>
+            <p class="subtitle">二次元 COS 圈人格测试 v6.3</p>
             <p class="slogan" id="randomQuote">"当次元壁破碎时，你会成为谁？"</p>
         </header>
 
@@ -347,7 +317,7 @@
         </div>
 
         <div id="test-screen" class="hidden">
-            <div class="music-player" style="margin-bottom: 20px;">
+            <div class="music-player">
                 <div class="music-info">
                     <div class="music-title" id="musicTitle">🎵 准备播放</div>
                     <div class="music-artist" id="musicArtist">二次元歌曲</div>
@@ -395,19 +365,6 @@
                 <div class="type-name" id="typeName">造物主</div>
                 <div class="confidence-badge" id="confidenceBadge">置信度：85%</div>
                 <div class="type-quote" id="typeQuote">"手是借来的，肝是自己的"</div>
-                <div class="music-player">
-                    <div class="music-info">
-                        <div class="music-title">🎵 背景音乐持续播放中</div>
-                        <div class="music-artist">享受你的 COS 人格测试之旅</div>
-                    </div>
-                    <div class="music-wave">
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                        <div class="wave-bar"></div>
-                    </div>
-                </div>
                 <div class="type-description">
                     <h3>✨ 核心特质</h3>
                     <p id="typeDesc">手工狂魔，享受从零到一的造物快感。</p>
@@ -436,9 +393,8 @@
         'use strict';
 
         // ========== 数据模块 ==========
-        const DATA = {
+        var DATA = {
             questions: [
-                // C/A 维度：创作者 vs 欣赏者（6 题）
                 { text: "看到喜欢的角色，你更倾向于：", dim: "CA", s: [
                     {v:2,t:"立刻开始研究怎么做全套装备"}, {v:1,t:"会考虑自己动手试试"}, {v:0,t:"看情况，有时间就自己做"}, {v:-1,t:"更期待看到别人还原的作品"}, {v:-2,t:"默默保存图片当壁纸"}
                 ]},
@@ -457,8 +413,6 @@
                 { text: "对于 COS 教程视频：", dim: "CA", s: [
                     {v:2,t:"收藏了就会跟着做"}, {v:1,t:"有时会尝试"}, {v:0,t:"看心情"}, {v:-1,t:"收藏了等于做了"}, {v:-2,t:"很少看教程"}
                 ]},
-                
-                // O/I 维度：舞台型 vs 圈内型（6 题）
                 { text: "理想的漫展一天：", dim: "OI", s: [
                     {v:2,t:"上台比赛/游场被围拍"}, {v:1,t:"多拍照多社交"}, {v:0,t:"随意逛逛，看心情"}, {v:-1,t:"和亲友小聚/逛摊位"}, {v:-2,t:"安静集邮，和认识的人玩"}
                 ]},
@@ -477,8 +431,6 @@
                 { text: "漫展结束后，你会：", dim: "OI", s: [
                     {v:2,t:"发总结动态/整理照片"}, {v:1,t:"发一些照片"}, {v:0,t:"看心情"}, {v:-1,t:"回家休息"}, {v:-2,t:"彻底消失几天"}
                 ]},
-                
-                // S/F 维度：手工型 vs 氪金型（6 题）
                 { text: "道具做不出来时，你会：", dim: "SF", s: [
                     {v:2,t:"熬夜查教程/换材料/请教大佬"}, {v:1,t:"尝试多种解决方案"}, {v:0,t:"看情况决定"}, {v:-1,t:"考虑买现成的"}, {v:-2,t:"直接打开淘宝/闲鱼"}
                 ]},
@@ -497,8 +449,6 @@
                 { text: "对于二手 COS 装备：", dim: "SF", s: [
                     {v:2,t:"买回来自己改造"}, {v:1,t:"会考虑"}, {v:0,t:"看性价比"}, {v:-1,t:"更倾向全新的"}, {v:-2,t:"只买全新或名家手作"}
                 ]},
-                
-                // P/R 维度：完美型 vs 随性型（4 题）
                 { text: "距离漫展 3 天，发现衣服尺寸不对：", dim: "PR", s: [
                     {v:2,t:"熬夜改/重新做，必须完美"}, {v:1,t:"尽量改到满意"}, {v:0,t:"能穿就行"}, {v:-1,t:"用别针固定一下"}, {v:-2,t:"反正拍照看不出来"}
                 ]},
@@ -511,15 +461,13 @@
                 { text: "出片后发现有穿帮：", dim: "PR", s: [
                     {v:2,t:"必须重修/重拍，不能留遗憾"}, {v:1,t:"尽量修掉"}, {v:0,t:"看严重程度"}, {v:-1,t:"算了，下次注意"}, {v:-2,t:"不仔细看发现不了"}
                 ]},
-                
-                // 新增场景题（3 题）
-                { text: "对于 COS 圈'内卷'现象：", dim: "PR", s: [
+                { text: "对于 COS 圈内卷现象：", dim: "PR", s: [
                     {v:2,t:"焦虑，被迫跟着卷"}, {v:1,t:"有点压力"}, {v:0,t:"无所谓"}, {v:-1,t:"不关我事"}, {v:-2,t:"坚决反卷"}
                 ]},
                 { text: "线上社群的参与程度：", dim: "OI", s: [
                     {v:2,t:"天天冒泡，组织活动"}, {v:1,t:"经常参与"}, {v:0,t:"偶尔看看"}, {v:-1,t:"很少说话"}, {v:-2,t:"潜水党"}
                 ]},
-                { text: "对于博主/KOL 的态度：", dim: "CA", s: [
+                { text: "对于博主 KOL 的态度：", dim: "CA", s: [
                     {v:2,t:"学习技术，关注更新"}, {v:1,t:"偶尔看看"}, {v:0,t:"看心情"}, {v:-1,t:"当娱乐看看"}, {v:-2,t:"不关注"}
                 ]}
             ],
@@ -563,43 +511,43 @@
             },
 
             music: [
-                {t:"unravel", a:"TK from 凛として時雨《东京食尸鬼》"},
-                {t:"红莲华", a:"LiSA《鬼灭之刃》"},
-                {t:"直到世界尽头", a:"WANDS《灌篮高手》"},
-                {t:"Butter-Fly", a:"和田光司《数码宝贝》"},
-                {t:"aLIEz", a:"mizuki《ALDNOAH.ZERO》"},
-                {t:"我的战斗", a:"Linked Horizon《进击的巨人》"},
-                {t:"青鸟", a:"生物股长《火影忍者》"},
-                {t:"only my railgun", a:"fripSide《某科学的超电磁炮》"},
-                {t:"Crossing Field", a:"LiSA《刀剑神域》"},
-                {t:"梦的光点", a:"王心凌《神兵小将》"},
-                {t:"恋爱循环", a:"花泽香菜《化物语》"},
-                {t:"白金 Disco", a:"井口裕香《伪物语》"},
-                {t:"God knows...", a:"平野绫《凉宫春日的忧郁》"},
-                {t:"鸟之诗", a:"Lia《AIR》"},
-                {t:"残酷天使的行动纲领", a:"高桥洋子《EVA》"}
+                {t:"unravel", a:"TK from 凛として時雨"},
+                {t:"红莲华", a:"LiSA"},
+                {t:"直到世界尽头", a:"WANDS"},
+                {t:"Butter-Fly", a:"和田光司"},
+                {t:"aLIEz", a:"mizuki"},
+                {t:"我的战斗", a:"Linked Horizon"},
+                {t:"青鸟", a:"生物股长"},
+                {t:"only my railgun", a:"fripSide"},
+                {t:"Crossing Field", a:"LiSA"},
+                {t:"梦的光点", a:"王心凌"},
+                {t:"恋爱循环", a:"花泽香菜"},
+                {t:"白金 Disco", a:"井口裕香"},
+                {t:"God knows...", a:"平野绫"},
+                {t:"鸟之诗", a:"Lia"},
+                {t:"残酷天使的行动纲领", a:"高桥洋子"}
             ],
 
             quotes: [
                 {t:"当次元壁破碎时，你会成为谁？", s:"原创"},
-                {t:"人不是什么时候都能活的光明正大，人生总是要背着一些污点活着。", s:"《反叛的鲁路修》"},
-                {t:"我只是一个路过的假面骑士，给我记好了！", s:"《假面骑士 Decade》"},
-                {t:"人类的赞歌就是勇气的赞歌！", s:"《JOJO 的奇妙冒险》"},
-                {t:"真相永远只有一个！", s:"《名侦探柯南》"},
-                {t:"我是要成为海贼王的男人！", s:"《海贼王》"},
-                {t:"已经没什么好害怕的了", s:"《魔法少女小圆》"},
-                {t:"这个世界是残酷的，但却也是美好的。", s:"《进击的巨人》"},
-                {t:"只要有树叶飞舞的地方，火就会燃烧。", s:"《火影忍者》"},
-                {t:"能打败你的，只有你自己。", s:"《排球少年》"},
-                {t:"如果结果不如你所愿，那就在尘埃落定前奋力一搏。", s:"《夏目友人帐》"},
-                {t:"不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福。", s:"《千与千寻》"},
-                {t:"我们的征途是星辰大海！", s:"《银河英雄传说》"},
-                {t:"只要还有一口气，就要把该做的事做到底。", s:"《鬼灭之刃》"}
+                {t:"人不是什么时候都能活的光明正大，人生总是要背着一些污点活着。", s:"反叛的鲁路修"},
+                {t:"我只是一个路过的假面骑士，给我记好了！", s:"假面骑士 Decade"},
+                {t:"人类的赞歌就是勇气的赞歌！", s:"JOJO 的奇妙冒险"},
+                {t:"真相永远只有一个！", s:"名侦探柯南"},
+                {t:"我是要成为海贼王的男人！", s:"海贼王"},
+                {t:"已经没什么好害怕的了", s:"魔法少女小圆"},
+                {t:"这个世界是残酷的，但却也是美好的。", s:"进击的巨人"},
+                {t:"只要有树叶飞舞的地方，火就会燃烧。", s:"火影忍者"},
+                {t:"能打败你的，只有你自己。", s:"排球少年"},
+                {t:"如果结果不如你所愿，那就在尘埃落定前奋力一搏。", s:"夏目友人帐"},
+                {t:"不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福。", s:"千与千寻"},
+                {t:"我们的征途是星辰大海！", s:"银河英雄传说"},
+                {t:"只要还有一口气，就要把该做的事做到底。", s:"鬼灭之刃"}
             ]
         };
 
         // ========== 状态模块 ==========
-        const STATE = {
+        var STATE = {
             q: 0,
             a: [],
             s: {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0},
@@ -608,17 +556,24 @@
             timeSpent: []
         };
 
+        // ========== 音乐状态 ==========
+        var musicState = {
+            playing: false,
+            current: null,
+            audio: null
+        };
+
         // ========== DOM 元素 ==========
-        let DOM = {};
+        var DOM = {};
 
         // ========== 工具函数 ==========
-        function $(id) { return document.getElementById(id); }
-        function show(a) { a.classList.remove('hidden'); }
-        function hide(a) { a.classList.add('hidden'); }
+        function gid(id) { return document.getElementById(id); }
+        function show(el) { el.classList.remove('hidden'); }
+        function hide(el) { el.classList.add('hidden'); }
         function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
         function shuffle(arr) { 
             if (!arr || !Array.isArray(arr)) return [];
-            return arr.slice().sort(() => Math.random() - 0.5); 
+            return arr.slice().sort(function() { return Math.random() - 0.5; }); 
         }
 
         // ========== 核心逻辑 ==========
@@ -628,39 +583,43 @@
             STATE.timeSpent = [];
             hide(DOM.start);
             show(DOM.test);
-            // 开始播放音乐
             playRandomMusic();
             renderQ();
         }
 
         function renderQ() {
-            const q = DATA.questions[STATE.q];
+            var q = DATA.questions[STATE.q];
             DOM.curQ.textContent = STATE.q + 1;
             DOM.progress.textContent = Math.round((STATE.q / 25) * 100) + '%';
             DOM.bar.style.width = (STATE.q / 25 * 100) + '%';
 
-            let html = '<div class="question-card"><div class="question-number">QUESTION ' + (STATE.q + 1) + '</div>';
+            var html = '<div class="question-card"><div class="question-number">QUESTION ' + (STATE.q + 1) + '</div>';
             html += '<div class="question-text">' + q.text + '</div><div class="likert-scale">';
             
-            q.s.forEach(function(opt) {
-                const val = opt.v > 0 ? '+' + opt.v : opt.v;
+            for (var i = 0; i < q.s.length; i++) {
+                var opt = q.s[i];
+                var val = opt.v > 0 ? '+' + opt.v : opt.v;
                 html += '<div class="likert-option" data-v="' + opt.v + '">';
                 html += '<div class="likert-value">' + val + '</div>';
                 html += '<div class="likert-text">' + opt.t + '</div></div>';
-            });
+            }
             
             html += '</div></div>';
             DOM.qCon.innerHTML = html;
 
-            const opts = DOM.qCon.querySelectorAll('.likert-option');
-            opts.forEach(function(o) {
-                o.onclick = function() {
-                    opts.forEach(function(x) { x.classList.remove('selected'); });
-                    this.classList.add('selected');
-                    STATE.a[STATE.q] = { dim: q.dim, v: parseInt(this.getAttribute('data-v')) };
-                    DOM.next.disabled = false;
-                };
-            });
+            var opts = DOM.qCon.querySelectorAll('.likert-option');
+            for (var j = 0; j < opts.length; j++) {
+                (function(o) {
+                    o.onclick = function() {
+                        for (var k = 0; k < opts.length; k++) {
+                            opts[k].classList.remove('selected');
+                        }
+                        this.classList.add('selected');
+                        STATE.a[STATE.q] = { dim: q.dim, v: parseInt(this.getAttribute('data-v')) };
+                        DOM.next.disabled = false;
+                    };
+                })(opts[j]);
+            }
 
             DOM.next.disabled = !STATE.a[STATE.q];
             DOM.prev.disabled = STATE.q === 0;
@@ -670,10 +629,9 @@
             if (!STATE.a[STATE.q]) return;
             STATE.timeSpent[STATE.q] = Date.now();
             
-            const a = STATE.a[STATE.q];
-            const dim = a.dim;
+            var a = STATE.a[STATE.q];
+            var dim = a.dim;
             
-            // 修复后的计分逻辑：相对倾向
             if (a.v > 0) {
                 STATE.s[dim[0]] += a.v;
             } else if (a.v < 0) {
@@ -698,7 +656,7 @@
         }
 
         function calcType() {
-            let t = '';
+            var t = '';
             t += (STATE.s.C >= STATE.s.A) ? 'C' : 'A';
             t += (STATE.s.O >= STATE.s.I) ? 'O' : 'I';
             t += (STATE.s.S >= STATE.s.F) ? 'S' : 'F';
@@ -707,52 +665,34 @@
         }
 
         function calcConf() {
-            // 优化后的置信度算法
-            const diffs = [
+            var diffs = [
                 Math.abs(STATE.s.C - STATE.s.A),
                 Math.abs(STATE.s.O - STATE.s.I),
                 Math.abs(STATE.s.S - STATE.s.F),
                 Math.abs(STATE.s.P - STATE.s.R)
             ];
-            const avgDiff = diffs.reduce((a,b) => a+b, 0) / 4;
-            const totalScore = STATE.s.C + STATE.s.A + STATE.s.O + STATE.s.I + 
-                              STATE.s.S + STATE.s.F + STATE.s.P + STATE.s.R;
+            var avgDiff = (diffs[0] + diffs[1] + diffs[2] + diffs[3]) / 4;
+            var totalScore = STATE.s.C + STATE.s.A + STATE.s.O + STATE.s.I + 
+                            STATE.s.S + STATE.s.F + STATE.s.P + STATE.s.R;
             
-            // 检测答题时间（防止刷分）
-            const totalTime = (Date.now() - STATE.startTime) / 1000;
-            const avgTime = totalTime / 25;
-            const timePenalty = avgTime < 3 ? 20 : 0; // 每题少于 3 秒扣 20 分
+            var totalTime = (Date.now() - STATE.startTime) / 1000;
+            var avgTime = totalTime / 25;
+            var timePenalty = avgTime < 3 ? 20 : 0;
             
-            const diffContrib = Math.min(30, avgDiff * 3);
-            const activeContrib = Math.min(20, totalScore / 2);
+            var diffContrib = Math.min(30, avgDiff * 3);
+            var activeContrib = Math.min(20, totalScore / 2);
             
             return Math.min(95, Math.max(50, Math.round(50 + diffContrib + activeContrib - timePenalty)));
-        }
-
-        function calcSub(main) {
-            const sorted = Object.entries(STATE.s).sort((a,b) => b[1]-a[1]);
-            const letters = main.split('');
-            for (let i = 0; i < sorted.length; i++) {
-                const l = sorted[i][0];
-                if (letters.indexOf(l) === -1) {
-                    const sub = main.split('');
-                    for (let j = 0; j < 4; j++) {
-                        if (sub[j] !== l) { sub[j] = l; break; }
-                    }
-                    return sub.join('');
-                }
-            }
-            return main;
         }
 
         function showResult() {
             hide(DOM.load);
             show(DOM.result);
 
-            const code = calcType();
-            const res = DATA.types[code] || DATA.types.COSP;
-            const conf = calcConf();
-            const behavs = DATA.behaviors[code] || DATA.behaviors.COSP;
+            var code = calcType();
+            var res = DATA.types[code] || DATA.types.COSP;
+            var conf = calcConf();
+            var behavs = DATA.behaviors[code] || DATA.behaviors.COSP;
 
             DOM.icon.textContent = res.i;
             DOM.code.textContent = code;
@@ -762,32 +702,32 @@
             DOM.behav.innerHTML = behavs ? shuffle(behavs).slice(0, 3).join('<br>') : '• 独特的人格魅力';
             DOM.conf.textContent = '置信度：' + conf + '%';
 
-            // 更新音乐显示状态
-            if (musicState.playing) {
-                DOM.musicTitle.textContent = '🎵 ' + (musicState.current ? musicState.current.t : '正在播放');
-                DOM.musicArtist.textContent = musicState.current ? musicState.current.a : '二次元歌曲';
+            if (musicState.playing && musicState.current) {
+                DOM.musicTitle.textContent = '🎵 ' + musicState.current.t;
+                DOM.musicArtist.textContent = musicState.current.a;
             }
 
-            const dims = [
+            var dims = [
                 {l:'创作者 C',v:STATE.s.C}, {l:'欣赏者 A',v:STATE.s.A},
                 {l:'舞台型 O',v:STATE.s.O}, {l:'圈内型 I',v:STATE.s.I},
                 {l:'手工型 S',v:STATE.s.S}, {l:'氪金型 F',v:STATE.s.F},
                 {l:'完美型 P',v:STATE.s.P}, {l:'随性型 R',v:STATE.s.R}
             ];
 
-            let bars = '';
-            dims.forEach(function(d) {
-                const pct = Math.min(100, (d.v / STATE.max * 100));
+            var bars = '';
+            for (var i = 0; i < dims.length; i++) {
+                var d = dims[i];
+                var pct = Math.min(100, (d.v / STATE.max * 100));
                 bars += '<div class="dimension-bar"><div class="dimension-label">';
                 bars += '<span>' + d.l + '</span><span>' + d.v + '/' + STATE.max + '</span></div>';
                 bars += '<div class="dimension-track"><div class="dimension-fill" style="width:' + pct + '%"></div>';
                 bars += '<span class="dimension-percent">' + Math.round(pct) + '%</span></div></div>';
-            });
+            }
             DOM.bars.innerHTML = bars;
         }
 
         function share() {
-            const txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent + '\n来自：次元相性测试 v6.0';
+            var txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent + '\n来自：次元相性测试 v6.3';
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(txt).then(function() { alert('结果已复制！'); });
             } else {
@@ -799,44 +739,62 @@
             alert('图片生成功能开发中... 敬请期待！');
         }
 
-        // ========== 音乐播放器 ==========
-        let musicState = {
-            playing: false,
-            current: null,
-            audio: null
-        };
+        function restart() {
+            STATE.q = 0;
+            STATE.a = [];
+            STATE.s = {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};
+            STATE.startTime = 0;
+            STATE.timeSpent = [];
+            if (musicState.audio) {
+                musicState.audio.pause();
+                musicState.audio = null;
+            }
+            musicState.playing = false;
+            hide(DOM.result);
+            show(DOM.start);
+        }
 
+        function showQuote() {
+            var q = rand(DATA.quotes);
+            DOM.quoteEl.textContent = '"' + q.t + '" —— ' + q.s;
+        }
+
+        // ========== 音乐播放器 ==========
         function playRandomMusic() {
-            const song = rand(DATA.music);
+            var song = rand(DATA.music);
             musicState.current = song;
             
-            // 使用网易云音乐外链（示例）
-            // 实际使用时需要替换为有效的音频 URL
-            const url = 'https://music.163.com/song/media/outer/url?id=' + getMusicId(song.t) + '.mp3';
+            var url = 'https://music.163.com/song/media/outer/url?id=' + getMusicId(song.t) + '.mp3';
             
             musicState.audio = new Audio(url);
             musicState.audio.onended = function() {
-                playRandomMusic(); // 播放完后随机下一首
+                playRandomMusic();
             };
             musicState.audio.onerror = function() {
-                DOM.musicTitle.textContent = '播放失败，请手动播放';
-                DOM.musicWave.classList.add('hidden');
+                if (DOM.musicTitle) {
+                    DOM.musicTitle.textContent = '播放失败，请手动播放';
+                    DOM.musicWave.classList.add('hidden');
+                }
             };
             
             musicState.audio.play().then(function() {
                 musicState.playing = true;
-                DOM.musicTitle.textContent = '🎵 ' + song.t;
-                DOM.musicArtist.textContent = song.a;
+                if (DOM.musicTitle) {
+                    DOM.musicTitle.textContent = '🎵 ' + song.t;
+                    DOM.musicArtist.textContent = song.a;
+                    DOM.musicWave.classList.remove('hidden');
+                }
             }).catch(function(e) {
                 console.log('[COSTI] 音乐播放失败:', e);
-                DOM.musicTitle.textContent = '🎵 播放失败（浏览器限制）';
-                DOM.musicArtist.textContent = song.t + ' - ' + song.a;
+                if (DOM.musicTitle) {
+                    DOM.musicTitle.textContent = '🎵 播放失败（浏览器限制）';
+                    DOM.musicArtist.textContent = song.t + ' - ' + song.a;
+                }
             });
         }
 
         function getMusicId(name) {
-            // 简化的 ID 映射（实际需要完整的歌曲 ID 数据库）
-            const ids = {
+            var ids = {
                 'unravel': '1031063946',
                 '红莲华': '1377518821',
                 '直到世界尽头': '1397031',
@@ -849,72 +807,64 @@
                 '鸟之诗': '1397076',
                 '残酷天使的行动纲领': '1397080'
             };
-            return ids[name] || '1397031'; // 默认返回一个 ID
-        }
-
-        function restart() {
-            STATE.q = 0;
-            STATE.a = [];
-            STATE.s = {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};
-            STATE.startTime = 0;
-            STATE.timeSpent = [];
-            // 停止当前音乐
-            if (musicState.audio) {
-                musicState.audio.pause();
-                musicState.audio = null;
-            }
-            musicState.playing = false;
-            hide(DOM.result);
-            show(DOM.start);
-        }
-
-        function showQuote() {
-            const q = rand(DATA.quotes);
-            DOM.quoteEl.textContent = '"' + q.t + '" —— ' + q.s;
+            return ids[name] || '1397031';
         }
 
         // ========== 初始化 ==========
         function init() {
             console.log('[COSTI] 初始化 DOM');
             DOM = {
-                start: $('start-screen'),
-                test: $('test-screen'),
-                load: $('loading-screen'),
-                result: $('result-screen'),
-                curQ: $('currentQ'),
-                progress: $('progressPercent'),
-                bar: $('progressBar'),
-                qCon: $('questionContainer'),
-                next: $('nextBtn'),
-                prev: $('prevBtn'),
-                icon: $('typeIcon'),
-                code: $('typeCode'),
-                name: $('typeName'),
-                quote: $('typeQuote'),
-                desc: $('typeDesc'),
-                behav: $('typeBehaviors'),
-                conf: $('confidenceBadge'),
-                bars: $('radarBars'),
-                quoteEl: $('randomQuote'),
-                musicTitle: $('musicTitle'),
-                musicArtist: $('musicArtist'),
-                musicWave: $('musicWave')
+                start: gid('start-screen'),
+                test: gid('test-screen'),
+                load: gid('loading-screen'),
+                result: gid('result-screen'),
+                curQ: gid('currentQ'),
+                progress: gid('progressPercent'),
+                bar: gid('progressBar'),
+                qCon: gid('questionContainer'),
+                next: gid('nextBtn'),
+                prev: gid('prevBtn'),
+                icon: gid('typeIcon'),
+                code: gid('typeCode'),
+                name: gid('typeName'),
+                quote: gid('typeQuote'),
+                desc: gid('typeDesc'),
+                behav: gid('typeBehaviors'),
+                conf: gid('confidenceBadge'),
+                bars: gid('radarBars'),
+                quoteEl: gid('randomQuote'),
+                musicTitle: gid('musicTitle'),
+                musicArtist: gid('musicArtist'),
+                musicWave: gid('musicWave')
             };
 
             console.log('[COSTI] 绑定事件');
-            $('startBtn').onclick = function(e) {
-                e.preventDefault();
-                console.log('[COSTI] 开始按钮点击');
-                start();
-            };
-            $('nextBtn').onclick = next;
-            $('prevBtn').onclick = prev;
-            $('shareBtn').onclick = share;
-            $('imgShareBtn').onclick = imgShare;
-            $('restartBtn').onclick = restart;
+            var startBtn = gid('startBtn');
+            if (startBtn) {
+                startBtn.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('[COSTI] 开始按钮点击');
+                    start();
+                };
+            }
+            
+            var nextBtn = gid('nextBtn');
+            if (nextBtn) nextBtn.onclick = next;
+            
+            var prevBtn = gid('prevBtn');
+            if (prevBtn) prevBtn.onclick = prev;
+            
+            var shareBtn = gid('shareBtn');
+            if (shareBtn) shareBtn.onclick = share;
+            
+            var imgShareBtn = gid('imgShareBtn');
+            if (imgShareBtn) imgShareBtn.onclick = imgShare;
+            
+            var restartBtn = gid('restartBtn');
+            if (restartBtn) restartBtn.onclick = restart;
 
             showQuote();
-            console.log('[COSTI] 初始化完成 - v6.1 全局随机播放');
+            console.log('[COSTI] 初始化完成 - v6.3');
         }
 
         // 页面加载完成后初始化
