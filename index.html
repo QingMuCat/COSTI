@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 680px;
+            max-width: 720px;
             margin: 0 auto;
             padding: 40px 20px 60px;
         }
@@ -113,6 +113,16 @@
             margin-bottom: 20px;
         }
 
+        .question-weight {
+            display: inline-block;
+            background: rgba(255, 107, 157, 0.2);
+            color: var(--accent-pink);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
         .question-text {
             font-size: 20px;
             line-height: 1.6;
@@ -122,14 +132,14 @@
         .options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .option {
             background: rgba(108, 93, 211, 0.1);
             border: 2px solid rgba(108, 93, 211, 0.3);
             border-radius: 16px;
-            padding: 20px 24px;
+            padding: 16px 20px;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -147,7 +157,7 @@
         }
 
         .option-text {
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.5;
         }
 
@@ -184,24 +194,6 @@
         }
 
         .hidden { display: none !important; }
-
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-dim);
-            font-size: 14px;
-            border-top: 1px solid rgba(108, 93, 211, 0.2);
-            margin-top: 40px;
-        }
-
-        .footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
 
         .result-card {
             background: rgba(18, 18, 42, 0.9);
@@ -255,6 +247,16 @@
             margin-bottom: 40px;
         }
 
+        .confidence-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
         .type-description {
             background: rgba(108, 93, 211, 0.1);
             border-radius: 20px;
@@ -290,17 +292,48 @@
 
         .dimension-track {
             background: rgba(108, 93, 211, 0.2);
-            height: 8px;
-            border-radius: 4px;
+            height: 10px;
+            border-radius: 5px;
             overflow: hidden;
+            position: relative;
         }
 
         .dimension-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
+            border-radius: 5px;
             width: 0%;
             transition: width 1s;
+        }
+
+        .dimension-percent {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .sub-type {
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .sub-type-title {
+            font-size: 14px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .sub-type-code {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-light);
         }
 
         .loading {
@@ -328,6 +361,24 @@
             40% { transform: scale(1); }
         }
 
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-dim);
+            font-size: 14px;
+            border-top: 1px solid rgba(108, 93, 211, 0.2);
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 480px) {
             .container { padding: 30px 15px 40px; }
             .question-card { padding: 30px 20px; }
@@ -344,7 +395,7 @@
         <header class="header">
             <div class="title-jp">ディメンション・セイセイ</div>
             <h1 class="main-title">次元相性</h1>
-            <p class="subtitle">二次元 COS 圈人格测试</p>
+            <p class="subtitle">二次元 COS 圈人格测试 v2.0</p>
             <p class="slogan" id="randomQuote">"当次元壁破碎时，你会成为谁？"</p>
         </header>
 
@@ -352,19 +403,21 @@
             <div class="question-card">
                 <div style="font-size: 24px; margin-bottom: 20px;">🎭 在无数角色中，找到属于你的那一面</div>
                 <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 30px;">
-                    通过 30 道精心设计的题目，诊断你的 COS 圈人格类型。
+                    通过 40 道精心设计的题目，诊断你的 COS 圈人格类型。<br>
+                    ✨ 新增：权重系统 + 置信度评估 + 主副类型分析
                 </p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
-                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 3-5 分钟</span>
-                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 30 道题</span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 5-8 分钟</span>
+                    <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 40 道题</span>
                     <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎯 16 种结果</span>
+                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">✅ 置信度</span>
                 </div>
                 <button class="btn" id="startBtn">开始测试</button>
             </div>
         </div>
 
         <div id="test-screen" class="hidden">
-            <div class="progress-text">问题 <span id="currentQ">1</span> / 30</div>
+            <div class="progress-text">问题 <span id="currentQ">1</span> / 40</div>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
@@ -389,17 +442,26 @@
                 <div class="type-icon" id="typeIcon">🛠️</div>
                 <div class="type-code" id="typeCode">COSP</div>
                 <div class="type-name" id="typeName">造物主</div>
+                <div class="confidence-badge" id="confidenceBadge">置信度：85%</div>
                 <div class="type-quote" id="typeQuote">"手是借来的，肝是自己的"</div>
+                
+                <div class="sub-type hidden" id="subTypeContainer">
+                    <div class="sub-type-title">🔸 次要倾向</div>
+                    <div class="sub-type-code" id="subTypeCode">COSR · 佛系手作娘</div>
+                </div>
+
                 <div class="type-description">
                     <h3>✨ 核心特质</h3>
                     <p id="typeDesc">手工狂魔，享受从零到一的造物快感。</p>
                     <h3>🎯 典型行为</h3>
                     <p id="typeBehaviors">• 收藏夹里全是教程</p>
                 </div>
+                
                 <div style="margin: 30px 0;">
                     <h3 style="color: var(--accent); margin-bottom: 20px;">📊 维度分析</h3>
                     <div id="radarBars"></div>
                 </div>
+                
                 <button class="btn" id="shareBtn">📤 分享结果</button>
                 <button class="btn btn-secondary" id="restartBtn">🔄 再测一次</button>
             </div>
@@ -413,63 +475,82 @@
 
     <script>
         (function() {
-            // 题库
+            // 题库 - 40 题，带权重
+            // weight: 1.5=核心题，1.0=普通题，0.8=边缘题
             const questions = [
-                { text: "看到喜欢的角色立绘，你的第一反应是：", options: [{ text: "开始研究怎么做这套衣服/道具", type: "C" }, { text: "保存图片，期待看到别人的还原作品", type: "A" }] },
-                { text: "漫展结束后，你更想发：", options: [{ text: "自己的场照/正片", type: "C" }, { text: "集邮合集/返图", type: "A" }] },
-                { text: "关注列表里占比更多的是：", options: [{ text: "妆娘/毛娘/道具师", type: "C" }, { text: "画师/摄影/同好", type: "A" }] },
-                { text: "对于买 cos 服的态度：", options: [{ text: "能自己做就自己做", type: "C" }, { text: "正常消费省时省力", type: "A" }] },
-                { text: "看到别人的精致道具：", options: [{ text: "凑近观察想学习", type: "C" }, { text: "感叹好还原", type: "A" }] },
-                { text: "空闲时间的 COS 活动：", options: [{ text: "肝道具/试妆", type: "C" }, { text: "刷返图/看舞台剧", type: "A" }] },
-                { text: "对于出冷门角色：", options: [{ text: "更有动力自己做全套", type: "C" }, { text: "观望等装备成熟", type: "A" }] },
-                { text: "更享受的时刻：", options: [{ text: "道具完成的瞬间", type: "C" }, { text: "被认出角色/收到返图", type: "A" }] },
-                { text: "理想的漫展一天：", options: [{ text: "上台比赛/被围拍", type: "O" }, { text: "和亲友小聚/逛摊", type: "I" }] },
-                { text: "被摄影围拍的感受：", options: [{ text: "兴奋认可", type: "O" }, { text: "紧张喜欢熟人拍", type: "I" }] },
-                { text: "出片场景偏好：", options: [{ text: "大场景/舞台", type: "O" }, { text: "摄影棚/小树林", type: "I" }] },
-                { text: "COS 社团参与：", options: [{ text: "舞台剧/比赛", type: "O" }, { text: "后勤/聚餐", type: "I" }] },
-                { text: "线上营业态度：", options: [{ text: "积极发片", type: "O" }, { text: "小圈子分享", type: "I" }] },
-                { text: "漫展前准备重心：", options: [{ text: "练习动作表情", type: "O" }, { text: "确认约会", type: "I" }] },
-                { text: "更喜欢的 COS 回忆：", options: [{ text: "舞台掌声/被集邮", type: "O" }, { text: "和亲友聊天", type: "I" }] },
-                { text: "道具做不出来时：", options: [{ text: "查教程请教", type: "S" }, { text: "淘宝闲鱼", type: "F" }] },
-                { text: "对于手作的看法：", options: [{ text: "核心乐趣", type: "S" }, { text: "时间成本太高", type: "F" }] },
-                { text: "装备来源比例：", options: [{ text: "70% 自制", type: "S" }, { text: "70% 购买", type: "F" }] },
-                { text: "看到 99 元全套推送：", options: [{ text: "好奇但不买", type: "S" }, { text: "看看评价", type: "F" }] },
-                { text: "对毛娘妆娘态度：", options: [{ text: "尽量自己学", type: "S" }, { text: "专业的事专业人", type: "F" }] },
-                { text: "漫展前一周在：", options: [{ text: "手搓配饰", type: "S" }, { text: "确认快递", type: "F" }] },
-                { text: "对二手 COS 服：", options: [{ text: "买材料改", type: "S" }, { text: "状态好就入", type: "F" }] },
-                { text: "更自豪的是：", options: [{ text: "自己做的", type: "S" }, { text: "抢到限量款", type: "F" }] },
-                { text: "衣服尺寸不对：", options: [{ text: "熬夜改完美", type: "P" }, { text: "别针固定", type: "R" }] },
-                { text: "对还原度要求：", options: [{ text: "细节到位", type: "P" }, { text: "感觉对就行", type: "R" }] },
-                { text: "准备新角色：", options: [{ text: "拉表制定计划", type: "P" }, { text: "大概齐", type: "R" }] },
-                { text: "看到别人更精致：", options: [{ text: "焦虑想升级", type: "P" }, { text: "欣赏各有节奏", type: "R" }] },
-                { text: "出片有穿帮：", options: [{ text: "重修重拍", type: "P" }, { text: "算了下次注意", type: "R" }] },
-                { text: "试妆频率：", options: [{ text: "至少 2-3 次", type: "P" }, { text: "当天第一次", type: "R" }] },
-                { text: "COS 座右铭：", options: [{ text: "要做就做到最好", type: "P" }, { text: "开心就好", type: "R" }] }
+                // C/A 维度：创作者 vs 欣赏者（10 题）
+                { text: "看到喜欢的角色立绘，你的第一反应是：", dimension: "C/A", weight: 1.5, options: [{ text: "开始研究怎么做这套衣服/道具", type: "C" }, { text: "保存图片，期待看到别人的还原作品", type: "A" }] },
+                { text: "漫展结束后，你更想发：", dimension: "C/A", weight: 1.2, options: [{ text: "自己的场照/正片", type: "C" }, { text: "集邮合集/返图", type: "A" }] },
+                { text: "关注列表里占比更多的是：", dimension: "C/A", weight: 1.0, options: [{ text: "妆娘/毛娘/道具师", type: "C" }, { text: "画师/摄影/同好", type: "A" }] },
+                { text: "对于买 cos 服的态度：", dimension: "C/A", weight: 1.3, options: [{ text: "能自己做就自己做", type: "C" }, { text: "正常消费省时省力", type: "A" }] },
+                { text: "看到别人的精致道具：", dimension: "C/A", weight: 1.0, options: [{ text: "凑近观察想学习", type: "C" }, { text: "感叹好还原", type: "A" }] },
+                { text: "空闲时间的 COS 活动：", dimension: "C/A", weight: 1.2, options: [{ text: "肝道具/试妆", type: "C" }, { text: "刷返图/看舞台剧", type: "A" }] },
+                { text: "对于出冷门角色：", dimension: "C/A", weight: 0.8, options: [{ text: "更有动力自己做全套", type: "C" }, { text: "观望等装备成熟", type: "A" }] },
+                { text: "更享受的时刻：", dimension: "C/A", weight: 1.5, options: [{ text: "道具完成的瞬间", type: "C" }, { text: "被认出角色/收到返图", type: "A" }] },
+                { text: "对于 COS 教程视频：", dimension: "C/A", weight: 1.0, options: [{ text: "收藏了等于做了", type: "A" }, { text: "真的会跟着做", type: "C" }] },
+                { text: "看到好看的 COS：", dimension: "C/A", weight: 0.8, options: [{ text: "点赞收藏转发", type: "A" }, { text: "分析是怎么做的", type: "C" }] },
+                
+                // O/I 维度：舞台型 vs 圈内型（10 题）
+                { text: "理想的漫展一天：", dimension: "O/I", weight: 1.5, options: [{ text: "上台比赛/被围拍", type: "O" }, { text: "和亲友小聚/逛摊", type: "I" }] },
+                { text: "被摄影围拍的感受：", dimension: "O/I", weight: 1.3, options: [{ text: "兴奋认可", type: "O" }, { text: "紧张喜欢熟人拍", type: "I" }] },
+                { text: "出片场景偏好：", dimension: "O/I", weight: 1.2, options: [{ text: "大场景/舞台", type: "O" }, { text: "摄影棚/小树林", type: "I" }] },
+                { text: "COS 社团参与：", dimension: "O/I", weight: 1.0, options: [{ text: "舞台剧/比赛", type: "O" }, { text: "后勤/聚餐", type: "I" }] },
+                { text: "线上营业态度：", dimension: "O/I", weight: 1.2, options: [{ text: "积极发片", type: "O" }, { text: "小圈子分享", type: "I" }] },
+                { text: "漫展前准备重心：", dimension: "O/I", weight: 1.0, options: [{ text: "练习动作表情", type: "O" }, { text: "确认约会", type: "I" }] },
+                { text: "更喜欢的 COS 回忆：", dimension: "O/I", weight: 1.5, options: [{ text: "舞台掌声/被集邮", type: "O" }, { text: "和亲友聊天", type: "I" }] },
+                { text: "对于游场：", dimension: "O/I", weight: 0.8, options: [{ text: "享受被拍", type: "O" }, { text: "只和亲友拍", type: "I" }] },
+                { text: "社交账号更新频率：", dimension: "O/I", weight: 1.0, options: [{ text: "经常发", type: "O" }, { text: "很少发", type: "I" }] },
+                { text: "漫展结束后：", dimension: "O/I", weight: 0.8, options: [{ text: "发总结动态", type: "O" }, { text: "回家休息", type: "I" }] },
+                
+                // S/F 维度：手工型 vs 氪金型（10 题）
+                { text: "道具做不出来时：", dimension: "S/F", weight: 1.5, options: [{ text: "查教程请教", type: "S" }, { text: "淘宝闲鱼", type: "F" }] },
+                { text: "对于手作的看法：", dimension: "S/F", weight: 1.3, options: [{ text: "核心乐趣", type: "S" }, { text: "时间成本太高", type: "F" }] },
+                { text: "装备来源比例：", dimension: "S/F", weight: 1.5, options: [{ text: "70% 自制", type: "S" }, { text: "70% 购买", type: "F" }] },
+                { text: "看到 99 元全套推送：", dimension: "S/F", weight: 0.8, options: [{ text: "好奇但不买", type: "S" }, { text: "看看评价", type: "F" }] },
+                { text: "对毛娘妆娘态度：", dimension: "S/F", weight: 1.2, options: [{ text: "尽量自己学", type: "S" }, { text: "专业的事专业人", type: "F" }] },
+                { text: "漫展前一周在：", dimension: "S/F", weight: 1.0, options: [{ text: "手搓配饰", type: "S" }, { text: "确认快递", type: "F" }] },
+                { text: "对二手 COS 服：", dimension: "S/F", weight: 0.8, options: [{ text: "买材料改", type: "S" }, { text: "状态好就入", type: "F" }] },
+                { text: "更自豪的是：", dimension: "S/F", weight: 1.3, options: [{ text: "自己做的", type: "S" }, { text: "抢到限量款", type: "F" }] },
+                { text: "工具投入：", dimension: "S/F", weight: 1.0, options: [{ text: "买了一堆工具", type: "S" }, { text: "工具够用就行", type: "F" }] },
+                { text: "对于改造：", dimension: "S/F", weight: 1.2, options: [{ text: "买了也要改", type: "S" }, { text: "直接穿", type: "F" }] },
+                
+                // P/R 维度：完美型 vs 随性型（10 题）
+                { text: "衣服尺寸不对：", dimension: "P/R", weight: 1.5, options: [{ text: "熬夜改完美", type: "P" }, { text: "别针固定", type: "R" }] },
+                { text: "对还原度要求：", dimension: "P/R", weight: 1.5, options: [{ text: "细节到位", type: "P" }, { text: "感觉对就行", type: "R" }] },
+                { text: "准备新角色：", dimension: "P/R", weight: 1.2, options: [{ text: "拉表制定计划", type: "P" }, { text: "大概齐", type: "R" }] },
+                { text: "看到别人更精致：", dimension: "P/R", weight: 1.0, options: [{ text: "焦虑想升级", type: "P" }, { text: "欣赏各有节奏", type: "R" }] },
+                { text: "出片有穿帮：", dimension: "P/R", weight: 1.3, options: [{ text: "重修重拍", type: "P" }, { text: "算了下次注意", type: "R" }] },
+                { text: "试妆频率：", dimension: "P/R", weight: 1.0, options: [{ text: "至少 2-3 次", type: "P" }, { text: "当天第一次", type: "R" }] },
+                { text: "COS 座右铭：", dimension: "P/R", weight: 1.5, options: [{ text: "要做就做到最好", type: "P" }, { text: "开心就好", type: "R" }] },
+                { text: "道具细节：", dimension: "P/R", weight: 1.2, options: [{ text: "必须还原", type: "P" }, { text: "差不多就行", type: "R" }] },
+                { text: "对于后期：", dimension: "P/R", weight: 0.8, options: [{ text: "精修每张照片", type: "P" }, { text: "随便调调", type: "R" }] },
+                { text: "装备迭代：", dimension: "P/R", weight: 1.0, options: [{ text: "不断更新升级", type: "P" }, { text: "够用就好", type: "R" }] }
             ];
 
             // 结果类型
             const types = {
-                "COSP": { name: "造物主", quote: "手是借来的，肝是自己的", desc: "手工狂魔，享受从零到一的造物快感。", icon: "🛠️" },
-                "COSR": { name: "佛系手作娘", quote: "能做就做，不行就改", desc: "喜欢动手但拒绝焦虑。", icon: "🧘" },
-                "COIP": { name: "舞台匠人", quote: "每一针都是为了聚光灯", desc: "手工 + 表演双重追求。", icon: "🎭" },
-                "COIR": { name: "同好工坊主", quote: "来我家做道具吧", desc: "享受和亲友一起手作。", icon: "🏠" },
-                "COFP": { name: "成品收藏家", quote: "专业的事交给专业的人", desc: "认可专业价值愿意买单。", icon: "💎" },
-                "COFR": { name: "轻松氪金党", quote: "买都买了开心就好", desc: "氪金但随性。", icon: "💸" },
-                "COIF": { name: "社交氪金王", quote: "我出钱你出人", desc: "氪金 + 社交型。", icon: "👑" },
-                "AOSP": { name: "极致收藏家", quote: "我不出但我懂", desc: "深度了解但不亲自下场。", icon: "📚" },
-                "AOSR": { name: "佛系云玩家", quote: "看看也挺好", desc: "轻度参与重在社交。", icon: "☁️" },
-                "AOIP": { name: "舞台鉴赏家", quote: "我是最专业的观众", desc: "深度舞台爱好者。", icon: "🎬" },
-                "AOIR": { name: "同好社交家", quote: "漫展是网友见面会", desc: "COS 是社交媒介。", icon: "🤝" },
-                "AISF": { name: "全能体验派", quote: "什么都想试试", desc: "无明显偏向体验派。", icon: "🌈" },
-                "AISR": { name: "轻量参与者", quote: "有局叫我", desc: "极低门槛参与。", icon: "🎈" },
-                "CIFP": { name: "技术流氪金党", quote: "我要最好的效果", desc: "结果导向完美主义。", icon: "⚡" },
-                "CIFR": { name: "随性技术宅", quote: "会做但只看兴趣", desc: "技能满但看心情。", icon: "🎨" },
-                "CISP": { name: "同好工坊主", quote: "手是借来的肝是自己的", desc: "手工狂魔。", icon: "🛠️" }
+                "COSP": { name: "造物主", quote: "手是借来的，肝是自己的", desc: "手工狂魔，享受从零到一的造物快感。缝纫机是本体，热熔胶是血液。", icon: "🛠️" },
+                "COSR": { name: "佛系手作娘", quote: "能做就做，不行就改", desc: "喜欢动手但拒绝焦虑。享受过程大于结果。", icon: "🧘" },
+                "COIP": { name: "舞台匠人", quote: "每一针都是为了聚光灯", desc: "手工 + 表演双重追求。舞台剧技术担当。", icon: "🎭" },
+                "COIR": { name: "同好工坊主", quote: "来我家做道具吧", desc: "享受和亲友一起手作。圈子技术支持。", icon: "🏠" },
+                "COFP": { name: "成品收藏家", quote: "专业的事交给专业的人", desc: "认可专业价值愿意买单。懂行会挑。", icon: "💎" },
+                "COFR": { name: "轻松氪金党", quote: "买都买了开心就好", desc: "氪金但随性。舒服第一。", icon: "💸" },
+                "COIF": { name: "社交氪金王", quote: "我出钱你出人", desc: "氪金 + 社交型。圈子金主爸爸。", icon: "👑" },
+                "AOSP": { name: "极致收藏家", quote: "我不出但我懂", desc: "深度了解但不亲自下场。行走的资料库。", icon: "📚" },
+                "AOSR": { name: "佛系云玩家", quote: "看看也挺好", desc: "轻度参与重在社交。和喜欢的人在一起。", icon: "☁️" },
+                "AOIP": { name: "舞台鉴赏家", quote: "我是最专业的观众", desc: "深度舞台爱好者。懂编舞懂灯光。", icon: "🎬" },
+                "AOIR": { name: "同好社交家", quote: "漫展是网友见面会", desc: "COS 是社交媒介。圈子粘合剂。", icon: "🤝" },
+                "AISF": { name: "全能体验派", quote: "什么都想试试", desc: "无明显偏向体验派。不深耕但快乐。", icon: "🌈" },
+                "AISR": { name: "轻量参与者", quote: "有局叫我", desc: "极低门槛参与。享受陪伴感。", icon: "🎈" },
+                "CIFP": { name: "技术流氪金党", quote: "我要最好的效果", desc: "结果导向完美主义。买回来还要改。", icon: "⚡" },
+                "CIFR": { name: "随性技术宅", quote: "会做但只看兴趣", desc: "技能满但看心情。兴趣驱动。", icon: "🎨" },
+                "CISP": { name: "同好工坊主", quote: "手是借来的肝是自己的", desc: "手工狂魔。技术大佬。", icon: "🛠️" }
             };
 
             let currentQ = 0;
             let answers = [];
             let scores = { C: 0, A: 0, O: 0, I: 0, S: 0, F: 0, P: 0, R: 0 };
+            let maxScores = { C: 0, A: 0, O: 0, I: 0, S: 0, F: 0, P: 0, R: 0 };
 
             // DOM 元素
             const startScreen = document.getElementById('start-screen');
@@ -484,9 +565,33 @@
             const progressBar = document.getElementById('progressBar');
             const currentQEl = document.getElementById('currentQ');
 
+            // 计算最大可能分数
+            function calculateMaxScores() {
+                questions.forEach(q => {
+                    if (q.options[0].type === 'C') maxScores.C += q.weight;
+                    else if (q.options[0].type === 'A') maxScores.A += q.weight;
+                    else if (q.options[0].type === 'O') maxScores.O += q.weight;
+                    else if (q.options[0].type === 'I') maxScores.I += q.weight;
+                    else if (q.options[0].type === 'S') maxScores.S += q.weight;
+                    else if (q.options[0].type === 'F') maxScores.F += q.weight;
+                    else if (q.options[0].type === 'P') maxScores.P += q.weight;
+                    else if (q.options[0].type === 'R') maxScores.R += q.weight;
+                    
+                    if (q.options[1].type === 'C') maxScores.C += q.weight;
+                    else if (q.options[1].type === 'A') maxScores.A += q.weight;
+                    else if (q.options[1].type === 'O') maxScores.O += q.weight;
+                    else if (q.options[1].type === 'I') maxScores.I += q.weight;
+                    else if (q.options[1].type === 'S') maxScores.S += q.weight;
+                    else if (q.options[1].type === 'F') maxScores.F += q.weight;
+                    else if (q.options[1].type === 'P') maxScores.P += q.weight;
+                    else if (q.options[1].type === 'R') maxScores.R += q.weight;
+                });
+            }
+
             // 开始测试
             function startTest() {
                 console.log('开始测试');
+                calculateMaxScores();
                 startScreen.classList.add('hidden');
                 testScreen.classList.remove('hidden');
                 showQuestion();
@@ -498,21 +603,26 @@
                 currentQEl.textContent = currentQ + 1;
                 progressBar.style.width = ((currentQ) / questions.length * 100) + '%';
 
+                const weightText = q.weight >= 1.3 ? '核心题' : (q.weight >= 1.0 ? '普通题' : '边缘题');
+                
                 questionContainer.innerHTML = '<div class="question-card">' +
-                    '<div class="question-number">QUESTION ' + (currentQ + 1) + '</div>' +
+                    '<div class="question-number">QUESTION ' + (currentQ + 1) + 
+                    '<span class="question-weight">' + weightText + '</span></div>' +
                     '<div class="question-text">' + q.text + '</div>' +
                     '<div class="options">' +
                     '<div class="option" data-index="0"><div class="option-text">' + q.options[0].text + '</div></div>' +
                     '<div class="option" data-index="1"><div class="option-text">' + q.options[1].text + '</div></div>' +
                     '</div></div>';
 
-                // 绑定选项点击
                 const options = questionContainer.querySelectorAll('.option');
                 options.forEach(function(opt) {
                     opt.addEventListener('click', function() {
                         options.forEach(function(o) { o.classList.remove('selected'); });
                         this.classList.add('selected');
-                        answers[currentQ] = q.options[parseInt(this.getAttribute('data-index'))].type;
+                        answers[currentQ] = {
+                            type: q.options[parseInt(this.getAttribute('data-index'))].type,
+                            weight: q.weight
+                        };
                         nextBtn.disabled = false;
                     });
                 });
@@ -522,7 +632,8 @@
 
             // 下一题
             function nextQuestion() {
-                scores[answers[currentQ]]++;
+                const answer = answers[currentQ];
+                scores[answer.type] += answer.weight;
                 currentQ++;
 
                 if (currentQ >= questions.length) {
@@ -536,12 +647,48 @@
 
             // 计算结果
             function calculateResult() {
-                var type = '';
-                type += scores.C >= scores.A ? 'C' : 'A';
-                type += scores.O >= scores.I ? 'O' : 'I';
-                type += scores.S >= scores.F ? 'S' : 'F';
-                type += scores.P >= scores.R ? 'P' : 'R';
-                return type;
+                const type = [];
+                type.push(scores.C >= scores.A ? 'C' : 'A');
+                type.push(scores.O >= scores.I ? 'O' : 'I');
+                type.push(scores.S >= scores.F ? 'S' : 'F');
+                type.push(scores.P >= scores.R ? 'P' : 'R');
+                return type.join('');
+            }
+
+            // 计算置信度
+            function calculateConfidence() {
+                const totalScore = scores.C + scores.A + scores.O + scores.I + scores.S + scores.F + scores.P + scores.R;
+                const diffs = [
+                    Math.abs(scores.C - scores.A) / (scores.C + scores.A || 1),
+                    Math.abs(scores.O - scores.I) / (scores.O + scores.I || 1),
+                    Math.abs(scores.S - scores.F) / (scores.S + scores.F || 1),
+                    Math.abs(scores.P - scores.R) / (scores.P + scores.R || 1)
+                ];
+                const avgDiff = diffs.reduce((a, b) => a + b, 0) / 4;
+                return Math.min(95, Math.max(50, Math.round(50 + avgDiff * 50)));
+            }
+
+            // 计算副类型
+            function calculateSubType(mainType) {
+                const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+                const mainLetters = mainType.split('');
+                
+                // 找到不在主类型中的最高分维度
+                for (let i = 0; i < sortedScores.length; i++) {
+                    const letter = sortedScores[i][0];
+                    if (!mainLetters.includes(letter)) {
+                        // 替换主类型中的一个字母
+                        const subType = mainType.split('');
+                        for (let j = 0; j < 4; j++) {
+                            if (subType[j] !== letter) {
+                                subType[j] = letter;
+                                break;
+                            }
+                        }
+                        return subType.join('');
+                    }
+                }
+                return mainType;
             }
 
             // 显示结果
@@ -551,6 +698,9 @@
 
                 const typeCode = calculateResult();
                 const result = types[typeCode] || types["COSP"];
+                const confidence = calculateConfidence();
+                const subTypeCode = calculateSubType(typeCode);
+                const subType = types[subTypeCode] || result;
 
                 document.getElementById('typeIcon').textContent = result.icon;
                 document.getElementById('typeCode').textContent = typeCode;
@@ -558,25 +708,33 @@
                 document.getElementById('typeQuote').textContent = '"' + result.quote + '"';
                 document.getElementById('typeDesc').textContent = result.desc;
                 document.getElementById('typeBehaviors').innerHTML = '• 手工大佬<br>• 技术担当<br>• 道具专家';
+                document.getElementById('confidenceBadge').textContent = '置信度：' + confidence + '%';
+
+                // 显示副类型
+                if (subTypeCode !== typeCode) {
+                    document.getElementById('subTypeContainer').classList.remove('hidden');
+                    document.getElementById('subTypeCode').textContent = subTypeCode + ' · ' + subType.name;
+                }
 
                 // 维度条
                 const dims = [
-                    { label: '创作者 C', value: scores.C, max: 8 },
-                    { label: '欣赏者 A', value: scores.A, max: 8 },
-                    { label: '舞台型 O', value: scores.O, max: 7 },
-                    { label: '圈内型 I', value: scores.I, max: 7 },
-                    { label: '手工型 S', value: scores.S, max: 8 },
-                    { label: '氪金型 F', value: scores.F, max: 8 },
-                    { label: '完美型 P', value: scores.P, max: 7 },
-                    { label: '随性型 R', value: scores.R, max: 7 }
+                    { label: '创作者 C', value: scores.C, max: maxScores.C / 2 },
+                    { label: '欣赏者 A', value: scores.A, max: maxScores.A / 2 },
+                    { label: '舞台型 O', value: scores.O, max: maxScores.O / 2 },
+                    { label: '圈内型 I', value: scores.I, max: maxScores.I / 2 },
+                    { label: '手工型 S', value: scores.S, max: maxScores.S / 2 },
+                    { label: '氪金型 F', value: scores.F, max: maxScores.F / 2 },
+                    { label: '完美型 P', value: scores.P, max: maxScores.P / 2 },
+                    { label: '随性型 R', value: scores.R, max: maxScores.R / 2 }
                 ];
 
                 let barsHtml = '';
                 dims.forEach(function(d) {
-                    const pct = (d.value / d.max * 100);
+                    const pct = Math.min(100, (d.value / d.max * 100));
                     barsHtml += '<div class="dimension-bar">' +
-                        '<div class="dimension-label"><span>' + d.label + '</span><span>' + d.value + '/' + d.max + '</span></div>' +
-                        '<div class="dimension-track"><div class="dimension-fill" style="width: ' + pct + '%"></div></div>' +
+                        '<div class="dimension-label"><span>' + d.label + '</span><span>' + d.value.toFixed(1) + '</span></div>' +
+                        '<div class="dimension-track"><div class="dimension-fill" style="width: ' + pct + '%"></div>' +
+                        '<span class="dimension-percent">' + pct.toFixed(0) + '%</span></div>' +
                         '</div>';
                 });
                 document.getElementById('radarBars').innerHTML = barsHtml;
@@ -586,7 +744,7 @@
             function shareResult() {
                 const code = document.getElementById('typeCode').textContent;
                 const name = document.getElementById('typeName').textContent;
-                const text = '我的 COSTI 结果是：' + code + ' · ' + name;
+                const text = '我的 COSTI 结果是：' + code + ' · ' + name + '\n来自：次元相性测试';
                 
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(text).then(function() {
@@ -618,24 +776,12 @@
                 { text: "这个世界是残酷的，但却也是美好的。", source: "《进击的巨人》" },
                 { text: "只要有树叶飞舞的地方，火就会燃烧。", source: "《火影忍者》" },
                 { text: "能打败你的，只有你自己。", source: "《排球少年》" },
-                { text: "我想我讨厌温柔的女孩子。", source: "《我的青春恋爱物语果然有问题》" },
-                { text: "人只有在失去什么之后，才会明白自己真正想要的是什么。", source: "《钢之炼金术师》" },
-                { text: "因为我是英雄，所以我要拯救大家！", source: "《我的英雄学院》" },
                 { text: "如果结果不如你所愿，那就在尘埃落定前奋力一搏。", source: "《夏目友人帐》" },
-                { text: "不管我本来是个什么样的人，过去曾做了什么，我觉得都是现在的我更重要。", source: "《空之境界》" },
-                { text: "人生就像一场游戏，但遗憾的是不能读档重来。", source: "《命运石之门》" },
-                { text: "所谓真正的强大，就是能够守护自己想要守护的东西。", source: "《妖精的尾巴》" },
-                { text: "只要有你在我身边，我就无所畏惧。", source: "《魔卡少女樱》" },
-                { text: "我讨厌温柔的女孩子，因为那会让我想起曾经的自己。", source: "《我的青春恋爱物语果然有问题》" },
-                { text: "如果这一切都是命运的安排，那我就打破这命运！", source: "《圣斗士星矢》" },
                 { text: "不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福。", source: "《千与千寻》" },
-                { text: "我命由我不由天！", source: "《哪吒之魔童降世》" },
                 { text: "我们的征途是星辰大海！", source: "《银河英雄传说》" },
-                { text: "只要还有一口气，就要把该做的事做到底。", source: "《鬼灭之刃》" },
-                { text: "如果爱请深爱，如果不爱请离开。", source: "《龙族》" }
+                { text: "只要还有一口气，就要把该做的事做到底。", source: "《鬼灭之刃》" }
             ];
 
-            // 随机显示名言
             function showRandomQuote() {
                 const randomIndex = Math.floor(Math.random() * quotes.length);
                 const quote = quotes[randomIndex];
@@ -648,9 +794,8 @@
             shareBtn.addEventListener('click', shareResult);
             restartBtn.addEventListener('click', restartTest);
 
-            // 页面加载时显示随机名言
             showRandomQuote();
-            console.log('COSTI 页面已就绪');
+            console.log('COSTI v2.0 已就绪');
         })();
     </script>
 </body>
