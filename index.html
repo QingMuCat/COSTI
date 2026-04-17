@@ -6,7 +6,6 @@
     <title>次元相性 | COSTI - 二次元 COS 圈人格测试</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
             --primary: #6C5DD3;
             --primary-light: #8B7FF5;
@@ -17,15 +16,12 @@
             --text-light: #E8E8FF;
             --text-dim: #9A9AB8;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
             background: var(--bg-dark);
             color: var(--text-light);
             min-height: 100vh;
-            overflow-x: hidden;
         }
-
         .bg-animation {
             position: fixed;
             top: 0; left: 0;
@@ -34,25 +30,9 @@
             background: radial-gradient(ellipse at 30% 20%, rgba(108, 93, 211, 0.15) 0%, transparent 50%),
                         radial-gradient(ellipse at 70% 80%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
         }
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .title-jp {
-            font-size: 14px;
-            color: var(--accent);
-            letter-spacing: 8px;
-            margin-bottom: 15px;
-        }
-
+        .container { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; }
+        .header { text-align: center; margin-bottom: 50px; }
+        .title-jp { font-size: 14px; color: var(--accent); letter-spacing: 8px; margin-bottom: 15px; }
         .main-title {
             font-size: clamp(42px, 8vw, 72px);
             font-weight: 900;
@@ -62,19 +42,8 @@
             background-clip: text;
             margin-bottom: 20px;
         }
-
-        .subtitle {
-            font-size: 18px;
-            color: var(--text-dim);
-            margin-bottom: 30px;
-        }
-
-        .slogan {
-            font-size: 14px;
-            color: var(--accent-pink);
-            font-style: italic;
-        }
-
+        .subtitle { font-size: 18px; color: var(--text-dim); margin-bottom: 30px; }
+        .slogan { font-size: 14px; color: var(--accent-pink); font-style: italic; }
         .question-card {
             background: rgba(18, 18, 42, 0.8);
             border: 1px solid rgba(108, 93, 211, 0.3);
@@ -83,14 +52,7 @@
             margin-bottom: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-
-        .progress-text {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 10px;
-        }
-
+        .progress-text { text-align: center; font-size: 14px; color: var(--text-dim); margin-bottom: 10px; }
         .progress-container {
             background: rgba(108, 93, 211, 0.2);
             border-radius: 20px;
@@ -98,33 +60,15 @@
             margin-bottom: 40px;
             overflow: hidden;
         }
-
         .progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             width: 0%;
             transition: width 0.5s;
         }
-
-        .question-number {
-            font-size: 14px;
-            color: var(--accent);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
-
-        .question-text {
-            font-size: 20px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .likert-scale {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
+        .question-number { font-size: 14px; color: var(--accent); letter-spacing: 2px; margin-bottom: 20px; }
+        .question-text { font-size: 20px; line-height: 1.6; margin-bottom: 30px; }
+        .likert-scale { display: flex; flex-direction: column; gap: 12px; }
         .likert-option {
             background: rgba(108, 93, 211, 0.1);
             border: 2px solid rgba(108, 93, 211, 0.3);
@@ -136,19 +80,16 @@
             align-items: center;
             gap: 12px;
         }
-
         .likert-option:hover {
             background: rgba(108, 93, 211, 0.2);
             border-color: var(--primary-light);
             transform: translateX(4px);
         }
-
         .likert-option.selected {
             background: rgba(108, 93, 211, 0.25);
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(108, 93, 211, 0.3);
         }
-
         .likert-value {
             width: 32px;
             height: 32px;
@@ -161,13 +102,7 @@
             font-size: 14px;
             flex-shrink: 0;
         }
-
-        .likert-text {
-            font-size: 15px;
-            line-height: 1.5;
-            flex: 1;
-        }
-
+        .likert-text { font-size: 15px; line-height: 1.5; flex: 1; }
         .btn {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
@@ -182,26 +117,13 @@
             font-family: inherit;
             transition: all 0.3s;
         }
-
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 40px rgba(108, 93, 211, 0.4);
         }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid rgba(108, 93, 211, 0.5);
-            margin-top: 15px;
-        }
-
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-secondary { background: transparent; border: 2px solid rgba(108, 93, 211, 0.5); margin-top: 15px; }
         .hidden { display: none !important; }
-
         .result-card {
             background: rgba(18, 18, 42, 0.9);
             border: 1px solid rgba(108, 93, 211, 0.4);
@@ -210,14 +132,7 @@
             text-align: center;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
         }
-
-        .result-title {
-            font-size: 14px;
-            color: var(--accent);
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-        }
-
+        .result-title { font-size: 14px; color: var(--accent); letter-spacing: 4px; margin-bottom: 30px; }
         .type-icon {
             width: 120px;
             height: 120px;
@@ -230,7 +145,6 @@
             font-size: 48px;
             box-shadow: 0 20px 60px rgba(108, 93, 211, 0.4);
         }
-
         .type-code {
             font-size: 42px;
             font-weight: 900;
@@ -240,20 +154,8 @@
             margin-bottom: 10px;
             letter-spacing: 8px;
         }
-
-        .type-name {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 25px;
-        }
-
-        .type-quote {
-            font-size: 16px;
-            color: var(--accent-pink);
-            font-style: italic;
-            margin-bottom: 40px;
-        }
-
+        .type-name { font-size: 28px; font-weight: 700; margin-bottom: 25px; }
+        .type-quote { font-size: 16px; color: var(--accent-pink); font-style: italic; margin-bottom: 40px; }
         .confidence-badge {
             display: inline-block;
             background: linear-gradient(135deg, var(--accent), var(--primary));
@@ -263,7 +165,6 @@
             font-weight: 700;
             margin-bottom: 30px;
         }
-
         .type-description {
             background: rgba(108, 93, 211, 0.1);
             border-radius: 20px;
@@ -271,24 +172,9 @@
             margin-bottom: 30px;
             text-align: left;
         }
-
-        .type-description h3 {
-            font-size: 16px;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-
-        .type-description p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--text-dim);
-            margin-bottom: 15px;
-        }
-
-        .dimension-bar {
-            margin: 15px 0;
-        }
-
+        .type-description h3 { font-size: 16px; color: var(--accent); margin-bottom: 15px; }
+        .type-description p { font-size: 15px; line-height: 1.7; color: var(--text-dim); margin-bottom: 15px; }
+        .dimension-bar { margin: 15px 0; }
         .dimension-label {
             display: flex;
             justify-content: space-between;
@@ -296,7 +182,6 @@
             color: var(--text-dim);
             margin-bottom: 8px;
         }
-
         .dimension-track {
             background: rgba(108, 93, 211, 0.2);
             height: 10px;
@@ -304,7 +189,6 @@
             overflow: hidden;
             position: relative;
         }
-
         .dimension-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--accent));
@@ -312,7 +196,6 @@
             width: 0%;
             transition: width 1s;
         }
-
         .dimension-percent {
             position: absolute;
             right: 10px;
@@ -322,7 +205,6 @@
             color: var(--text-light);
             font-weight: 700;
         }
-
         .sub-type {
             background: rgba(0, 212, 170, 0.1);
             border: 1px solid rgba(0, 212, 170, 0.3);
@@ -330,27 +212,9 @@
             padding: 20px;
             margin-top: 20px;
         }
-
-        .sub-type-title {
-            font-size: 14px;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-
-        .sub-type-code {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-light);
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 20px;
-        }
-
+        .sub-type-title { font-size: 14px; color: var(--accent); margin-bottom: 10px; }
+        .sub-type-code { font-size: 24px; font-weight: 700; color: var(--text-light); }
+        .loading { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
         .loading-dot {
             width: 12px;
             height: 12px;
@@ -358,16 +222,13 @@
             border-radius: 50%;
             animation: loadingBounce 1.4s ease-in-out infinite both;
         }
-
         .loading-dot:nth-child(1) { animation-delay: -0.32s; }
         .loading-dot:nth-child(2) { animation-delay: -0.16s; }
         .loading-dot:nth-child(3) { animation-delay: 0s; }
-
         @keyframes loadingBounce {
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1); }
         }
-
         .footer {
             text-align: center;
             padding: 40px 20px;
@@ -376,35 +237,24 @@
             border-top: 1px solid rgba(108, 93, 211, 0.2);
             margin-top: 40px;
         }
-
-        .footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
         @media (max-width: 480px) {
             .container { padding: 30px 15px 40px; }
             .question-card { padding: 30px 20px; }
             .result-card { padding: 40px 20px; }
             .type-icon { width: 100px; height: 100px; font-size: 42px; }
             .type-code { font-size: 32px; }
-            .likert-option { padding: 12px 14px; }
-            .likert-value { width: 28px; height: 28px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
-
     <div class="container">
         <header class="header">
             <div class="title-jp">ディメンション・セイセイ</div>
             <h1 class="main-title">次元相性</h1>
-            <p class="subtitle">二次元 COS 圈人格测试 v3.1</p>
+            <p class="subtitle">二次元 COS 圈人格测试 v4.0</p>
             <p class="slogan" id="randomQuote">"当次元壁破碎时，你会成为谁？"</p>
         </header>
 
@@ -413,13 +263,12 @@
                 <div style="font-size: 24px; margin-bottom: 20px;">🎭 在无数角色中，找到属于你的那一面</div>
                 <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 30px;">
                     通过 20 道人性化题目，诊断你的 COS 圈人格类型。<br>
-                    ✨ 新增：5 级量表 + 真实场景 + 置信度评估
+                    ✨ 5 级量表 + 真实场景 + 置信度评估
                 </p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
                     <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">⏱️ 3-5 分钟</span>
                     <span style="background: rgba(0, 212, 170, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">📊 20 道题</span>
                     <span style="background: rgba(255, 107, 157, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">🎯 16 种结果</span>
-                    <span style="background: rgba(108, 93, 211, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 14px;">✅ 置信度</span>
                 </div>
                 <button class="btn" id="startBtn">开始测试</button>
             </div>
@@ -453,670 +302,375 @@
                 <div class="type-name" id="typeName">造物主</div>
                 <div class="confidence-badge" id="confidenceBadge">置信度：85%</div>
                 <div class="type-quote" id="typeQuote">"手是借来的，肝是自己的"</div>
-                
                 <div class="sub-type hidden" id="subTypeContainer">
                     <div class="sub-type-title">🔸 次要倾向</div>
                     <div class="sub-type-code" id="subTypeCode">COSR · 佛系手作娘</div>
                 </div>
-
                 <div class="type-description">
                     <h3>✨ 核心特质</h3>
                     <p id="typeDesc">手工狂魔，享受从零到一的造物快感。</p>
                     <h3>🎯 典型行为</h3>
                     <p id="typeBehaviors">• 收藏夹里全是教程</p>
                 </div>
-                
                 <div style="margin: 30px 0;">
                     <h3 style="color: var(--accent); margin-bottom: 20px;">📊 维度分析</h3>
                     <div id="radarBars"></div>
                 </div>
-                
                 <button class="btn" id="shareBtn">📤 分享结果</button>
                 <button class="btn btn-secondary" id="restartBtn">🔄 再测一次</button>
             </div>
         </div>
     </div>
-
     <footer class="footer">
         <p>© 2026 COSTI 次元相性 | Designed by 青木</p>
         <p style="margin-top: 10px;">📧 意见与建议：<a href="mailto:1242550160@qq.com">1242550160@qq.com</a></p>
     </footer>
 
     <script>
-        (function() {
-            // 20 道人性化题目 - 5 级李克特量表
-            // 每个维度 5 题，涵盖真实场景
-            const questions = [
-                // C/A 维度：创作者 vs 欣赏者（5 题）
-                {
-                    text: "看到喜欢的角色，你更倾向于：",
-                    dimension: "C/A",
-                    scale: [
-                        { value: 2, text: "立刻开始研究怎么做全套装备" },
-                        { value: 1, text: "会考虑自己动手试试" },
-                        { value: 0, text: "看情况，有时间就自己做" },
-                        { value: -1, text: "更期待看到别人还原的作品" },
-                        { value: -2, text: "默默保存图片当壁纸" }
-                    ]
-                },
-                {
-                    text: "漫展结束后，你更想：",
-                    dimension: "C/A",
-                    scale: [
-                        { value: 2, text: "发自己的场照/正片" },
-                        { value: 1, text: "分享一些自己的照片" },
-                        { value: 0, text: "发不发都行" },
-                        { value: -1, text: "发集邮合集和喜欢的摊位" },
-                        { value: -2, text: "只看不发，当个安静的美男子" }
-                    ]
-                },
-                {
-                    text: "你的关注列表里主要是：",
-                    dimension: "C/A",
-                    scale: [
-                        { value: 2, text: "大部分是妆娘/毛娘/道具师" },
-                        { value: 1, text: "技术类博主占一半" },
-                        { value: 0, text: "各种类型都有" },
-                        { value: -1, text: "主要是画师/摄影/同好" },
-                        { value: -2, text: "几乎不关注技术类博主" }
-                    ]
-                },
-                {
-                    text: "对于 COS 服，你的态度是：",
-                    dimension: "C/A",
-                    scale: [
-                        { value: 2, text: "能自己做绝对不买" },
-                        { value: 1, text: "优先自己做，实在不行再买" },
-                        { value: 0, text: "看时间和预算决定" },
-                        { value: -1, text: "正常消费，省时省力" },
-                        { value: -2, text: "直接买成品更香" }
-                    ]
-                },
-                {
-                    text: "看到别人的精致道具，你会：",
-                    dimension: "C/A",
-                    scale: [
-                        { value: 2, text: "凑近观察工艺，想学习制作" },
-                        { value: 1, text: "会问是怎么做的" },
-                        { value: 0, text: "感叹好厉害" },
-                        { value: -1, text: "询问是哪位太太的作品" },
-                        { value: -2, text: "点赞收藏，默默欣赏" }
-                    ]
-                },
-                
-                // O/I 维度：舞台型 vs 圈内型（5 题）
-                {
-                    text: "理想的漫展一天：",
-                    dimension: "O/I",
-                    scale: [
-                        { value: 2, text: "上台比赛/游场被围拍" },
-                        { value: 1, text: "多拍照多社交" },
-                        { value: 0, text: "随意逛逛，看心情" },
-                        { value: -1, text: "和亲友小聚/逛摊位" },
-                        { value: -2, text: "安静集邮，和认识的人玩" }
-                    ]
-                },
-                {
-                    text: "对于被摄影围拍的感受：",
-                    dimension: "O/I",
-                    scale: [
-                        { value: 2, text: "兴奋，这是对自己的认可" },
-                        { value: 1, text: "有点紧张但可以接受" },
-                        { value: 0, text: "无所谓，看情况" },
-                        { value: -1, text: "更喜欢和熟悉的摄影拍" },
-                        { value: -2, text: "会感到不自在" }
-                    ]
-                },
-                {
-                    text: "你更喜欢在什么场景出片：",
-                    dimension: "O/I",
-                    scale: [
-                        { value: 2, text: "大场景/舞台/展会现场" },
-                        { value: 1, text: "人多热闹的地方" },
-                        { value: 0, text: "哪里都可以" },
-                        { value: -1, text: "摄影棚/小树林" },
-                        { value: -2, text: "亲友家/私密空间" }
-                    ]
-                },
-                {
-                    text: "加入 COS 社团，你更想参与：",
-                    dimension: "O/I",
-                    scale: [
-                        { value: 2, text: "舞台剧/宅舞/比赛" },
-                        { value: 1, text: "台前表演类活动" },
-                        { value: 0, text: "看活动内容决定" },
-                        { value: -1, text: "后勤/聚餐" },
-                        { value: -2, text: "线上水群，线下随缘" }
-                    ]
-                },
-                {
-                    text: "漫展前的准备重心：",
-                    dimension: "O/I",
-                    scale: [
-                        { value: 2, text: "练习动作/表情/舞台走位" },
-                        { value: 1, text: "准备展示内容" },
-                        { value: 0, text: "随便准备一下" },
-                        { value: -1, text: "确认和谁的约会" },
-                        { value: -2, text: "带什么零食和亲友分享" }
-                    ]
-                },
-                
-                // S/F 维度：手工型 vs 氪金型（5 题）
-                {
-                    text: "道具做不出来时，你会：",
-                    dimension: "S/F",
-                    scale: [
-                        { value: 2, text: "熬夜查教程/换材料/请教大佬" },
-                        { value: 1, text: "尝试多种解决方案" },
-                        { value: 0, text: "看情况决定" },
-                        { value: -1, text: "考虑买现成的" },
-                        { value: -2, text: "直接打开淘宝/闲鱼" }
-                    ]
-                },
-                {
-                    text: "你的装备来源大概是：",
-                    dimension: "S/F",
-                    scale: [
-                        { value: 2, text: "90% 以上自制/改造" },
-                        { value: 1, text: "大部分自己做" },
-                        { value: 0, text: "一半一半" },
-                        { value: -1, text: "大部分购买/约单" },
-                        { value: -2, text: "几乎全是买的" }
-                    ]
-                },
-                {
-                    text: "对于手作的看法：",
-                    dimension: "S/F",
-                    scale: [
-                        { value: 2, text: "核心乐趣，省钱是附带的" },
-                        { value: 1, text: "很有成就感" },
-                        { value: 0, text: "看心情" },
-                        { value: -1, text: "时间成本太高" },
-                        { value: -2, text: "不如直接买" }
-                    ]
-                },
-                {
-                    text: "对于毛娘/妆娘的态度：",
-                    dimension: "S/F",
-                    scale: [
-                        { value: 2, text: "尽量自己学，实在不行才约" },
-                        { value: 1, text: "简单的自己来" },
-                        { value: 0, text: "看情况" },
-                        { value: -1, text: "专业的交给专业的人" },
-                        { value: -2, text: "全部约单更省心" }
-                    ]
-                },
-                {
-                    text: "漫展前一周，你在：",
-                    dimension: "S/F",
-                    scale: [
-                        { value: 2, text: "手搓最后几件配饰/修假发" },
-                        { value: 1, text: "还在完善装备" },
-                        { value: 0, text: "该准备的都准备了" },
-                        { value: -1, text: "确认快递进度" },
-                        { value: -2, text: "约妆娘时间/尾款" }
-                    ]
-                },
-                
-                // P/R 维度：完美型 vs 随性型（5 题）
-                {
-                    text: "距离漫展 3 天，发现衣服尺寸不对：",
-                    dimension: "P/R",
-                    scale: [
-                        { value: 2, text: "熬夜改/重新做，必须完美" },
-                        { value: 1, text: "尽量改到满意" },
-                        { value: 0, text: "能穿就行" },
-                        { value: -1, text: "用别针固定一下" },
-                        { value: -2, text: "反正拍照看不出来" }
-                    ]
-                },
-                {
-                    text: "对于"还原度'的要求：",
-                    dimension: "P/R",
-                    scale: [
-                        { value: 2, text: "细节必须到位，哪怕照片拍不出" },
-                        { value: 1, text: "尽量还原" },
-                        { value: 0, text: "差不多就行" },
-                        { value: -1, text: "整体感觉对了就行" },
-                        { value: -2, text: "开心就好" }
-                    ]
-                },
-                {
-                    text: "准备一个新角色，你会：",
-                    dimension: "P/R",
-                    scale: [
-                        { value: 2, text: "拉设定表/找参考图/制定时间表" },
-                        { value: 1, text: "做详细准备" },
-                        { value: 0, text: "简单准备一下" },
-                        { value: -1, text: "大概齐" },
-                        { value: -2, text: "边出边调整" }
-                    ]
-                },
-                {
-                    text: "看到别人的 COS 比你的精致：",
-                    dimension: "P/R",
-                    scale: [
-                        { value: 2, text: "焦虑，想升级自己的装备" },
-                        { value: 1, text: "有点压力" },
-                        { value: 0, text: "还好吧" },
-                        { value: -1, text: "欣赏一下" },
-                        { value: -2, text: "每个人都有自己的节奏" }
-                    ]
-                },
-                {
-                    text: "出片后发现有穿帮：",
-                    dimension: "P/R",
-                    scale: [
-                        { value: 2, text: "必须重修/重拍，不能留遗憾" },
-                        { value: 1, text: "尽量修掉" },
-                        { value: 0, text: "看严重程度" },
-                        { value: -1, text: "算了，下次注意" },
-                        { value: -2, text: "不仔细看发现不了" }
-                    ]
-                }
-            ];
+    (function() {
+        'use strict';
 
-            // 典型行为词汇库 - 每种类型多个行为描述，随机显示
-            const behaviorLib = {
-                "COSP": [
-                    "• 收藏夹里全是教程、版型、材料测评",
-                    "• 看到角色先想这个铠甲能不能用 EVA 做",
-                    "• 漫展前夜在宾馆手搓道具到凌晨",
-                    "• 热熔胶枪是本体，工作台是第二个家",
-                    "• 为了一个配件可以查三个月资料"
-                ],
-                "COSR": [
-                    "• 这个花纹绣不好？那就贴布贴",
-                    "• 漫展前一周还在改方案，但心态稳如老狗",
-                    "• 常说出差不多行了名言",
-                    "• 做不出来就 plan B，绝不内耗",
-                    "• 享受过程，结果随缘"
-                ],
-                "COIP": [
-                    "• 做衣服时已经在想这个动作会不会崩线",
-                    "• 会为了舞台效果专门设计可拆卸部件",
-                    "• 后台最忙的人：一边修道具一边背台词",
-                    "• 舞台剧/宅舞比赛的技术担当",
-                    "• 每一针都是为了那一刻的聚光灯"
-                ],
-                "COIR": [
-                    "• 家里变成同好聚集地，工具共享",
-                    "• 漫展前组织肝道具夜话会",
-                    "• 比起自己出片，更开心的是我徒弟出片了",
-                    "• 小圈子里的技术支持，喜欢教人",
-                    "• 来我家做道具吧，我买了新缝纫机"
-                ],
-                "COFP": [
-                    "• 关注列表里一半是妆娘/毛娘/道具师",
-                    "• 能准确说出这个毛胚是哪家的",
-                    "• 漫展前主要工作：催单、确认物流、检查尾款",
-                    "• 懂行会挑，是太太们的优质甲方",
-                    "• 收藏柜里全是名家手作"
-                ],
-                "COFR": [
-                    "• 这件质感一般但拍照够用了",
-                    "• 漫展前三天还在犹豫出不出",
-                    "• 装备齐全但可能没拆封过几次",
-                    "• 氪金但随性，舒服第一",
-                    "• 买都买了，开心就好"
-                ],
-                "COIF": [
-                    "• 这套团片我包了摄影和棚子",
-                    "• 家里有空房间存放大家的装备",
-                    "• 不一定自己出，但一定在场",
-                    "• 小圈子的金主爸爸/后勤供应商",
-                    "• 我出钱你出人，咱们漫展见"
-                ],
-                "AOSP": [
-                    "• 漫展上最会夸的人：这个刺绣是苏绣吧",
-                    "• 家里有一面墙是手办/设定集/物料",
-                    "• 可能是隐藏的摄影/后期大佬",
-                    "• 行走的资料库，懂工艺懂设定",
-                    "• 我不出，但我懂，而且我有很多"
-                ],
-                "AOSR": [
-                    "• 漫展行程：集邮→吃饭→聊天→回家",
-                    "• 装备不多但使用率极高",
-                    "• 对卷文化免疫",
-                    "• 轻度参与，重在社交",
-                    "• 看看也挺好，去漫展主要是为了见朋友"
-                ],
-                "AOIP": [
-                    "• 宅舞比赛台下记笔记的人",
-                    "• 能指出这里切镜节奏不对",
-                    "• 手机里有上百 G 舞台视频，分类整理",
-                    "• 深度舞台爱好者，懂编舞懂灯光",
-                    "• 我在台下看，但我是最专业的观众"
-                ],
-                "AOIR": [
-                    "• 漫展前一个月开始组局",
-                    "• 群里最活跃，负责协调时间/地点/吃饭",
-                    "• 可能出的角色很普通，但合影永远有人找",
-                    "• 小圈子核心人物，记得住每个人的 CN",
-                    "• 漫展是大型网友见面会"
-                ],
-                "AISF": [
-                    "• 技能树点得很散：会一点妆、一点毛、一点道具",
-                    "• 漫展角色年年换，没有固定风格",
-                    "• 经常说出下次想试试 XX 然后真的试了",
-                    "• 什么都想试试，什么都玩一点",
-                    "• 不深耕但快乐，体验派"
-                ],
-                "AISR": [
-                    "• 装备可能是借的/租的/二手收的",
-                    "• 出片主要靠亲友后期拯救",
-                    "• 但每次都玩得很开心",
-                    "• 被朋友拉入坑，享受陪伴感",
-                    "• 有局叫我，没局也行"
-                ],
-                "CIFP": [
-                    "• 这个毛胚不错，但刘海要重新贴",
-                    "• 约单后还要自己加细节",
-                    "• 装备迭代极快，永远在升级",
-                    "• 结果导向的完美主义",
-                    "• 我要最好的效果，买还是做只是手段"
-                ],
-                "CIFR": [
-                    "• 这个角色的武器太酷了，我要自己做",
-                    "• 其他部分？淘宝一键购买",
-                    "• 兴趣驱动，没有固定模式",
-                    "• 技能点满但调用看心情",
-                    "• 会做，但只做感兴趣的"
-                ],
-                "CISP": [
-                    "• 手工狂魔，技术大佬",
-                    "• 缝纫机是本体，热熔胶是血液",
-                    "• 漫展前夜手搓道具到凌晨",
-                    "• 享受从零到一的造物快感",
-                    "• 手是借来的，肝是自己的"
-                ]
-            };
+        // ========== 数据模块 ==========
+        const DATA = {
+            questions: [
+                { text: "看到喜欢的角色，你更倾向于：", dim: "CA", s: [
+                    {v:2,t:"立刻开始研究怎么做全套装备"}, {v:1,t:"会考虑自己动手试试"}, {v:0,t:"看情况，有时间就自己做"}, {v:-1,t:"更期待看到别人还原的作品"}, {v:-2,t:"默默保存图片当壁纸"}
+                ]},
+                { text: "漫展结束后，你更想：", dim: "CA", s: [
+                    {v:2,t:"发自己的场照/正片"}, {v:1,t:"分享一些自己的照片"}, {v:0,t:"发不发都行"}, {v:-1,t:"发集邮合集和喜欢的摊位"}, {v:-2,t:"只看不发，当个安静的美男子"}
+                ]},
+                { text: "你的关注列表里主要是：", dim: "CA", s: [
+                    {v:2,t:"大部分是妆娘/毛娘/道具师"}, {v:1,t:"技术类博主占一半"}, {v:0,t:"各种类型都有"}, {v:-1,t:"主要是画师/摄影/同好"}, {v:-2,t:"几乎不关注技术类博主"}
+                ]},
+                { text: "对于 COS 服，你的态度是：", dim: "CA", s: [
+                    {v:2,t:"能自己做绝对不买"}, {v:1,t:"优先自己做，实在不行再买"}, {v:0,t:"看时间和预算决定"}, {v:-1,t:"正常消费，省时省力"}, {v:-2,t:"直接买成品更香"}
+                ]},
+                { text: "看到别人的精致道具，你会：", dim: "CA", s: [
+                    {v:2,t:"凑近观察工艺，想学习制作"}, {v:1,t:"会问是怎么做的"}, {v:0,t:"感叹好厉害"}, {v:-1,t:"询问是哪位太太的作品"}, {v:-2,t:"点赞收藏，默默欣赏"}
+                ]},
+                { text: "理想的漫展一天：", dim: "OI", s: [
+                    {v:2,t:"上台比赛/游场被围拍"}, {v:1,t:"多拍照多社交"}, {v:0,t:"随意逛逛，看心情"}, {v:-1,t:"和亲友小聚/逛摊位"}, {v:-2,t:"安静集邮，和认识的人玩"}
+                ]},
+                { text: "对于被摄影围拍的感受：", dim: "OI", s: [
+                    {v:2,t:"兴奋，这是对自己的认可"}, {v:1,t:"有点紧张但可以接受"}, {v:0,t:"无所谓，看情况"}, {v:-1,t:"更喜欢和熟悉的摄影拍"}, {v:-2,t:"会感到不自在"}
+                ]},
+                { text: "你更喜欢在什么场景出片：", dim: "OI", s: [
+                    {v:2,t:"大场景/舞台/展会现场"}, {v:1,t:"人多热闹的地方"}, {v:0,t:"哪里都可以"}, {v:-1,t:"摄影棚/小树林"}, {v:-2,t:"亲友家/私密空间"}
+                ]},
+                { text: "加入 COS 社团，你更想参与：", dim: "OI", s: [
+                    {v:2,t:"舞台剧/宅舞/比赛"}, {v:1,t:"台前表演类活动"}, {v:0,t:"看活动内容决定"}, {v:-1,t:"后勤/聚餐"}, {v:-2,t:"线上水群，线下随缘"}
+                ]},
+                { text: "漫展前的准备重心：", dim: "OI", s: [
+                    {v:2,t:"练习动作/表情/舞台走位"}, {v:1,t:"准备展示内容"}, {v:0,t:"随便准备一下"}, {v:-1,t:"确认和谁的约会"}, {v:-2,t:"带什么零食和亲友分享"}
+                ]},
+                { text: "道具做不出来时，你会：", dim: "SF", s: [
+                    {v:2,t:"熬夜查教程/换材料/请教大佬"}, {v:1,t:"尝试多种解决方案"}, {v:0,t:"看情况决定"}, {v:-1,t:"考虑买现成的"}, {v:-2,t:"直接打开淘宝/闲鱼"}
+                ]},
+                { text: "你的装备来源大概是：", dim: "SF", s: [
+                    {v:2,t:"90% 以上自制/改造"}, {v:1,t:"大部分自己做"}, {v:0,t:"一半一半"}, {v:-1,t:"大部分购买/约单"}, {v:-2,t:"几乎全是买的"}
+                ]},
+                { text: "对于手作的看法：", dim: "SF", s: [
+                    {v:2,t:"核心乐趣，省钱是附带的"}, {v:1,t:"很有成就感"}, {v:0,t:"看心情"}, {v:-1,t:"时间成本太高"}, {v:-2,t:"不如直接买"}
+                ]},
+                { text: "对于毛娘/妆娘的态度：", dim: "SF", s: [
+                    {v:2,t:"尽量自己学，实在不行才约"}, {v:1,t:"简单的自己来"}, {v:0,t:"看情况"}, {v:-1,t:"专业的交给专业的人"}, {v:-2,t:"全部约单更省心"}
+                ]},
+                { text: "漫展前一周，你在：", dim: "SF", s: [
+                    {v:2,t:"手搓最后几件配饰/修假发"}, {v:1,t:"还在完善装备"}, {v:0,t:"该准备的都准备了"}, {v:-1,t:"确认快递进度"}, {v:-2,t:"约妆娘时间/尾款"}
+                ]},
+                { text: "距离漫展 3 天，发现衣服尺寸不对：", dim: "PR", s: [
+                    {v:2,t:"熬夜改/重新做，必须完美"}, {v:1,t:"尽量改到满意"}, {v:0,t:"能穿就行"}, {v:-1,t:"用别针固定一下"}, {v:-2,t:"反正拍照看不出来"}
+                ]},
+                { text: "对于还原度的要求：", dim: "PR", s: [
+                    {v:2,t:"细节必须到位，哪怕照片拍不出"}, {v:1,t:"尽量还原"}, {v:0,t:"差不多就行"}, {v:-1,t:"整体感觉对了就行"}, {v:-2,t:"开心就好"}
+                ]},
+                { text: "准备一个新角色，你会：", dim: "PR", s: [
+                    {v:2,t:"拉设定表/找参考图/制定时间表"}, {v:1,t:"做详细准备"}, {v:0,t:"简单准备一下"}, {v:-1,t:"大概齐"}, {v:-2,t:"边出边调整"}
+                ]},
+                { text: "看到别人的 COS 比你的精致：", dim: "PR", s: [
+                    {v:2,t:"焦虑，想升级自己的装备"}, {v:1,t:"有点压力"}, {v:0,t:"还好吧"}, {v:-1,t:"欣赏一下"}, {v:-2,t:"每个人都有自己的节奏"}
+                ]},
+                { text: "出片后发现有穿帮：", dim: "PR", s: [
+                    {v:2,t:"必须重修/重拍，不能留遗憾"}, {v:1,t:"尽量修掉"}, {v:0,t:"看严重程度"}, {v:-1,t:"算了，下次注意"}, {v:-2,t:"不仔细看发现不了"}
+                ]}
+            ],
 
-            // 结果类型
-            const types = {
-                "COSP": { name: "造物主", quote: "手是借来的，肝是自己的", desc: "手工狂魔，享受从零到一的造物快感。缝纫机是本体，热熔胶是血液。", icon: "🛠️" },
-                "COSR": { name: "佛系手作娘", quote: "能做就做，不行就改", desc: "喜欢动手但拒绝焦虑。享受过程大于结果。", icon: "🧘" },
-                "COIP": { name: "舞台匠人", quote: "每一针都是为了聚光灯", desc: "手工 + 表演双重追求。舞台剧技术担当。", icon: "🎭" },
-                "COIR": { name: "同好工坊主", quote: "来我家做道具吧", desc: "享受和亲友一起手作。圈子技术支持。", icon: "🏠" },
-                "COFP": { name: "成品收藏家", quote: "专业的事交给专业的人", desc: "认可专业价值愿意买单。懂行会挑。", icon: "💎" },
-                "COFR": { name: "轻松氪金党", quote: "买都买了开心就好", desc: "氪金但随性。舒服第一。", icon: "💸" },
-                "COIF": { name: "社交氪金王", quote: "我出钱你出人", desc: "氪金 + 社交型。圈子金主爸爸。", icon: "👑" },
-                "AOSP": { name: "极致收藏家", quote: "我不出但我懂", desc: "深度了解但不亲自下场。行走的资料库。", icon: "📚" },
-                "AOSR": { name: "佛系云玩家", quote: "看看也挺好", desc: "轻度参与重在社交。和喜欢的人在一起。", icon: "☁️" },
-                "AOIP": { name: "舞台鉴赏家", quote: "我是最专业的观众", desc: "深度舞台爱好者。懂编舞懂灯光。", icon: "🎬" },
-                "AOIR": { name: "同好社交家", quote: "漫展是网友见面会", desc: "COS 是社交媒介。圈子粘合剂。", icon: "🤝" },
-                "AISF": { name: "全能体验派", quote: "什么都想试试", desc: "无明显偏向体验派。不深耕但快乐。", icon: "🌈" },
-                "AISR": { name: "轻量参与者", quote: "有局叫我", desc: "极低门槛参与。享受陪伴感。", icon: "🎈" },
-                "CIFP": { name: "技术流氪金党", quote: "我要最好的效果", desc: "结果导向完美主义。买回来还要改。", icon: "⚡" },
-                "CIFR": { name: "随性技术宅", quote: "会做但只看兴趣", desc: "技能满但看心情。兴趣驱动。", icon: "🎨" },
-                "CISP": { name: "同好工坊主", quote: "手是借来的肝是自己的", desc: "手工狂魔。技术大佬。", icon: "🛠️" }
-            };
+            types: {
+                COSP: {n:"造物主", q:"手是借来的，肝是自己的", d:"手工狂魔，享受从零到一的造物快感。", i:"🛠️"},
+                COSR: {n:"佛系手作娘", q:"能做就做，不行就改", d:"喜欢动手但拒绝焦虑。享受过程大于结果。", i:"🧘"},
+                COIP: {n:"舞台匠人", q:"每一针都是为了聚光灯", d:"手工 + 表演双重追求。舞台剧技术担当。", i:"🎭"},
+                COIR: {n:"同好工坊主", q:"来我家做道具吧", d:"享受和亲友一起手作。圈子技术支持。", i:"🏠"},
+                COFP: {n:"成品收藏家", q:"专业的事交给专业的人", d:"认可专业价值愿意买单。懂行会挑。", i:"💎"},
+                COFR: {n:"轻松氪金党", q:"买都买了开心就好", d:"氪金但随性。舒服第一。", i:"💸"},
+                COIF: {n:"社交氪金王", q:"我出钱你出人", d:"氪金 + 社交型。圈子金主爸爸。", i:"👑"},
+                AOSP: {n:"极致收藏家", q:"我不出但我懂", d:"深度了解但不亲自下场。行走的资料库。", i:"📚"},
+                AOSR: {n:"佛系云玩家", q:"看看也挺好", d:"轻度参与重在社交。和喜欢的人在一起。", i:"☁️"},
+                AOIP: {n:"舞台鉴赏家", q:"我是最专业的观众", d:"深度舞台爱好者。懂编舞懂灯光。", i:"🎬"},
+                AOIR: {n:"同好社交家", q:"漫展是网友见面会", d:"COS 是社交媒介。圈子粘合剂。", i:"🤝"},
+                AISF: {n:"全能体验派", q:"什么都想试试", d:"无明显偏向体验派。不深耕但快乐。", i:"🌈"},
+                AISR: {n:"轻量参与者", q:"有局叫我", d:"极低门槛参与。享受陪伴感。", i:"🎈"},
+                CIFP: {n:"技术流氪金党", q:"我要最好的效果", d:"结果导向完美主义。买回来还要改。", i:"⚡"},
+                CIFR: {n:"随性技术宅", q:"会做但只看兴趣", d:"技能满但看心情。兴趣驱动。", i:"🎨"},
+                CISP: {n:"同好工坊主", q:"手是借来的肝是自己的", d:"手工狂魔。技术大佬。", i:"🛠️"}
+            },
 
-            let currentQ = 0;
-            let answers = [];
-            let scores = { C: 0, A: 0, O: 0, I: 0, S: 0, F: 0, P: 0, R: 0 };
-            const maxScorePerDim = 10; // 每维度 5 题 × 2 分 = 10 分
+            behaviors: {
+                COSP: ["收藏夹里全是教程、版型、材料测评","看到角色先想这个铠甲能不能用 EVA 做","漫展前夜在宾馆手搓道具到凌晨","热熔胶枪是本体，工作台是第二个家","为了一个配件可以查三个月资料"],
+                COSR: ["这个花纹绣不好？那就贴布贴","漫展前一周还在改方案，但心态稳如老狗","常说出差不多行了名言","做不出来就 plan B，绝不内耗","享受过程，结果随缘"],
+                COIP: ["做衣服时已经在想这个动作会不会崩线","会为了舞台效果专门设计可拆卸部件","后台最忙的人：一边修道具一边背台词","舞台剧/宅舞比赛的技术担当","每一针都是为了那一刻的聚光灯"],
+                COIR: ["家里变成同好聚集地，工具共享","漫展前组织肝道具夜话会","比起自己出片，更开心的是我徒弟出片了","小圈子里的技术支持，喜欢教人","来我家做道具吧，我买了新缝纫机"],
+                COFP: ["关注列表里一半是妆娘/毛娘/道具师","能准确说出这个毛胚是哪家的","漫展前主要工作：催单、确认物流、检查尾款","懂行会挑，是太太们的优质甲方","收藏柜里全是名家手作"],
+                COFR: ["这件质感一般但拍照够用了","漫展前三天还在犹豫出不出","装备齐全但可能没拆封过几次","氪金但随性，舒服第一","买都买了，开心就好"],
+                COIF: ["这套团片我包了摄影和棚子","家里有空房间存放大家的装备","不一定自己出，但一定在场","小圈子的金主爸爸/后勤供应商","我出钱你出人，咱们漫展见"],
+                AOSP: ["漫展上最会夸的人：这个刺绣是苏绣吧","家里有一面墙是手办/设定集/物料","可能是隐藏的摄影/后期大佬","行走的资料库，懂工艺懂设定","我不出，但我懂，而且我有很多"],
+                AOSR: ["漫展行程：集邮→吃饭→聊天→回家","装备不多但使用率极高","对卷文化免疫","轻度参与，重在社交","看看也挺好，去漫展主要是为了见朋友"],
+                AOIP: ["宅舞比赛台下记笔记的人","能指出这里切镜节奏不对","手机里有上百 G 舞台视频，分类整理","深度舞台爱好者，懂编舞懂灯光","我在台下看，但我是最专业的观众"],
+                AOIR: ["漫展前一个月开始组局","群里最活跃，负责协调时间/地点/吃饭","可能出的角色很普通，但合影永远有人找","小圈子核心人物，记得住每个人的 CN","漫展是大型网友见面会"],
+                AISF: ["技能树点得很散：会一点妆、一点毛、一点道具","漫展角色年年换，没有固定风格","经常说出下次想试试 XX 然后真的试了","什么都想试试，什么都玩一点","不深耕但快乐，体验派"],
+                AISR: ["装备可能是借的/租的/二手收的","出片主要靠亲友后期拯救","但每次都玩得很开心","被朋友拉入坑，享受陪伴感","有局叫我，没局也行"],
+                CIFP: ["这个毛胚不错，但刘海要重新贴","约单后还要自己加细节","装备迭代极快，永远在升级","结果导向的完美主义","我要最好的效果，买还是做只是手段"],
+                CIFR: ["这个角色的武器太酷了，我要自己做","其他部分？淘宝一键购买","兴趣驱动，没有固定模式","技能点满但调用看心情","会做，但只做感兴趣的"],
+                CISP: ["手工狂魔，技术大佬","缝纫机是本体，热熔胶是血液","漫展前夜手搓道具到凌晨","享受从零到一的造物快感","手是借来的，肝是自己的"]
+            },
 
-            // DOM 元素
-            const startScreen = document.getElementById('start-screen');
-            const testScreen = document.getElementById('test-screen');
-            const loadingScreen = document.getElementById('loading-screen');
-            const resultScreen = document.getElementById('result-screen');
-            const startBtn = document.getElementById('startBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const shareBtn = document.getElementById('shareBtn');
-            const restartBtn = document.getElementById('restartBtn');
-            const questionContainer = document.getElementById('questionContainer');
-            const progressBar = document.getElementById('progressBar');
-            const currentQEl = document.getElementById('currentQ');
+            quotes: [
+                {t:"当次元壁破碎时，你会成为谁？", s:"原创"},
+                {t:"人不是什么时候都能活的光明正大，人生总是要背着一些污点活着。", s:"《反叛的鲁路修》"},
+                {t:"我只是一个路过的假面骑士，给我记好了！", s:"《假面骑士 Decade》"},
+                {t:"人类的赞歌就是勇气的赞歌！", s:"《JOJO 的奇妙冒险》"},
+                {t:"真相永远只有一个！", s:"《名侦探柯南》"},
+                {t:"我是要成为海贼王的男人！", s:"《海贼王》"},
+                {t:"已经没什么好害怕的了", s:"《魔法少女小圆》"},
+                {t:"这个世界是残酷的，但却也是美好的。", s:"《进击的巨人》"},
+                {t:"只要有树叶飞舞的地方，火就会燃烧。", s:"《火影忍者》"},
+                {t:"能打败你的，只有你自己。", s:"《排球少年》"},
+                {t:"如果结果不如你所愿，那就在尘埃落定前奋力一搏。", s:"《夏目友人帐》"},
+                {t:"不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福。", s:"《千与千寻》"},
+                {t:"我们的征途是星辰大海！", s:"《银河英雄传说》"},
+                {t:"只要还有一口气，就要把该做的事做到底。", s:"《鬼灭之刃》"}
+            ]
+        };
 
-            // 开始测试
-            function startTest() {
-                console.log('开始测试 v3.0');
-                startScreen.classList.add('hidden');
-                testScreen.classList.remove('hidden');
-                showQuestion();
-            }
+        // ========== 状态模块 ==========
+        const STATE = {
+            q: 0,
+            a: [],
+            s: {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0},
+            max: 10
+        };
 
-            // 显示问题
-            function showQuestion() {
-                const q = questions[currentQ];
-                currentQEl.textContent = currentQ + 1;
-                progressBar.style.width = ((currentQ) / questions.length * 100) + '%';
+        // ========== DOM 元素 ==========
+        let DOM = {};
 
-                let optionsHtml = '';
-                q.scale.forEach(function(opt, index) {
-                    optionsHtml += '<div class="likert-option" data-value="' + opt.value + '">' +
-                        '<div class="likert-value">' + (opt.value > 0 ? '+' + opt.value : opt.value) + '</div>' +
-                        '<div class="likert-text">' + opt.text + '</div>' +
-                        '</div>';
-                });
+        // ========== 工具函数 ==========
+        function $(id) { return document.getElementById(id); }
+        function show(a) { a.classList.remove('hidden'); }
+        function hide(a) { a.classList.add('hidden'); }
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
 
-                questionContainer.innerHTML = '<div class="question-card">' +
-                    '<div class="question-number">QUESTION ' + (currentQ + 1) + '</div>' +
-                    '<div class="question-text">' + q.text + '</div>' +
-                    '<div class="likert-scale">' + optionsHtml + '</div></div>';
+        // ========== 核心逻辑 ==========
+        function start() {
+            console.log('[COSTI] 开始测试');
+            hide(DOM.start);
+            show(DOM.test);
+            renderQ();
+        }
 
-                const options = questionContainer.querySelectorAll('.likert-option');
-                options.forEach(function(opt) {
-                    opt.addEventListener('click', function() {
-                        options.forEach(function(o) { o.classList.remove('selected'); });
-                        this.classList.add('selected');
-                        answers[currentQ] = {
-                            dimension: q.dimension,
-                            value: parseInt(this.getAttribute('data-value'))
-                        };
-                        nextBtn.disabled = false;
-                    });
-                });
+        function renderQ() {
+            const q = DATA.questions[STATE.q];
+            DOM.curQ.textContent = STATE.q + 1;
+            DOM.bar.style.width = (STATE.q / 20 * 100) + '%';
 
-                nextBtn.disabled = true;
-            }
-
-            // 下一题
-            function nextQuestion() {
-                const answer = answers[currentQ];
-                const dim = answer.dimension.split('/');
-                
-                // 5 级量表计分：+2/+1 归左维度，0 不计，-1/-2 归右维度
-                if (answer.value > 0) {
-                    scores[dim[0]] += answer.value;
-                } else if (answer.value < 0) {
-                    scores[dim[1]] += Math.abs(answer.value);
-                }
-                
-                currentQ++;
-
-                if (currentQ >= questions.length) {
-                    testScreen.classList.add('hidden');
-                    loadingScreen.classList.remove('hidden');
-                    setTimeout(showResult, 2000);
-                } else {
-                    showQuestion();
-                }
-            }
-
-            // 计算结果
-            function calculateResult() {
-                const type = [];
-                type.push(scores.C >= scores.A ? 'C' : 'A');
-                type.push(scores.O >= scores.I ? 'O' : 'I');
-                type.push(scores.S >= scores.F ? 'S' : 'F');
-                type.push(scores.P >= scores.R ? 'P' : 'R');
-                return type.join('');
-            }
-
-            // 计算置信度
-            function calculateConfidence() {
-                const diffs = [
-                    Math.abs(scores.C - scores.A),
-                    Math.abs(scores.O - scores.I),
-                    Math.abs(scores.S - scores.F),
-                    Math.abs(scores.P - scores.R)
-                ];
-                const avgDiff = diffs.reduce((a, b) => a + b, 0) / 4;
-                return Math.min(95, Math.max(50, Math.round(50 + avgDiff * 10)));
-            }
-
-            // 计算副类型
-            function calculateSubType(mainType) {
-                const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-                const mainLetters = mainType.split('');
-                
-                for (let i = 0; i < sortedScores.length; i++) {
-                    const letter = sortedScores[i][0];
-                    if (!mainLetters.includes(letter)) {
-                        const subType = mainType.split('');
-                        for (let j = 0; j < 4; j++) {
-                            if (subType[j] !== letter) {
-                                subType[j] = letter;
-                                break;
-                            }
-                        }
-                        return subType.join('');
-                    }
-                }
-                return mainType;
-            }
-
-            // 随机选择典型行为
-            function getRandomBehaviors(typeCode) {
-                const behaviors = behaviorLib[typeCode] || behaviorLib["COSP"];
-                // 随机打乱并取 3 条
-                const shuffled = behaviors.sort(() => Math.random() - 0.5);
-                return shuffled.slice(0, 3).join('<br>');
-            }
-
-            // 显示结果
-            function showResult() {
-                loadingScreen.classList.add('hidden');
-                resultScreen.classList.remove('hidden');
-
-                const typeCode = calculateResult();
-                const result = types[typeCode] || types["COSP"];
-                const confidence = calculateConfidence();
-                const subTypeCode = calculateSubType(typeCode);
-                const subType = types[subTypeCode] || result;
-
-                document.getElementById('typeIcon').textContent = result.icon;
-                document.getElementById('typeCode').textContent = typeCode;
-                document.getElementById('typeName').textContent = result.name;
-                document.getElementById('typeQuote').textContent = '"' + result.quote + '"';
-                document.getElementById('typeDesc').textContent = result.desc;
-                document.getElementById('typeBehaviors').innerHTML = getRandomBehaviors(typeCode);
-                document.getElementById('confidenceBadge').textContent = '置信度：' + confidence + '%';
-
-                if (subTypeCode !== typeCode) {
-                    document.getElementById('subTypeContainer').classList.remove('hidden');
-                    document.getElementById('subTypeCode').textContent = subTypeCode + ' · ' + subType.name;
-                }
-
-                // 维度条
-                const dims = [
-                    { label: '创作者 C', value: scores.C },
-                    { label: '欣赏者 A', value: scores.A },
-                    { label: '舞台型 O', value: scores.O },
-                    { label: '圈内型 I', value: scores.I },
-                    { label: '手工型 S', value: scores.S },
-                    { label: '氪金型 F', value: scores.F },
-                    { label: '完美型 P', value: scores.P },
-                    { label: '随性型 R', value: scores.R }
-                ];
-
-                let barsHtml = '';
-                dims.forEach(function(d) {
-                    const pct = Math.min(100, (d.value / maxScorePerDim * 100));
-                    barsHtml += '<div class="dimension-bar">' +
-                        '<div class="dimension-label"><span>' + d.label + '</span><span>' + d.value + '/' + maxScorePerDim + '</span></div>' +
-                        '<div class="dimension-track"><div class="dimension-fill" style="width: ' + pct + '%"></div>' +
-                        '<span class="dimension-percent">' + pct.toFixed(0) + '%</span></div>' +
-                        '</div>';
-                });
-                document.getElementById('radarBars').innerHTML = barsHtml;
-            }
-
-            // 分享
-            function shareResult() {
-                const code = document.getElementById('typeCode').textContent;
-                const name = document.getElementById('typeName').textContent;
-                const text = '我的 COSTI 结果是：' + code + ' · ' + name + '\n来自：次元相性测试';
-                
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text).then(function() {
-                        alert('结果已复制！');
-                    });
-                } else {
-                    alert(text);
-                }
-            }
-
-            // 重新开始
-            function restartTest() {
-                currentQ = 0;
-                answers = [];
-                scores = { C: 0, A: 0, O: 0, I: 0, S: 0, F: 0, P: 0, R: 0 };
-                resultScreen.classList.add('hidden');
-                startScreen.classList.remove('hidden');
-            }
-
-            // 二次元名言库
-            const quotes = [
-                { text: "当次元壁破碎时，你会成为谁？", source: "原创" },
-                { text: "人不是什么时候都能活的光明正大，人生总是要背着一些污点活着。", source: "《反叛的鲁路修》" },
-                { text: "我只是一个路过的假面骑士，给我记好了！", source: "《假面骑士 Decade》" },
-                { text: "人类的赞歌就是勇气的赞歌！", source: "《JOJO 的奇妙冒险》" },
-                { text: "真相永远只有一个！", source: "《名侦探柯南》" },
-                { text: "我是要成为海贼王的男人！", source: "《海贼王》" },
-                { text: "已经没什么好害怕的了", source: "《魔法少女小圆》" },
-                { text: "这个世界是残酷的，但却也是美好的。", source: "《进击的巨人》" },
-                { text: "只要有树叶飞舞的地方，火就会燃烧。", source: "《火影忍者》" },
-                { text: "能打败你的，只有你自己。", source: "《排球少年》" },
-                { text: "如果结果不如你所愿，那就在尘埃落定前奋力一搏。", source: "《夏目友人帐》" },
-                { text: "不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福。", source: "《千与千寻》" },
-                { text: "我们的征途是星辰大海！", source: "《银河英雄传说》" },
-                { text: "只要还有一口气，就要把该做的事做到底。", source: "《鬼灭之刃》" }
-            ];
-
-            function showRandomQuote() {
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                const quote = quotes[randomIndex];
-                document.getElementById('randomQuote').textContent = '"' + quote.text + '" —— ' + quote.source;
-            }
-
-            // 页面加载完成后初始化
-            window.addEventListener('DOMContentLoaded', function() {
-                console.log('DOM 加载完成');
-                showRandomQuote();
-                
-                // 重新获取 DOM 元素（确保已加载）
-                const startBtn = document.getElementById('startBtn');
-                const nextBtn = document.getElementById('nextBtn');
-                const shareBtn = document.getElementById('shareBtn');
-                const restartBtn = document.getElementById('restartBtn');
-                
-                if (startBtn) {
-                    startBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        console.log('开始测试按钮被点击');
-                        startTest();
-                    });
-                }
-                
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', nextQuestion);
-                }
-                
-                if (shareBtn) {
-                    shareBtn.addEventListener('click', shareResult);
-                }
-                
-                if (restartBtn) {
-                    restartBtn.addEventListener('click', restartTest);
-                }
-                
-                console.log('COSTI v3.0 已就绪 - 事件绑定完成');
+            let html = '<div class="question-card"><div class="question-number">QUESTION ' + (STATE.q + 1) + '</div>';
+            html += '<div class="question-text">' + q.text + '</div><div class="likert-scale">';
+            
+            q.s.forEach(function(opt) {
+                const val = opt.v > 0 ? '+' + opt.v : opt.v;
+                html += '<div class="likert-option" data-v="' + opt.v + '">';
+                html += '<div class="likert-value">' + val + '</div>';
+                html += '<div class="likert-text">' + opt.t + '</div></div>';
             });
-        })();
+            
+            html += '</div></div>';
+            DOM.qCon.innerHTML = html;
+
+            const opts = DOM.qCon.querySelectorAll('.likert-option');
+            opts.forEach(function(o) {
+                o.onclick = function() {
+                    opts.forEach(function(x) { x.classList.remove('selected'); });
+                    this.classList.add('selected');
+                    STATE.a[STATE.q] = { dim: q.dim, v: parseInt(this.getAttribute('data-v')) };
+                    DOM.next.disabled = false;
+                };
+            });
+
+            DOM.next.disabled = true;
+        }
+
+        function next() {
+            const a = STATE.a[STATE.q];
+            if (a.v > 0) {
+                STATE.s[a.dim[0]] += a.v;
+            } else if (a.v < 0) {
+                STATE.s[a.dim[1]] += Math.abs(a.v);
+            }
+            STATE.q++;
+
+            if (STATE.q >= 20) {
+                hide(DOM.test);
+                show(DOM.load);
+                setTimeout(showResult, 2000);
+            } else {
+                renderQ();
+            }
+        }
+
+        function calcType() {
+            let t = '';
+            t += STATE.s.C >= STATE.s.A ? 'C' : 'A';
+            t += STATE.s.O >= STATE.s.I ? 'O' : 'I';
+            t += STATE.s.S >= STATE.s.F ? 'S' : 'F';
+            t += STATE.s.P >= STATE.s.R ? 'P' : 'R';
+            return t;
+        }
+
+        function calcConf() {
+            const d = [
+                Math.abs(STATE.s.C - STATE.s.A),
+                Math.abs(STATE.s.O - STATE.s.I),
+                Math.abs(STATE.s.S - STATE.s.F),
+                Math.abs(STATE.s.P - STATE.s.R)
+            ];
+            const avg = d.reduce(function(a,b){return a+b;}, 0) / 4;
+            return Math.min(95, Math.max(50, Math.round(50 + avg * 10)));
+        }
+
+        function calcSub(main) {
+            const sorted = Object.entries(STATE.s).sort(function(a,b){return b[1]-a[1];});
+            const letters = main.split('');
+            for (let i = 0; i < sorted.length; i++) {
+                const l = sorted[i][0];
+                if (letters.indexOf(l) === -1) {
+                    const sub = main.split('');
+                    for (let j = 0; j < 4; j++) {
+                        if (sub[j] !== l) { sub[j] = l; break; }
+                    }
+                    return sub.join('');
+                }
+            }
+            return main;
+        }
+
+        function showResult() {
+            hide(DOM.load);
+            show(DOM.result);
+
+            const code = calcType();
+            const res = DATA.types[code] || DATA.types.COSP;
+            const conf = calcConf();
+            const subCode = calcSub(code);
+            const sub = DATA.types[subCode] || res;
+
+            DOM.icon.textContent = res.i;
+            DOM.code.textContent = code;
+            DOM.name.textContent = res.n;
+            DOM.quote.textContent = '"' + res.q + '"';
+            DOM.desc.textContent = res.d;
+            DOM.behav.innerHTML = shuffle(DATA.behaviors[code]).slice(0, 3).join('<br>');
+            DOM.conf.textContent = '置信度：' + conf + '%';
+
+            if (subCode !== code) {
+                DOM.subCon.classList.remove('hidden');
+                DOM.subCode.textContent = subCode + ' · ' + sub.n;
+            }
+
+            const dims = [
+                {l:'创作者 C',v:STATE.s.C}, {l:'欣赏者 A',v:STATE.s.A},
+                {l:'舞台型 O',v:STATE.s.O}, {l:'圈内型 I',v:STATE.s.I},
+                {l:'手工型 S',v:STATE.s.S}, {l:'氪金型 F',v:STATE.s.F},
+                {l:'完美型 P',v:STATE.s.P}, {l:'随性型 R',v:STATE.s.R}
+            ];
+
+            let bars = '';
+            dims.forEach(function(d) {
+                const pct = Math.min(100, (d.v / STATE.max * 100));
+                bars += '<div class="dimension-bar"><div class="dimension-label">';
+                bars += '<span>' + d.l + '</span><span>' + d.v + '/' + STATE.max + '</span></div>';
+                bars += '<div class="dimension-track"><div class="dimension-fill" style="width:' + pct + '%"></div>';
+                bars += '<span class="dimension-percent">' + Math.round(pct) + '%</span></div></div>';
+            });
+            DOM.bars.innerHTML = bars;
+        }
+
+        function share() {
+            const txt = '我的 COSTI 结果是：' + DOM.code.textContent + ' · ' + DOM.name.textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(txt).then(function() { alert('结果已复制！'); });
+            } else {
+                alert(txt);
+            }
+        }
+
+        function restart() {
+            STATE.q = 0;
+            STATE.a = [];
+            STATE.s = {C:0,A:0,O:0,I:0,S:0,F:0,P:0,R:0};
+            hide(DOM.result);
+            show(DOM.start);
+        }
+
+        function showQuote() {
+            const q = rand(DATA.quotes);
+            DOM.quoteEl.textContent = '"' + q.t + '" —— ' + q.s;
+        }
+
+        // ========== 初始化 ==========
+        function init() {
+            console.log('[COSTI] 初始化 DOM');
+            DOM = {
+                start: $('start-screen'),
+                test: $('test-screen'),
+                load: $('loading-screen'),
+                result: $('result-screen'),
+                curQ: $('currentQ'),
+                bar: $('progressBar'),
+                qCon: $('questionContainer'),
+                next: $('nextBtn'),
+                icon: $('typeIcon'),
+                code: $('typeCode'),
+                name: $('typeName'),
+                quote: $('typeQuote'),
+                desc: $('typeDesc'),
+                behav: $('typeBehaviors'),
+                conf: $('confidenceBadge'),
+                subCon: $('subTypeContainer'),
+                subCode: $('subTypeCode'),
+                bars: $('radarBars'),
+                quoteEl: $('randomQuote')
+            };
+
+            console.log('[COSTI] 绑定事件');
+            $('startBtn').onclick = function(e) {
+                e.preventDefault();
+                console.log('[COSTI] 开始按钮点击');
+                start();
+            };
+            $('nextBtn').onclick = next;
+            $('shareBtn').onclick = share;
+            $('restartBtn').onclick = restart;
+
+            showQuote();
+            console.log('[COSTI] 初始化完成');
+        }
+
+        // 页面加载完成后初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
     </script>
 </body>
 </html>
