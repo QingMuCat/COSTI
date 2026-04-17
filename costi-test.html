@@ -382,12 +382,11 @@
                 <div class="confidence-badge" id="confidenceBadge">置信度：85%</div>
                 <div class="type-quote" id="typeQuote">"手是借来的，肝是自己的"</div>
                 <div class="music-player" id="musicPlayer">
-                    <button class="music-btn" id="musicBtn">▶</button>
                     <div class="music-info">
-                        <div class="music-title" id="musicTitle">点击播放二次元歌曲</div>
-                        <div class="music-artist" id="musicArtist">🎵 随机推荐</div>
+                        <div class="music-title" id="musicTitle">🎵 正在播放</div>
+                        <div class="music-artist" id="musicArtist">随机二次元歌曲</div>
                     </div>
-                    <div class="music-wave hidden" id="musicWave">
+                    <div class="music-wave" id="musicWave">
                         <div class="wave-bar"></div>
                         <div class="wave-bar"></div>
                         <div class="wave-bar"></div>
@@ -747,8 +746,8 @@
             DOM.behav.innerHTML = behavs ? shuffle(behavs).slice(0, 3).join('<br>') : '• 独特的人格魅力';
             DOM.conf.textContent = '置信度：' + conf + '%';
 
-            // 初始化音乐播放器
-            initMusic();
+            // 自动播放音乐
+            playRandomMusic();
 
             const dims = [
                 {l:'创作者 C',v:STATE.s.C}, {l:'欣赏者 A',v:STATE.s.A},
@@ -788,38 +787,6 @@
             audio: null
         };
 
-        function initMusic() {
-            DOM.musicBtn = $('musicBtn');
-            DOM.musicTitle = $('musicTitle');
-            DOM.musicArtist = $('musicArtist');
-            DOM.musicWave = $('musicWave');
-            
-            if (DOM.musicBtn) {
-                DOM.musicBtn.onclick = toggleMusic;
-            }
-        }
-
-        function toggleMusic() {
-            if (!musicState.audio) {
-                // 首次播放，随机选择一首
-                playRandomMusic();
-            } else if (musicState.playing) {
-                // 暂停
-                musicState.audio.pause();
-                musicState.playing = false;
-                DOM.musicBtn.textContent = '▶';
-                DOM.musicWave.classList.add('hidden');
-                DOM.musicTitle.textContent = '已暂停';
-            } else {
-                // 继续播放
-                musicState.audio.play();
-                musicState.playing = true;
-                DOM.musicBtn.textContent = '⏸';
-                DOM.musicWave.classList.remove('hidden');
-                DOM.musicTitle.textContent = musicState.current.t;
-            }
-        }
-
         function playRandomMusic() {
             const song = rand(DATA.music);
             musicState.current = song;
@@ -839,13 +806,11 @@
             
             musicState.audio.play().then(function() {
                 musicState.playing = true;
-                DOM.musicBtn.textContent = '⏸';
-                DOM.musicTitle.textContent = song.t;
+                DOM.musicTitle.textContent = '🎵 ' + song.t;
                 DOM.musicArtist.textContent = song.a;
-                DOM.musicWave.classList.remove('hidden');
             }).catch(function(e) {
                 console.log('[COSTI] 音乐播放失败:', e);
-                DOM.musicTitle.textContent = '点击播放';
+                DOM.musicTitle.textContent = '🎵 播放失败（浏览器限制）';
                 DOM.musicArtist.textContent = song.t + ' - ' + song.a;
             });
         }
@@ -906,10 +871,8 @@
                 conf: $('confidenceBadge'),
                 bars: $('radarBars'),
                 quoteEl: $('randomQuote'),
-                musicBtn: null,
-                musicTitle: null,
-                musicArtist: null,
-                musicWave: null
+                musicTitle: $('musicTitle'),
+                musicArtist: $('musicArtist')
             };
 
             console.log('[COSTI] 绑定事件');
@@ -925,7 +888,7 @@
             $('restartBtn').onclick = restart;
 
             showQuote();
-            console.log('[COSTI] 初始化完成 - v6.0 带音乐播放');
+            console.log('[COSTI] 初始化完成 - v6.1 全局随机播放');
         }
 
         // 页面加载完成后初始化
