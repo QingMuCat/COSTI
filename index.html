@@ -214,15 +214,70 @@
             color: var(--text-light);
             font-weight: 700;
         }
-        .sub-type {
-            background: rgba(0, 212, 170, 0.1);
-            border: 1px solid rgba(0, 212, 170, 0.3);
+        .music-player {
+            background: rgba(108, 93, 211, 0.15);
+            border: 1px solid rgba(108, 93, 211, 0.3);
             border-radius: 16px;
             padding: 20px;
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .sub-type-title { font-size: 14px; color: var(--accent); margin-bottom: 10px; }
-        .sub-type-code { font-size: 24px; font-weight: 700; color: var(--text-light); }
+        .music-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(108, 93, 211, 0.4);
+        }
+        .music-info {
+            flex: 1;
+            text-align: left;
+        }
+        .music-title {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .music-artist {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        .music-wave {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 30px;
+        }
+        .wave-bar {
+            width: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        .wave-bar:nth-child(1) { height: 60%; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { height: 100%; animation-delay: 0.6s; }
+        .wave-bar:nth-child(5) { height: 70%; animation-delay: 0.8s; }
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
         .loading { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; }
         .loading-dot {
             width: 12px;
@@ -326,9 +381,19 @@
                 <div class="type-name" id="typeName">造物主</div>
                 <div class="confidence-badge" id="confidenceBadge">置信度：85%</div>
                 <div class="type-quote" id="typeQuote">"手是借来的，肝是自己的"</div>
-                <div class="sub-type hidden" id="subTypeContainer">
-                    <div class="sub-type-title">🔸 次要倾向</div>
-                    <div class="sub-type-code" id="subTypeCode">COSR · 佛系手作娘</div>
+                <div class="music-player" id="musicPlayer">
+                    <button class="music-btn" id="musicBtn">▶</button>
+                    <div class="music-info">
+                        <div class="music-title" id="musicTitle">点击播放二次元歌曲</div>
+                        <div class="music-artist" id="musicArtist">🎵 随机推荐</div>
+                    </div>
+                    <div class="music-wave hidden" id="musicWave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
                 </div>
                 <div class="type-description">
                     <h3>✨ 核心特质</h3>
@@ -483,6 +548,24 @@
                 CIFR: ["这个角色的武器太酷了，我要自己做","其他部分？淘宝一键购买","兴趣驱动，没有固定模式","技能点满但调用看心情","会做，但只做感兴趣的"],
                 CISP: ["拉设定表找参考图制定时间表","每一个细节都要打磨到极致","要么不做，要做就做到最好","创作欲 + 完美主义的双重 buff","为了还原度可以熬夜改三天"]
             },
+
+            music: [
+                {t:"unravel", a:"TK from 凛として時雨《东京食尸鬼》"},
+                {t:"红莲华", a:"LiSA《鬼灭之刃》"},
+                {t:"直到世界尽头", a:"WANDS《灌篮高手》"},
+                {t:"Butter-Fly", a:"和田光司《数码宝贝》"},
+                {t:"aLIEz", a:"mizuki《ALDNOAH.ZERO》"},
+                {t:"我的战斗", a:"Linked Horizon《进击的巨人》"},
+                {t:"青鸟", a:"生物股长《火影忍者》"},
+                {t:"only my railgun", a:"fripSide《某科学的超电磁炮》"},
+                {t:"Crossing Field", a:"LiSA《刀剑神域》"},
+                {t:"梦的光点", a:"王心凌《神兵小将》"},
+                {t:"恋爱循环", a:"花泽香菜《化物语》"},
+                {t:"白金 Disco", a:"井口裕香《伪物语》"},
+                {t":"God knows...", a:"平野绫《凉宫春日的忧郁》"},
+                {t:"鸟之诗", a:"Lia《AIR》"},
+                {t:"残酷天使的行动纲领", a:"高桥洋子《EVA》"}
+            ],
 
             quotes: [
                 {t:"当次元壁破碎时，你会成为谁？", s:"原创"},
@@ -654,8 +737,6 @@
             const code = calcType();
             const res = DATA.types[code] || DATA.types.COSP;
             const conf = calcConf();
-            const subCode = calcSub(code);
-            const sub = DATA.types[subCode] || res;
             const behavs = DATA.behaviors[code] || DATA.behaviors.COSP;
 
             DOM.icon.textContent = res.i;
@@ -666,10 +747,8 @@
             DOM.behav.innerHTML = behavs ? shuffle(behavs).slice(0, 3).join('<br>') : '• 独特的人格魅力';
             DOM.conf.textContent = '置信度：' + conf + '%';
 
-            if (subCode !== code) {
-                DOM.subCon.classList.remove('hidden');
-                DOM.subCode.textContent = subCode + ' · ' + sub.n;
-            }
+            // 初始化音乐播放器
+            initMusic();
 
             const dims = [
                 {l:'创作者 C',v:STATE.s.C}, {l:'欣赏者 A',v:STATE.s.A},
@@ -700,7 +779,93 @@
 
         function imgShare() {
             alert('图片生成功能开发中... 敬请期待！');
-            // TODO: 使用 canvas 生成结果图片
+        }
+
+        // ========== 音乐播放器 ==========
+        let musicState = {
+            playing: false,
+            current: null,
+            audio: null
+        };
+
+        function initMusic() {
+            DOM.musicBtn = $('musicBtn');
+            DOM.musicTitle = $('musicTitle');
+            DOM.musicArtist = $('musicArtist');
+            DOM.musicWave = $('musicWave');
+            
+            if (DOM.musicBtn) {
+                DOM.musicBtn.onclick = toggleMusic;
+            }
+        }
+
+        function toggleMusic() {
+            if (!musicState.audio) {
+                // 首次播放，随机选择一首
+                playRandomMusic();
+            } else if (musicState.playing) {
+                // 暂停
+                musicState.audio.pause();
+                musicState.playing = false;
+                DOM.musicBtn.textContent = '▶';
+                DOM.musicWave.classList.add('hidden');
+                DOM.musicTitle.textContent = '已暂停';
+            } else {
+                // 继续播放
+                musicState.audio.play();
+                musicState.playing = true;
+                DOM.musicBtn.textContent = '⏸';
+                DOM.musicWave.classList.remove('hidden');
+                DOM.musicTitle.textContent = musicState.current.t;
+            }
+        }
+
+        function playRandomMusic() {
+            const song = rand(DATA.music);
+            musicState.current = song;
+            
+            // 使用网易云音乐外链（示例）
+            // 实际使用时需要替换为有效的音频 URL
+            const url = 'https://music.163.com/song/media/outer/url?id=' + getMusicId(song.t) + '.mp3';
+            
+            musicState.audio = new Audio(url);
+            musicState.audio.onended = function() {
+                playRandomMusic(); // 播放完后随机下一首
+            };
+            musicState.audio.onerror = function() {
+                DOM.musicTitle.textContent = '播放失败，请手动播放';
+                DOM.musicWave.classList.add('hidden');
+            };
+            
+            musicState.audio.play().then(function() {
+                musicState.playing = true;
+                DOM.musicBtn.textContent = '⏸';
+                DOM.musicTitle.textContent = song.t;
+                DOM.musicArtist.textContent = song.a;
+                DOM.musicWave.classList.remove('hidden');
+            }).catch(function(e) {
+                console.log('[COSTI] 音乐播放失败:', e);
+                DOM.musicTitle.textContent = '点击播放';
+                DOM.musicArtist.textContent = song.t + ' - ' + song.a;
+            });
+        }
+
+        function getMusicId(name) {
+            // 简化的 ID 映射（实际需要完整的歌曲 ID 数据库）
+            const ids = {
+                'unravel': '1031063946',
+                '红莲华': '1377518821',
+                '直到世界尽头': '1397031',
+                'Butter-Fly': '1397060',
+                'aLIEz': '28261695',
+                '青鸟': '1397055',
+                'only my railgun': '1397064',
+                'Crossing Field': '1397068',
+                '恋爱循环': '1397072',
+                '鸟之诗': '1397076',
+                '残酷天使的行动纲领': '1397080'
+            };
+            return ids[name] || '1397031'; // 默认返回一个 ID
         }
 
         function restart() {
@@ -739,10 +904,12 @@
                 desc: $('typeDesc'),
                 behav: $('typeBehaviors'),
                 conf: $('confidenceBadge'),
-                subCon: $('subTypeContainer'),
-                subCode: $('subTypeCode'),
                 bars: $('radarBars'),
-                quoteEl: $('randomQuote')
+                quoteEl: $('randomQuote'),
+                musicBtn: null,
+                musicTitle: null,
+                musicArtist: null,
+                musicWave: null
             };
 
             console.log('[COSTI] 绑定事件');
@@ -758,7 +925,7 @@
             $('restartBtn').onclick = restart;
 
             showQuote();
-            console.log('[COSTI] 初始化完成 - v6.0');
+            console.log('[COSTI] 初始化完成 - v6.0 带音乐播放');
         }
 
         // 页面加载完成后初始化
