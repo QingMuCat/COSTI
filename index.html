@@ -511,21 +511,26 @@
             },
 
             music: [
-                {t:"unravel", a:"TK from 凛として時雨"},
-                {t:"红莲华", a:"LiSA"},
-                {t:"直到世界尽头", a:"WANDS"},
-                {t:"Butter-Fly", a:"和田光司"},
-                {t:"aLIEz", a:"mizuki"},
-                {t:"我的战斗", a:"Linked Horizon"},
-                {t:"青鸟", a:"生物股长"},
-                {t:"only my railgun", a:"fripSide"},
-                {t:"Crossing Field", a:"LiSA"},
-                {t:"梦的光点", a:"王心凌"},
-                {t:"恋爱循环", a:"花泽香菜"},
-                {t:"白金 Disco", a:"井口裕香"},
-                {t:"God knows...", a:"平野绫"},
-                {t:"鸟之诗", a:"Lia"},
-                {t:"残酷天使的行动纲领", a:"高桥洋子"}
+                {t:"远航星的告别", a:"鸣潮先约电台", id:"3346496288"},
+                {t:"明月天涯", a:"五音 Jw", id:"416388799"},
+                {t:"曹操", a:"林俊杰", id:"108795"},
+                {t:"VISIONS", a:"NAQT VANE", id:"2750093263"},
+                {t:"EXCITE", a:"三浦大知", id:"454438331"},
+                {t:"AIZO", a:"King Gnu", id:"3337367763"},
+                {t:"unravel", a:"TK from 凛として時雨", id:"1031063946"},
+                {t:"红莲华", a:"LiSA", id:"1377518821"},
+                {t:"直到世界尽头", a:"WANDS", id:"1397031"},
+                {t:"Butter-Fly", a:"和田光司", id:"1397060"},
+                {t:"aLIEz", a:"mizuki", id:"28261695"},
+                {t:"我的战斗", a:"Linked Horizon", id:"28261696"},
+                {t:"青鸟", a:"生物股长", id:"1397055"},
+                {t:"only my railgun", a:"fripSide", id:"1397064"},
+                {t:"Crossing Field", a:"LiSA", id:"1397068"},
+                {t:"恋爱循环", a:"花泽香菜", id:"1397072"},
+                {t:"鸟之诗", a:"Lia", id:"1397076"},
+                {t:"残酷天使的行动纲领", a:"高桥洋子", id:"1397080"},
+                {t:"God knows...", a:"平野绫", id:"1397084"},
+                {t:"梦的光点", a:"王心凌", id:"1397088"}
             ],
 
             quotes: [
@@ -578,13 +583,18 @@
 
         // ========== 核心逻辑 ==========
         function start() {
-            console.log('[COSTI] 开始测试');
-            STATE.startTime = Date.now();
-            STATE.timeSpent = [];
-            hide(DOM.start);
-            show(DOM.test);
-            playRandomMusic();
-            renderQ();
+            try {
+                console.log('[COSTI] 开始测试');
+                STATE.startTime = Date.now();
+                STATE.timeSpent = [];
+                hide(DOM.start);
+                show(DOM.test);
+                playRandomMusic();
+                renderQ();
+            } catch (err) {
+                console.error('[COSTI] 开始测试失败:', err);
+                alert('测试启动失败，请刷新页面重试');
+            }
         }
 
         function renderQ() {
@@ -761,53 +771,37 @@
 
         // ========== 音乐播放器 ==========
         function playRandomMusic() {
-            var song = rand(DATA.music);
-            musicState.current = song;
-            
-            var url = 'https://music.163.com/song/media/outer/url?id=' + getMusicId(song.t) + '.mp3';
-            
-            musicState.audio = new Audio(url);
-            musicState.audio.onended = function() {
-                playRandomMusic();
-            };
-            musicState.audio.onerror = function() {
-                if (DOM.musicTitle) {
-                    DOM.musicTitle.textContent = '播放失败，请手动播放';
-                    DOM.musicWave.classList.add('hidden');
+            try {
+                var song = rand(DATA.music);
+                musicState.current = song;
+                
+                var url = 'https://music.163.com/song/media/outer/url?id=' + song.id + '.mp3';
+                
+                if (musicState.audio) {
+                    musicState.audio.pause();
                 }
-            };
-            
-            musicState.audio.play().then(function() {
-                musicState.playing = true;
-                if (DOM.musicTitle) {
-                    DOM.musicTitle.textContent = '🎵 ' + song.t;
-                    DOM.musicArtist.textContent = song.a;
-                    DOM.musicWave.classList.remove('hidden');
-                }
-            }).catch(function(e) {
-                console.log('[COSTI] 音乐播放失败:', e);
-                if (DOM.musicTitle) {
-                    DOM.musicTitle.textContent = '🎵 播放失败（浏览器限制）';
-                    DOM.musicArtist.textContent = song.t + ' - ' + song.a;
-                }
-            });
-        }
-
-        function getMusicId(name) {
-            var ids = {
-                'unravel': '1031063946',
-                '红莲华': '1377518821',
-                '直到世界尽头': '1397031',
-                'Butter-Fly': '1397060',
-                'aLIEz': '28261695',
-                '青鸟': '1397055',
-                'only my railgun': '1397064',
-                'Crossing Field': '1397068',
-                '恋爱循环': '1397072',
-                '鸟之诗': '1397076',
-                '残酷天使的行动纲领': '1397080'
-            };
-            return ids[name] || '1397031';
+                
+                musicState.audio = new Audio(url);
+                musicState.audio.onended = function() {
+                    setTimeout(playRandomMusic, 1000);
+                };
+                musicState.audio.onerror = function() {
+                    console.log('[COSTI] 音乐加载失败');
+                };
+                
+                musicState.audio.play().then(function() {
+                    musicState.playing = true;
+                    if (DOM.musicTitle && DOM.musicArtist && DOM.musicWave) {
+                        DOM.musicTitle.textContent = '🎵 ' + song.t;
+                        DOM.musicArtist.textContent = song.a;
+                        DOM.musicWave.classList.remove('hidden');
+                    }
+                }).catch(function(e) {
+                    console.log('[COSTI] 音乐播放失败:', e);
+                });
+            } catch (err) {
+                console.log('[COSTI] 音乐播放异常:', err);
+            }
         }
 
         // ========== 初始化 ==========
